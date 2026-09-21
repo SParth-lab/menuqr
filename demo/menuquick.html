@@ -1,0 +1,1062 @@
+<title>MenuQuick</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.js"></script>
+
+<style>
+  /* ---- Shell tokens. Light is the base; the two blocks below only redefine. ---- */
+  :root {
+    --ground:   #f6f7f9;
+    --grid:     #e4e8ee;
+    --surface:  #ffffff;
+    --raised:   #fbfcfd;
+    --line:     #e2e8f0;
+    --line-firm:#cbd5e1;
+    --ink:      #0f172a;
+    --ink-soft: #475569;
+    --muted:    #64748b;
+    --accent:   #4f46e5;
+    --accent-ink:#ffffff;
+    --accent-wash:#eef2ff;
+    --accent-line:#c7d2fe;
+    --good:     #15803d;
+    --good-wash:#dcfce7;
+    --warn-wash:#fef3c7;
+    --warn-ink: #92400e;
+    --shadow:   0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.18);
+    --phone-shadow: 0 30px 60px -24px rgba(15,23,42,.45), 0 0 0 1px rgba(15,23,42,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #0b1018;
+      --grid:     #18202d;
+      --surface:  #111927;
+      --raised:   #151e2d;
+      --line:     #1f2a3a;
+      --line-firm:#2c3a4e;
+      --ink:      #e7edf5;
+      --ink-soft: #b3c0d1;
+      --muted:    #8798ad;
+      --accent:   #8b93f8;
+      --accent-ink:#0b1018;
+      --accent-wash:#1b2140;
+      --accent-line:#39407a;
+      --good:     #4ade80;
+      --good-wash:#14321f;
+      --warn-wash:#3a2c0d;
+      --warn-ink: #fbbf24;
+      --shadow:   0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+      --phone-shadow: 0 30px 60px -22px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.07);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:   #0b1018;
+    --grid:     #18202d;
+    --surface:  #111927;
+    --raised:   #151e2d;
+    --line:     #1f2a3a;
+    --line-firm:#2c3a4e;
+    --ink:      #e7edf5;
+    --ink-soft: #b3c0d1;
+    --muted:    #8798ad;
+    --accent:   #8b93f8;
+    --accent-ink:#0b1018;
+    --accent-wash:#1b2140;
+    --accent-line:#39407a;
+    --good:     #4ade80;
+    --good-wash:#14321f;
+    --warn-wash:#3a2c0d;
+    --warn-ink: #fbbf24;
+    --shadow:   0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+    --phone-shadow: 0 30px 60px -22px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.07);
+  }
+
+  html, body { background: var(--ground); }
+  body {
+    color: var(--ink);
+    font-family: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  * { box-sizing: border-box; }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace; }
+
+  /* Field the phone sits on — a drafting grid, not a flat panel. */
+  .field {
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--grid) 1px, transparent 0);
+    background-size: 16px 16px;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- Stepper ---- */
+  .step-tab {
+    position: relative;
+    transition: color .18s ease, background-color .18s ease;
+  }
+  .step-tab[aria-selected="true"] { color: var(--ink); }
+  .step-tab[aria-selected="true"] .step-num {
+    background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+  }
+  .step-tab::after {
+    content: ""; position: absolute; left: 12px; right: 12px; bottom: -1px;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .26s cubic-bezier(.4,0,.2,1);
+  }
+  .step-tab[aria-selected="true"]::after { transform: scaleX(1); }
+  .step-num {
+    display: grid; place-items: center;
+    width: 22px; height: 22px; border-radius: 999px;
+    border: 1px solid var(--line-firm);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    color: var(--muted); background: var(--surface);
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+  }
+
+  .panel[hidden] { display: none !important; }
+  .panel { animation: panel-in .28s cubic-bezier(.16,1,.3,1); }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ---- Controls ---- */
+  .inp {
+    width: 100%; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 8px 10px; font-size: 14px; font-family: inherit;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .inp::placeholder { color: var(--muted); opacity: .8; }
+  .inp:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+  .lbl { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    border-radius: 8px; font-size: 13px; font-weight: 600; font-family: inherit;
+    padding: 8px 14px; cursor: pointer; border: 1px solid transparent;
+    transition: transform .12s ease, background-color .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-ghost { background: var(--surface); color: var(--ink-soft); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--line-firm); color: var(--ink); }
+  .btn-danger { background: transparent; color: #b91c1c; border-color: transparent; padding: 4px 6px; }
+  .btn-danger:hover { background: #fee2e2; }
+  :root[data-theme="dark"] .btn-danger { color: #fca5a5; }
+  :root[data-theme="dark"] .btn-danger:hover { background: #3f1d1d; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .btn-danger { color: #fca5a5; }
+    :root:not([data-theme="light"]) .btn-danger:hover { background: #3f1d1d; }
+  }
+  .btn:focus-visible, .step-tab:focus-visible, .inp:focus-visible, .theme-card:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+
+  .row-in { animation: row-in .26s cubic-bezier(.16,1,.3,1); }
+  @keyframes row-in { from { opacity: 0; transform: translateY(-4px) scale(.99); } to { opacity: 1; transform: none; } }
+
+  .theme-card {
+    cursor: pointer; border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    background: var(--surface); text-align: left; width: 100%;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .theme-card:hover { transform: translateY(-2px); border-color: var(--line-firm); }
+  .theme-card[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+
+  /* ---- Phone frame ---- */
+  .phone {
+    width: 390px; max-width: 100%;
+    border-radius: 42px; padding: 11px;
+    background: linear-gradient(160deg, #3a4356, #10141c 60%);
+    box-shadow: var(--phone-shadow);
+  }
+  .phone-screen {
+    border-radius: 32px; overflow: hidden; position: relative;
+    height: 660px; display: flex; flex-direction: column;
+  }
+  .notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 118px; height: 24px; background: #10141c;
+    border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; z-index: 40;
+  }
+  .scroller { flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  .scroller::-webkit-scrollbar { width: 5px; }
+  .scroller::-webkit-scrollbar-thumb { background: rgba(128,128,128,.4); border-radius: 3px; }
+
+  /* ---- Menu themes: self-contained palettes, independent of the host theme ---- */
+  .m-minimal {
+    --mbg:#ffffff; --mpaper:#ffffff; --mink:#0b0b0c; --mmuted:#71717a;
+    --mline:#e7e7ea; --maccent:#0b0b0c; --mbadge:#111113; --mbadge-ink:#ffffff;
+    --mdisplay:'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --mbody:'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --mtrack:-.02em; --mweight:700;
+  }
+  .m-cafe {
+    --mmuted:#8a7a68; --mline:#e0d3c0; --maccent:#a4622a; --mbadge:#a4622a; --mbadge-ink:#fdf8f1;
+    --mdisplay:'Fraunces', ui-serif, Georgia, serif;
+    --mbody:'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --mtrack:0em; --mweight:600;
+  }
+  .m-dark {
+    --mbg:#121110; --mpaper:#1a1817; --mink:#efe7d9; --mmuted:#9b9183;
+    --mline:#2c2926; --maccent:#c9a227; --mbadge:#c9a227; --mbadge-ink:#1a1817;
+    --mdisplay:'Fraunces', ui-serif, Georgia, serif;
+    --mbody:'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --mtrack:.04em; --mweight:300;
+  }
+
+  .menu-root { background: var(--mbg); color: var(--mink); font-family: var(--mbody); }
+  .menu-display { font-family: var(--mdisplay); letter-spacing: var(--mtrack); font-weight: var(--mweight); }
+
+  .ad-slot {
+    border: 1px dashed var(--mline);
+    background: repeating-linear-gradient(135deg, transparent 0 7px, rgba(128,128,128,.07) 7px 14px);
+    color: var(--mmuted);
+    display: grid; place-items: center; text-align: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .06em;
+  }
+
+  .ad-highlight { box-shadow: 0 0 0 2px var(--accent); border-radius: 4px; }
+
+  .item-card { border-bottom: 1px solid var(--mline); }
+  .special-badge {
+    background: var(--mbadge); color: var(--mbadge-ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px; font-weight: 700; letter-spacing: .1em;
+    padding: 2px 5px; border-radius: 3px; white-space: nowrap;
+  }
+
+  pre.code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px; line-height: 1.6;
+    background: var(--raised); border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px; overflow-x: auto; color: var(--ink-soft);
+    white-space: pre; tab-size: 2;
+  }
+
+  dialog::backdrop { background: rgba(9,12,18,.62); backdrop-filter: blur(3px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+</style>
+
+<header class="sticky z-30 border-b" style="top: env(safe-area-inset-top, 0px); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(10px); border-color: var(--line);">
+  <div class="mx-auto max-w-[1400px] px-4 md:px-6">
+
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
+      <div class="flex items-center gap-2.5">
+        <span class="grid h-7 w-7 place-items-center rounded-md" style="background: var(--accent); color: var(--accent-ink);" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4z"/><path d="M14 14h2M18 14h2M14 18h2M18 18h2"/>
+          </svg>
+        </span>
+        <span class="text-[15px] font-bold tracking-tight">MenuQuick</span>
+      </div>
+
+      <span class="eyebrow hidden sm:inline">QR menu builder</span>
+
+      <div class="ml-auto flex items-center gap-2">
+        <span class="mono hidden text-[10px] md:inline" style="color: var(--muted);" id="url-chip">menuquick.app/m/—</span>
+        <button class="btn btn-ghost" id="reset-btn" type="button">Reset demo</button>
+      </div>
+    </div>
+
+    <nav class="-mb-px flex gap-1 overflow-x-auto" role="tablist" aria-label="Build steps">
+      <button class="step-tab flex shrink-0 items-center gap-2 rounded-t-lg px-3 py-2.5 text-[13px] font-semibold" style="color: var(--muted);" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" data-step="1">
+        <span class="step-num" aria-hidden="true">1</span> Design Menu
+      </button>
+      <span class="grid shrink-0 place-items-center px-1" style="color: var(--line-firm);" aria-hidden="true">&rarr;</span>
+      <button class="step-tab flex shrink-0 items-center gap-2 rounded-t-lg px-3 py-2.5 text-[13px] font-semibold" style="color: var(--muted);" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" data-step="2">
+        <span class="step-num" aria-hidden="true">2</span> Customize &amp; QR
+      </button>
+      <span class="grid shrink-0 place-items-center px-1" style="color: var(--line-firm);" aria-hidden="true">&rarr;</span>
+      <button class="step-tab flex shrink-0 items-center gap-2 rounded-t-lg px-3 py-2.5 text-[13px] font-semibold" style="color: var(--muted);" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" data-step="3">
+        <span class="step-num" aria-hidden="true">3</span> Live Preview &amp; SEO
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="mx-auto grid max-w-[1400px] grid-cols-1 gap-6 px-4 py-6 md:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)]">
+
+  <!-- ================= LEFT: BUILDER ================= -->
+  <div class="min-w-0">
+
+    <!-- ---------- STEP 1 ---------- -->
+    <section class="panel space-y-5" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+
+      <div class="card p-5">
+        <p class="eyebrow">Step 1 &middot; Restaurant details</p>
+        <h2 class="mt-1 text-lg font-bold tracking-tight">Who is this menu for?</h2>
+        <p class="mt-1 text-[13px]" style="color: var(--muted);">These three fields become the page title, the H1 and the address in your Schema.org markup.</p>
+
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div class="sm:col-span-2">
+            <label class="lbl" for="f-name">Restaurant name</label>
+            <input class="inp" id="f-name" type="text" placeholder="Tamarind &amp; Rye" autocomplete="off">
+          </div>
+          <div>
+            <label class="lbl" for="f-cuisine">Cuisine type</label>
+            <input class="inp" id="f-cuisine" type="text" placeholder="Modern Indian bakery" autocomplete="off">
+          </div>
+          <div>
+            <label class="lbl" for="f-city">City</label>
+            <input class="inp" id="f-city" type="text" placeholder="Ahmedabad" autocomplete="off">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="lbl" for="f-address">Address</label>
+            <input class="inp" id="f-address" type="text" placeholder="14 Ashram Road, Navrangpura" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-5">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="eyebrow">Step 1 &middot; Menu builder</p>
+            <h2 class="mt-1 text-lg font-bold tracking-tight">Categories &amp; items</h2>
+          </div>
+          <button class="btn btn-ghost" id="add-category" type="button">+ Add category</button>
+        </div>
+
+        <div class="mt-4 space-y-4" id="builder"></div>
+
+        <p class="mt-4 text-[12px]" style="color: var(--muted);">
+          <span id="stat-line" class="mono"></span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 2 ---------- -->
+    <section class="panel space-y-5" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+
+      <div class="card p-5">
+        <p class="eyebrow">Step 2 &middot; Theme</p>
+        <h2 class="mt-1 text-lg font-bold tracking-tight">Pick the look diners see</h2>
+        <p class="mt-1 text-[13px]" style="color: var(--muted);">Each theme sets its own palette and display face. The preview repaints as you choose.</p>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-3" id="theme-picker"></div>
+      </div>
+
+      <div class="card p-5">
+        <p class="eyebrow">Step 2 &middot; QR code engine</p>
+        <h2 class="mt-1 text-lg font-bold tracking-tight">Your table code</h2>
+        <p class="mt-1 text-[13px]" style="color: var(--muted);">
+          Encodes the live menu URL. The restaurant name is printed into the frame, so a stack of
+          printed cards never gets mixed up between venues.
+        </p>
+
+        <div class="mt-4 flex flex-wrap items-start gap-5">
+          <div class="shrink-0 rounded-xl p-3" style="background: var(--raised); border: 1px solid var(--line);">
+            <img id="qr-img" width="190" height="228" alt="QR code for the menu" style="display:block; width:190px; height:auto; border-radius:6px;">
+          </div>
+
+          <div class="min-w-[220px] flex-1 space-y-3">
+            <div>
+              <p class="lbl">Encoded URL</p>
+              <p class="mono break-all text-[11.5px]" id="qr-url" style="color: var(--ink-soft);"></p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button class="btn btn-primary" id="download-qr" type="button">Download QR code</button>
+              <button class="btn btn-ghost" id="copy-url" type="button">Copy link</button>
+            </div>
+
+            <p class="text-[11.5px]" id="qr-note" style="color: var(--muted);">
+              Regenerates whenever the restaurant name changes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- STEP 3 ---------- -->
+    <section class="panel space-y-5" id="panel-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+
+      <div class="card p-5">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="eyebrow">Step 3 &middot; Monetization</p>
+            <h2 class="mt-1 text-lg font-bold tracking-tight">Ad layout</h2>
+          </div>
+          <label class="flex cursor-pointer items-center gap-2 text-[13px] font-semibold" style="color: var(--ink-soft);">
+            <input type="checkbox" id="f-highlight" class="h-4 w-4 accent-indigo-600">
+            Outline slots in preview
+          </label>
+        </div>
+
+        <ul class="mt-4 space-y-3">
+          <li class="flex gap-3 rounded-lg p-3" style="background: var(--raised);">
+            <span class="mono mt-0.5 text-[10px] font-bold" style="color: var(--accent);">01</span>
+            <div>
+              <p class="text-[13px] font-semibold">Sticky leaderboard &middot; 320&times;50</p>
+              <p class="mt-0.5 text-[12.5px]" style="color: var(--muted);">Pinned above the menu. Held to 50px so it never covers a dish while someone scrolls.</p>
+            </div>
+          </li>
+          <li class="flex gap-3 rounded-lg p-3" style="background: var(--raised);">
+            <span class="mono mt-0.5 text-[10px] font-bold" style="color: var(--accent);">02</span>
+            <div>
+              <p class="text-[13px] font-semibold">In-feed responsive</p>
+              <p class="mt-0.5 text-[12.5px]" style="color: var(--muted);">Dropped between categories, at a natural break in reading rather than mid-list.</p>
+            </div>
+          </li>
+        </ul>
+
+        <p class="mt-4 rounded-lg px-3 py-2.5 text-[12.5px]" style="background: var(--warn-wash); color: var(--warn-ink);">
+          Two units per menu is the ceiling. A diner deciding what to eat is a captive audience, and a
+          third slot costs more in bounce than it earns.
+        </p>
+      </div>
+
+      <div class="card p-5">
+        <p class="eyebrow">Step 3 &middot; Search appearance</p>
+        <h2 class="mt-1 text-lg font-bold tracking-tight">What Google renders</h2>
+
+        <div class="mt-4 rounded-lg border p-3.5" style="border-color: var(--line); background: var(--raised);">
+          <p class="mono text-[11px]" id="serp-url" style="color: var(--good);"></p>
+          <p class="mt-1 text-[16px] font-medium leading-snug" id="serp-title" style="color: #1a0dab;"></p>
+          <p class="mt-0.5 text-[12.5px] leading-relaxed" id="serp-desc" style="color: var(--ink-soft);"></p>
+        </div>
+
+        <dl class="mt-4 space-y-2 text-[12.5px]">
+          <div class="flex justify-between gap-4 border-b pb-2" style="border-color: var(--line);">
+            <dt style="color: var(--muted);">Title length</dt><dd class="mono" id="m-title-len"></dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b pb-2" style="border-color: var(--line);">
+            <dt style="color: var(--muted);">Description length</dt><dd class="mono" id="m-desc-len"></dd>
+          </div>
+          <div class="flex justify-between gap-4 border-b pb-2" style="border-color: var(--line);">
+            <dt style="color: var(--muted);">Indexable</dt><dd class="mono" id="m-index"></dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt style="color: var(--muted);">Canonical</dt><dd class="mono truncate" id="m-canonical"></dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="card p-5">
+        <p class="eyebrow">Step 3 &middot; Structured data</p>
+        <h2 class="mt-1 text-lg font-bold tracking-tight">Schema.org JSON-LD</h2>
+        <p class="mt-1 text-[13px]" style="color: var(--muted);">
+          Live <code class="mono text-[11.5px]">Restaurant</code> + <code class="mono text-[11.5px]">Menu</code> graph, emitted into this page's DOM as you type. This is what earns the rich menu result.
+        </p>
+        <pre class="code mt-3" id="ld-preview" aria-label="JSON-LD structured data"></pre>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= RIGHT: LIVE PREVIEW ================= -->
+  <aside class="min-w-0">
+    <div class="lg:sticky" style="top: calc(env(safe-area-inset-top, 0px) + 104px);">
+      <div class="mb-2.5 flex items-center justify-between">
+        <p class="eyebrow">Live preview</p>
+        <p class="mono text-[10px]" style="color: var(--muted);" id="preview-theme-name"></p>
+      </div>
+
+      <div class="field flex justify-center rounded-2xl border p-5" style="border-color: var(--line);">
+        <div class="phone">
+          <div class="phone-screen menu-root m-minimal" id="phone-screen">
+            <div class="notch" aria-hidden="true"></div>
+
+            <!-- Sticky leaderboard -->
+            <div class="ad-slot shrink-0" id="ad-top" style="height:50px; padding-top:26px; box-sizing:content-box;">
+              [Google AdSense &mdash; 320&times;50 Leaderboard]
+            </div>
+
+            <div class="scroller" id="menu-scroll"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-2.5 text-center text-[11.5px]" style="color: var(--muted);">
+        390&times;660 viewport &middot; what a diner sees after scanning
+      </p>
+    </div>
+  </aside>
+</main>
+
+<dialog id="qr-dialog" class="rounded-2xl border-0 p-0" style="background: var(--surface); color: var(--ink); max-width: 92vw;">
+  <div class="p-6" style="width: 340px; max-width: 100%;">
+    <p class="eyebrow">Save your code</p>
+    <h3 class="mt-1 text-base font-bold tracking-tight">Print-ready QR</h3>
+
+    <img id="qr-large" alt="Full size QR code" class="mx-auto mt-4 rounded-lg" style="display:block; width: 260px; max-width: 100%; height: auto;">
+
+    <p class="mt-4 text-[12.5px] leading-relaxed" style="color: var(--ink-soft);">
+      Right-click the code (long-press on mobile) and choose <strong>Save image</strong>. This preview
+      sandbox blocks direct downloads, so that is the reliable route here; the shipped app serves it as
+      PNG and SVG.
+    </p>
+
+    <div class="mt-4 flex gap-2">
+      <button class="btn btn-primary flex-1" id="qr-copy-2" type="button">Copy menu link</button>
+      <button class="btn btn-ghost" id="qr-close" type="button">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script type="application/ld+json" id="ld-json"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORE_KEY = 'menuquick.draft.v1';
+  var uid = 0;
+  function nid(p) { uid += 1; return p + '-' + Date.now().toString(36) + '-' + uid; }
+
+  var THEMES = [
+    { key: 'minimal', cls: 'm-minimal', name: 'Light Minimalist', note: 'Hairline rules, no ornament', swatch: ['#ffffff', '#0b0b0c', '#e7e7ea'] },
+    { key: 'cafe',    cls: 'm-cafe',    name: 'Warm Cafe',        note: 'Sepia paper, serif display',  swatch: ['#f4ece0', '#a4622a', '#3d3025'] },
+    { key: 'dark',    cls: 'm-dark',    name: 'Elegant Dark',     note: 'Gold on near-black',          swatch: ['#121110', '#c9a227', '#efe7d9'] }
+  ];
+
+  /* A filled example venue, so the tool opens showing what it does. */
+  function seed() {
+    return {
+      step: 1,
+      name: 'Tamarind & Rye',
+      cuisine: 'Modern Indian bakery',
+      city: 'Ahmedabad',
+      address: '14 Ashram Road, Navrangpura',
+      theme: 'cafe',
+      highlightAds: false,
+      categories: [
+        { id: nid('c'), name: 'Small Plates', items: [
+          { id: nid('i'), name: 'Kejriwal Toast',      price: '280', desc: 'Amul cheese, green chilli, fried egg', special: true },
+          { id: nid('i'), name: 'Beetroot Galouti',    price: '320', desc: 'Smoked beetroot kebab, mint chutney',  special: false },
+          { id: nid('i'), name: 'Masala Corn Ribs',    price: '240', desc: 'Charred corn, chaat masala, lime',      special: false }
+        ]},
+        { id: nid('c'), name: 'Mains', items: [
+          { id: nid('i'), name: 'Lamb Kheema Pav',     price: '460', desc: 'Slow-cooked kheema, buttered milk bun', special: true },
+          { id: nid('i'), name: 'Pumpkin Kofta Curry', price: '390', desc: 'Cashew gravy, burnt garlic oil',        special: false },
+          { id: nid('i'), name: 'Ragi Sourdough Club', price: '340', desc: 'House ragi loaf, smoked tomato',        special: false }
+        ]},
+        { id: nid('c'), name: 'Filter Coffee & Chai', items: [
+          { id: nid('i'), name: 'Degree Kaapi',        price: '140', desc: 'Chicory blend, tumbler and dabara',     special: false },
+          { id: nid('i'), name: 'Rose Cardamom Latte', price: '180', desc: 'Single origin, house rose syrup',       special: true },
+          { id: nid('i'), name: 'Kashmiri Kahwa',      price: '160', desc: 'Saffron, almond, green tea',            special: false }
+        ]},
+        { id: nid('c'), name: 'Sweets', items: [
+          { id: nid('i'), name: 'Jaggery Basque Cheesecake', price: '260', desc: 'Burnt top, palm jaggery',   special: true },
+          { id: nid('i'), name: 'Thandai Tiramisu',          price: '280', desc: 'Fennel, pepper, mascarpone', special: false }
+        ]}
+      ]
+    };
+  }
+
+  var state = load() || seed();
+  var qrIsReal = true;
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return null;
+      var v = JSON.parse(raw);
+      return (v && Array.isArray(v.categories)) ? v : null;
+    } catch (e) { return null; }
+  }
+  function save() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function slugify(s) {
+    return String(s || '').toLowerCase().normalize('NFKD')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 48) || 'your-restaurant';
+  }
+  function themeOf() {
+    for (var i = 0; i < THEMES.length; i++) if (THEMES[i].key === state.theme) return THEMES[i];
+    return THEMES[0];
+  }
+  function counts() {
+    var items = 0, specials = 0;
+    state.categories.forEach(function (c) {
+      items += c.items.length;
+      c.items.forEach(function (it) { if (it.special) specials += 1; });
+    });
+    return { cats: state.categories.length, items: items, specials: specials };
+  }
+  function menuUrl() { return 'https://menuquick.app/m/' + slugify(state.name); }
+
+  /* ---------------------------------------------------------------- steps */
+  function setStep(n) {
+    state.step = n;
+    [1, 2, 3].forEach(function (i) {
+      $('tab-' + i).setAttribute('aria-selected', String(i === n));
+      $('panel-' + i).hidden = (i !== n);
+    });
+    save();
+  }
+  [1, 2, 3].forEach(function (i) {
+    $('tab-' + i).addEventListener('click', function () { setStep(i); });
+  });
+
+  /* ------------------------------------------------------- detail fields */
+  var FIELDS = [['f-name', 'name'], ['f-cuisine', 'cuisine'], ['f-city', 'city'], ['f-address', 'address']];
+  FIELDS.forEach(function (pair) {
+    var el = $(pair[0]);
+    el.value = state[pair[1]] || '';
+    el.addEventListener('input', function () {
+      state[pair[1]] = el.value;
+      renderPreview(); renderSeo(); renderQr(); save();
+    });
+  });
+
+  /* -------------------------------------------------------- menu builder */
+  function renderBuilder() {
+    var host = $('builder');
+    if (!state.categories.length) {
+      host.innerHTML =
+        '<div class="rounded-lg border border-dashed p-8 text-center" style="border-color: var(--line-firm);">' +
+        '<p class="text-[13px] font-semibold">No categories yet</p>' +
+        '<p class="mt-1 text-[12.5px]" style="color: var(--muted);">Most venues land between four and eight. Start with the one people order from most.</p>' +
+        '</div>';
+      return;
+    }
+
+    host.innerHTML = state.categories.map(function (cat, ci) {
+      var rows = cat.items.map(function (it, ii) {
+        return '' +
+        '<div class="row-in grid gap-2 rounded-lg p-2.5 sm:grid-cols-[minmax(0,1.1fr)_84px_minmax(0,1.4fr)_auto] sm:items-center" style="background: var(--raised);" data-ci="' + ci + '" data-ii="' + ii + '">' +
+          '<input class="inp" type="text" value="' + esc(it.name) + '" placeholder="Item name" aria-label="Item name" data-bind="name">' +
+          '<input class="inp mono text-[13px]" type="text" inputmode="decimal" value="' + esc(it.price) + '" placeholder="Price" aria-label="Price" data-bind="price">' +
+          '<input class="inp" type="text" value="' + esc(it.desc) + '" placeholder="Short description" aria-label="Description" data-bind="desc">' +
+          '<div class="flex items-center justify-between gap-1 sm:justify-start">' +
+            '<label class="flex cursor-pointer items-center gap-1.5 whitespace-nowrap text-[11.5px] font-semibold" style="color: var(--ink-soft);">' +
+              '<input type="checkbox" class="h-3.5 w-3.5 accent-indigo-600" ' + (it.special ? 'checked' : '') + ' data-bind="special"> Special' +
+            '</label>' +
+            '<button class="btn btn-danger" type="button" data-act="del-item" aria-label="Delete ' + esc(it.name || 'item') + '">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      return '' +
+      '<div class="row-in rounded-xl border p-3.5" style="border-color: var(--line);" data-ci="' + ci + '">' +
+        '<div class="flex items-center gap-2">' +
+          '<span class="mono text-[10px] font-bold" style="color: var(--accent);">' + String(ci + 1).padStart(2, '0') + '</span>' +
+          '<input class="inp font-semibold" type="text" value="' + esc(cat.name) + '" placeholder="Category name" aria-label="Category name" data-bind="cat-name">' +
+          '<button class="btn btn-danger" type="button" data-act="del-cat" aria-label="Delete category ' + esc(cat.name) + '">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="mt-2.5 space-y-2">' + rows + '</div>' +
+        '<button class="btn btn-ghost mt-2.5 w-full" type="button" data-act="add-item">+ Add item to ' + esc(cat.name || 'category') + '</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function catIndexFrom(el) {
+    var box = el.closest('[data-ci]');
+    return box ? parseInt(box.getAttribute('data-ci'), 10) : -1;
+  }
+
+  $('builder').addEventListener('input', function (e) {
+    var el = e.target, bind = el.getAttribute('data-bind');
+    if (!bind) return;
+
+    if (bind === 'cat-name') {
+      var ci = catIndexFrom(el);
+      if (ci < 0) return;
+      state.categories[ci].name = el.value;
+    } else {
+      var row = el.closest('[data-ii]');
+      if (!row) return;
+      var c = parseInt(row.getAttribute('data-ci'), 10);
+      var i = parseInt(row.getAttribute('data-ii'), 10);
+      var item = state.categories[c].items[i];
+      if (bind === 'special') item.special = el.checked; else item[bind] = el.value;
+    }
+    /* The builder itself is NOT re-rendered here — that would steal focus mid-typing. */
+    renderPreview(); renderSeo(); renderQr(); save();
+  });
+
+  $('builder').addEventListener('change', function (e) {
+    if (e.target.getAttribute('data-bind') === 'special') {
+      renderPreview(); renderSeo(); save();
+    }
+  });
+
+  $('builder').addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    var act = btn.getAttribute('data-act');
+
+    if (act === 'add-item') {
+      var ci = catIndexFrom(btn);
+      state.categories[ci].items.push({ id: nid('i'), name: '', price: '', desc: '', special: false });
+      renderAll();
+      var rows = $('builder').querySelectorAll('[data-ci="' + ci + '"] [data-bind="name"]');
+      if (rows.length) rows[rows.length - 1].focus();
+      return;
+    }
+
+    if (act === 'del-item') {
+      var row = btn.closest('[data-ii]');
+      var c = parseInt(row.getAttribute('data-ci'), 10);
+      var i = parseInt(row.getAttribute('data-ii'), 10);
+      state.categories[c].items.splice(i, 1);
+      renderAll();
+      return;
+    }
+
+    if (act === 'del-cat') {
+      var k = catIndexFrom(btn);
+      var cat = state.categories[k];
+      if (cat.items.length && !window.confirm('Delete "' + (cat.name || 'this category') + '" and its ' + cat.items.length + ' item' + (cat.items.length === 1 ? '' : 's') + '?')) return;
+      state.categories.splice(k, 1);
+      renderAll();
+    }
+  });
+
+  $('add-category').addEventListener('click', function () {
+    state.categories.push({ id: nid('c'), name: 'New category', items: [] });
+    renderAll();
+    var heads = $('builder').querySelectorAll('[data-bind="cat-name"]');
+    if (heads.length) { var last = heads[heads.length - 1]; last.focus(); last.select(); }
+  });
+
+  /* -------------------------------------------------------- theme picker */
+  function renderThemePicker() {
+    $('theme-picker').innerHTML = THEMES.map(function (t) {
+      var chips = t.swatch.map(function (c) {
+        return '<span style="display:inline-block;width:14px;height:14px;border-radius:999px;background:' + c + ';box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);"></span>';
+      }).join('');
+      return '' +
+      '<button class="theme-card" type="button" data-theme="' + t.key + '" aria-pressed="' + (state.theme === t.key) + '">' +
+        '<span style="display:block;height:62px;background:' + t.swatch[0] + ';padding:10px 12px;">' +
+          '<span style="display:block;height:7px;width:52%;border-radius:2px;background:' + t.swatch[1] + ';"></span>' +
+          '<span style="display:block;margin-top:6px;height:4px;width:74%;border-radius:2px;background:' + t.swatch[2] + ';opacity:.55;"></span>' +
+          '<span style="display:block;margin-top:4px;height:4px;width:38%;border-radius:2px;background:' + t.swatch[2] + ';opacity:.35;"></span>' +
+        '</span>' +
+        '<span style="display:block;border-top:1px solid var(--line);padding:9px 11px;">' +
+          '<span style="display:flex;align-items:center;justify-content:space-between;gap:6px;">' +
+            '<span style="font-size:13px;font-weight:700;">' + esc(t.name) + '</span>' +
+            '<span style="display:flex;gap:3px;">' + chips + '</span>' +
+          '</span>' +
+          '<span style="display:block;margin-top:2px;font-size:11.5px;color:var(--muted);">' + esc(t.note) + '</span>' +
+        '</span>' +
+      '</button>';
+    }).join('');
+  }
+
+  $('theme-picker').addEventListener('click', function (e) {
+    var card = e.target.closest('[data-theme]');
+    if (!card) return;
+    state.theme = card.getAttribute('data-theme');
+    renderThemePicker(); renderPreview(); save();
+  });
+
+  /* ------------------------------------------------------------- preview */
+  function renderPreview() {
+    var t = themeOf();
+    var screen = $('phone-screen');
+    screen.className = 'phone-screen menu-root ' + t.cls;
+    $('preview-theme-name').textContent = t.name;
+
+    var name = state.name || 'Your Restaurant';
+    var meta = [state.cuisine, state.city].filter(Boolean).join(' · ');
+
+    var head = '' +
+    '<header style="padding:22px 18px 16px;text-align:center;border-bottom:1px solid var(--mline);">' +
+      '<div style="width:34px;height:34px;margin:0 auto 10px;border-radius:999px;display:grid;place-items:center;background:var(--maccent);color:var(--mbg);font-family:var(--mdisplay);font-size:15px;font-weight:700;">' +
+        esc((name.trim()[0] || 'M').toUpperCase()) +
+      '</div>' +
+      '<h1 class="menu-display" style="font-size:25px;line-height:1.15;margin:0;">' + esc(name) + '</h1>' +
+      (meta ? '<p style="margin:6px 0 0;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mmuted);">' + esc(meta) + '</p>' : '') +
+      (state.address ? '<address style="display:block;margin:8px 0 0;font-size:12px;font-style:normal;color:var(--mmuted);line-height:1.5;">' + esc(state.address) + '</address>' : '') +
+    '</header>';
+
+    var hl = state.highlightAds ? ' ad-highlight' : '';
+    var inFeed = '' +
+      '<div style="padding:14px 18px;">' +
+        '<div class="ad-slot' + hl + '" style="height:94px;border-radius:6px;">[Google AdSense &mdash; Responsive Inline Ad]</div>' +
+      '</div>';
+
+    var body = '';
+    var live = state.categories.filter(function (c) { return c.items.length > 0; });
+
+    if (!live.length) {
+      body = '<p style="padding:56px 24px;text-align:center;font-size:13px;color:var(--mmuted);line-height:1.6;">Add a category and a few items in step 1 and they appear here instantly.</p>';
+    } else {
+      live.forEach(function (cat, idx) {
+        var items = cat.items.map(function (it) {
+          return '' +
+          '<article class="item-card" style="display:flex;gap:12px;padding:12px 0;">' +
+            '<div style="min-width:0;flex:1;">' +
+              '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">' +
+                '<h3 class="menu-display" style="font-size:14.5px;margin:0;font-weight:600;letter-spacing:0;">' + esc(it.name || 'Untitled item') + '</h3>' +
+                (it.special ? '<span class="special-badge">CHEF&rsquo;S SPECIAL</span>' : '') +
+              '</div>' +
+              (it.desc ? '<p style="margin:3px 0 0;font-size:12px;line-height:1.5;color:var(--mmuted);">' + esc(it.desc) + '</p>' : '') +
+            '</div>' +
+            '<div style="font-size:13.5px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--maccent);">' +
+              (it.price ? '&#8377;' + esc(it.price) : '&mdash;') +
+            '</div>' +
+          '</article>';
+        }).join('');
+
+        body += '' +
+        '<section style="padding:16px 18px 4px;">' +
+          '<h2 class="menu-display" style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 2px;color:var(--maccent);font-weight:700;">' + esc(cat.name || 'Category') + '</h2>' +
+          '<div>' + items + '</div>' +
+        '</section>';
+
+        /* In-feed unit lands at the first category break, not mid-list. */
+        if (idx === 0 && live.length > 1) body += inFeed;
+      });
+    }
+
+    var foot = '' +
+    '<footer style="padding:20px 18px 28px;text-align:center;border-top:1px solid var(--mline);margin-top:14px;">' +
+      '<p style="margin:0;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mmuted);">Menu by MenuQuick</p>' +
+    '</footer>';
+
+    $('menu-scroll').innerHTML = head + body + foot;
+    $('ad-top').classList.toggle('ad-highlight', !!state.highlightAds);
+  }
+
+  $('f-highlight').addEventListener('change', function (e) {
+    state.highlightAds = e.target.checked;
+    renderPreview(); save();
+  });
+
+  /* ------------------------------------------------------------- SEO ---- */
+  function seoTitle() {
+    var n = state.name || 'Your Restaurant';
+    var tail = [state.cuisine, state.city].filter(Boolean).join(' in ');
+    return tail ? n + ' Menu — ' + tail : n + ' Menu';
+  }
+  function seoDesc() {
+    var c = counts();
+    var n = state.name || 'Your Restaurant';
+    var where = state.city ? ' in ' + state.city : '';
+    return 'Full ' + n + ' menu with current prices: ' + c.items + ' dishes across ' +
+      c.cats + ' section' + (c.cats === 1 ? '' : 's') + (state.cuisine ? '. ' + state.cuisine : '') + where + '.';
+  }
+
+  function renderSeo() {
+    var c = counts(), title = seoTitle(), desc = seoDesc(), url = menuUrl();
+
+    $('serp-url').textContent = url.replace('https://', '');
+    $('serp-title').textContent = title;
+    $('serp-desc').textContent = desc.length > 158 ? desc.slice(0, 157) + '…' : desc;
+
+    $('m-title-len').textContent = title.length + ' / 60';
+    $('m-title-len').style.color = title.length > 60 ? '#b45309' : 'var(--good)';
+    $('m-desc-len').textContent = desc.length + ' / 158';
+    $('m-desc-len').style.color = desc.length > 158 ? '#b45309' : 'var(--good)';
+
+    var indexable = c.items >= 5;
+    $('m-index').textContent = indexable ? 'yes' : 'noindex · under 5 items';
+    $('m-index').style.color = indexable ? 'var(--good)' : '#b45309';
+    $('m-canonical').textContent = '/m/' + slugify(state.name);
+
+    var graph = {
+      '@context': 'https://schema.org',
+      '@type': 'Restaurant',
+      name: state.name || 'Your Restaurant',
+      url: url,
+      servesCuisine: state.cuisine || undefined,
+      address: state.address ? {
+        '@type': 'PostalAddress',
+        streetAddress: state.address,
+        addressLocality: state.city || undefined
+      } : undefined,
+      hasMenu: {
+        '@type': 'Menu',
+        name: (state.name || 'Your Restaurant') + ' Menu',
+        hasMenuSection: state.categories.filter(function (x) { return x.items.length; }).map(function (cat) {
+          return {
+            '@type': 'MenuSection',
+            name: cat.name || 'Section',
+            hasMenuItem: cat.items.map(function (it) {
+              return {
+                '@type': 'MenuItem',
+                name: it.name || 'Item',
+                description: it.desc || undefined,
+                offers: { '@type': 'Offer', price: it.price || '0', priceCurrency: 'INR' }
+              };
+            })
+          };
+        })
+      }
+    };
+
+    var json = JSON.stringify(graph, null, 2);
+    $('ld-preview').textContent = json;
+    $('ld-json').textContent = json;   /* real structured data in the DOM, not just a screenshot of it */
+
+    $('stat-line').textContent =
+      c.cats + ' categories · ' + c.items + ' items · ' + c.specials + ' chef’s specials';
+    $('url-chip').textContent = url.replace('https://', '');
+  }
+
+  /* -------------------------------------------------------------- QR ---- */
+  function hash32(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = (h * 16777619) >>> 0; }
+    return h >>> 0;
+  }
+
+  /* Only used if the encoder script is unavailable; the UI says so when it fires. */
+  function fallbackMatrix(text, n) {
+    var h = hash32(text), grid = [];
+    for (var r = 0; r < n; r++) {
+      grid[r] = [];
+      for (var c = 0; c < n; c++) {
+        h = (h * 1103515245 + 12345 + r * 31 + c * 17) >>> 0;
+        grid[r][c] = ((h >>> 16) & 1) === 1;
+      }
+    }
+    [[0, 0], [0, n - 7], [n - 7, 0]].forEach(function (o) {
+      for (var r = 0; r < 7; r++) for (var c = 0; c < 7; c++) {
+        var edge = (r === 0 || r === 6 || c === 0 || c === 6);
+        var core = (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+        grid[o[0] + r][o[1] + c] = edge || core;
+      }
+      for (var k = -1; k <= 7; k++) {
+        if (o[0] + 7 < n && o[1] + k >= 0 && o[1] + k < n) grid[o[0] + 7][o[1] + k] = false;
+        if (o[1] + 7 < n && o[0] + k >= 0 && o[0] + k < n) grid[o[0] + k][o[1] + 7] = false;
+      }
+    });
+    return grid;
+  }
+
+  function renderQr() {
+    var url = menuUrl();
+    var label = (state.name || 'Your Restaurant').trim();
+    var SCALE = 8, QUIET = 4;
+
+    var isDark, count;
+    if (typeof window.qrcode === 'function') {
+      try {
+        var qr = window.qrcode(0, 'M');
+        qr.addData(url);
+        qr.make();
+        count = qr.getModuleCount();
+        isDark = function (r, c) { return qr.isDark(r, c); };
+        qrIsReal = true;
+      } catch (err) { qrIsReal = false; }
+    } else {
+      qrIsReal = false;
+    }
+
+    if (!qrIsReal) {
+      count = 33;
+      var m = fallbackMatrix(url, count);
+      isDark = function (r, c) { return m[r][c]; };
+    }
+
+    var side = (count + QUIET * 2) * SCALE;
+    var strip = 62;
+    var cv = document.createElement('canvas');
+    cv.width = side; cv.height = side + strip;
+    var g = cv.getContext('2d');
+
+    g.fillStyle = '#ffffff';
+    g.fillRect(0, 0, cv.width, cv.height);
+
+    g.fillStyle = '#0b0b0c';
+    for (var r = 0; r < count; r++) {
+      for (var c = 0; c < count; c++) {
+        if (isDark(r, c)) g.fillRect((c + QUIET) * SCALE, (r + QUIET) * SCALE, SCALE, SCALE);
+      }
+    }
+
+    /* Name printed into the frame so a stack of table cards stays sorted. */
+    g.fillStyle = '#0b0b0c';
+    g.fillRect(QUIET * SCALE, side - SCALE, side - QUIET * SCALE * 2, 2);
+
+    g.textAlign = 'center';
+    g.fillStyle = '#0b0b0c';
+    g.font = '700 22px "Instrument Sans", system-ui, sans-serif';
+    var shown = label.length > 26 ? label.slice(0, 25) + '…' : label;
+    g.fillText(shown, side / 2, side + 26);
+
+    g.fillStyle = '#6b7280';
+    g.font = '500 13px "JetBrains Mono", ui-monospace, monospace';
+    g.fillText('SCAN  FOR  MENU', side / 2, side + 48);
+
+    var data = cv.toDataURL('image/png');
+    $('qr-img').src = data;
+    $('qr-img').alt = 'QR code linking to the ' + label + ' menu';
+    $('qr-large').src = data;
+    $('qr-url').textContent = url;
+
+    $('qr-note').textContent = qrIsReal
+      ? 'Scannable now — points at the live menu URL above.'
+      : 'Preview pattern only: the QR encoder did not load, so this image will not scan.';
+    $('qr-note').style.color = qrIsReal ? 'var(--muted)' : '#b45309';
+  }
+
+  /* ------------------------------------------------------- QR actions --- */
+  var dlg = $('qr-dialog');
+  $('download-qr').addEventListener('click', function () { dlg.showModal(); });
+  $('qr-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
+  function copyLink(btn) {
+    var original = btn.textContent;
+    var done = function () {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = original; }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(menuUrl()).then(done, function () { btn.textContent = 'Press Ctrl+C'; });
+    } else {
+      btn.textContent = 'Press Ctrl+C';
+    }
+  }
+  $('copy-url').addEventListener('click', function () { copyLink(this); });
+  $('qr-copy-2').addEventListener('click', function () { copyLink(this); });
+
+  /* ------------------------------------------------------------ reset --- */
+  $('reset-btn').addEventListener('click', function () {
+    if (!window.confirm('Replace everything with the example menu?')) return;
+    state = seed();
+    FIELDS.forEach(function (p) { $(p[0]).value = state[p[1]] || ''; });
+    $('f-highlight').checked = false;
+    setStep(1);
+    renderAll();
+  });
+
+  /* ------------------------------------------------------------ boot ---- */
+  function renderAll() {
+    renderBuilder();
+    renderThemePicker();
+    renderPreview();
+    renderSeo();
+    renderQr();
+    save();
+  }
+
+  $('f-highlight').checked = !!state.highlightAds;
+  setStep(state.step || 1);
+  renderAll();
+
+  /* Canvas text measures wrong before the webfont lands — redraw once it has. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { renderQr(); });
+  }
+})();
+</script>
