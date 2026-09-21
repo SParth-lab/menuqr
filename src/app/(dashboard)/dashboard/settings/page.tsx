@@ -1,0 +1,73 @@
+import type { Metadata } from 'next';
+import { auth } from '@/lib/auth';
+import { getOwnerRestaurant } from '@/lib/owner';
+import { publicMenuUrl } from '@/lib/qr';
+import { Card, PageHeader, StatusBadge } from '@/components/ui';
+import { PasswordForm } from '@/components/dashboard/PasswordForm';
+import { SignOutButton } from '@/components/dashboard/SignOutButton';
+
+export const metadata: Metadata = { title: 'Settings', robots: { index: false, follow: false } };
+export const dynamic = 'force-dynamic';
+
+export default async function SettingsPage() {
+  const restaurant = await getOwnerRestaurant();
+  const session = await auth();
+
+  return (
+    <>
+      <PageHeader title="Settings" description="Account and restaurant status." />
+
+      <div className="max-w-2xl space-y-5">
+        <Card>
+          <h2 className="text-sm font-bold text-slate-900">Account</h2>
+          <dl className="mt-3 space-y-2 text-sm">
+            <div className="flex justify-between gap-4">
+              <dt className="text-slate-500">Name</dt>
+              <dd className="font-medium text-slate-900">{session?.user.name}</dd>
+            </div>
+            <div className="flex justify-between gap-4">
+              <dt className="text-slate-500">Email</dt>
+              <dd className="font-medium text-slate-900">{session?.user.email}</dd>
+            </div>
+            <div className="flex justify-between gap-4">
+              <dt className="text-slate-500">Role</dt>
+              <dd className="font-medium text-slate-900">Restaurant owner</dd>
+            </div>
+          </dl>
+        </Card>
+
+        <Card>
+          <h2 className="text-sm font-bold text-slate-900">Restaurant</h2>
+          <dl className="mt-3 space-y-2 text-sm">
+            <div className="flex items-center justify-between gap-4">
+              <dt className="text-slate-500">Status</dt>
+              <dd><StatusBadge status={restaurant.status} /></dd>
+            </div>
+            <div className="flex justify-between gap-4">
+              <dt className="text-slate-500">Public URL</dt>
+              <dd className="break-all text-right font-mono text-xs text-slate-700">
+                {publicMenuUrl(restaurant.slug)}
+              </dd>
+            </div>
+          </dl>
+          {restaurant.status === 'REJECTED' && restaurant.rejectionReason ? (
+            <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">
+              {restaurant.rejectionReason}
+            </p>
+          ) : null}
+        </Card>
+
+        <Card>
+          <h2 className="text-sm font-bold text-slate-900">Change password</h2>
+          <PasswordForm />
+        </Card>
+
+        <Card>
+          <h2 className="text-sm font-bold text-slate-900">Session</h2>
+          <p className="mt-1 text-xs text-slate-600">Sign out of this device.</p>
+          <div className="mt-3"><SignOutButton /></div>
+        </Card>
+      </div>
+    </>
+  );
+}
