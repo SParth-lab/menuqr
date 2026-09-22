@@ -56,6 +56,7 @@ export default async function MenuPage({ params }: Props) {
   const template = getTemplate(design.templateKey);
   const theme = resolveTheme(template.defaultConfig, design.config as Partial<ThemeConfig>);
   const { Component } = template;
+  const fontsHref = googleFontsHref(theme);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -104,9 +105,14 @@ export default async function MenuPage({ params }: Props) {
 
   return (
     <>
-      {/* Only the fonts this template resolves to are fetched. */}
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link rel="stylesheet" href={googleFontsHref(theme)} />
+      {/* Null when the template uses the self-hosted faces, which is the default:
+          the fastest font request is the one never made. */}
+      {fontsHref ? (
+        <>
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+          <link rel="stylesheet" href={fontsHref} />
+        </>
+      ) : null}
       <JsonLd data={schema} />
 
       <div style={themeToCssVars(theme)}>

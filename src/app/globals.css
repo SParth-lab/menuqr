@@ -1,11 +1,23 @@
 @import 'tailwindcss';
 
+/* ---------------------------------------------------------------------------
+   Tokens. The shell is a quiet gallery; the menu artefact inside it is a
+   printed card. Both palettes live here so nothing drifts between them.
+   --------------------------------------------------------------------------- */
 :root {
-  --brand: #ea580c;
-  --brand-dark: #c2410c;
-  --ink: #0f172a;
-  --muted: #64748b;
-  --line: #e2e8f0;
+  --bone: #f7f4ed;
+  --paper: #ffffff;
+  --ink: #0b0a09;
+  --ink-soft: #3e3a33;
+  --muted: #6e675c;
+  --rule: #e3ded2;
+  --rule-soft: #eae5da;
+  --claret: #7e1620;
+  --claret-lift: #9b2028;
+  --brass: #b08a3c;
+  --brass-lift: #e8ce8a;
+  --plate: #0b0a09;
+  --plate-soft: #17130e;
 }
 
 html {
@@ -14,25 +26,200 @@ html {
 }
 
 body {
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
   color: var(--ink);
-  background: #fff;
+  background: var(--bone);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Print sheet for the QR page: only the printable card survives. */
+.display {
+  font-family: var(--font-display), Didot, Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Bodoni hairlines shatter at body sizes, so the display face is never
+   allowed below this. Everything smaller is Archivo. */
+.display-sm {
+  font-family: var(--font-display), Didot, Georgia, serif;
+  font-size: 1.5rem;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Motion. Everything here runs without input — a menu card should look alive
+   on a still screen. All of it collapses under prefers-reduced-motion.
+   --------------------------------------------------------------------------- */
+
+/* A highlight travelling across the letterforms, not a flat gold fill. */
+.foil {
+  background: linear-gradient(
+    100deg,
+    #6e4e19 0%, #a9853a 16%, var(--brass-lift) 28%, #fff6df 36%,
+    var(--brass-lift) 44%, #8c6b26 62%, #6e4e19 100%
+  );
+  background-size: 320% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: foil 9s linear infinite;
+}
+@keyframes foil {
+  from { background-position: 130% 50%; }
+  to { background-position: -30% 50%; }
+}
+
+/* Paper tooth. Sits over a surface, never under text. */
+.grain { position: relative; }
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image:
+    repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 4px);
+}
+
+/* Candlelight crossing a dark plate. */
+.rake { position: relative; overflow: hidden; }
+.rake::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: -60%;
+  width: 46%;
+  height: 180%;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    100deg, transparent, rgba(232, 206, 138, 0.09) 46%,
+    rgba(255, 246, 223, 0.13) 53%, transparent
+  );
+  transform: rotate(14deg);
+  animation: rake 14s ease-in-out infinite;
+}
+@keyframes rake {
+  0% { left: -60%; }
+  58% { left: 130%; }
+  100% { left: 130%; }
+}
+
+.rise { animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Combination rules: .foil and .rise both set the `animation` shorthand, so an
+   element carrying both needs its own declaration or the later class wins
+   outright and the foil silently stops. */
+.foil.rise {
+  animation: foil 9s linear infinite, rise 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.drift { animation: drift 12s ease-in-out infinite; }
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.glow { animation: glow 8s ease-in-out infinite; }
+@keyframes glow {
+  0%, 100% { opacity: 0.36; transform: scale(1); }
+  50% { opacity: 0.82; transform: scale(1.07); }
+}
+
+.star { animation: star 4.5s ease-in-out infinite; }
+@keyframes star {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* A reader passing over the code. */
+.scanner { position: relative; overflow: hidden; }
+.scanner::after {
+  content: '';
+  position: absolute;
+  left: -6%;
+  width: 112%;
+  height: 30px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    180deg, transparent, rgba(232, 206, 138, 0.3) 42%,
+    rgba(176, 138, 60, 0.95) 50%, rgba(232, 206, 138, 0.3) 58%, transparent
+  );
+  animation: beam 4.2s cubic-bezier(0.55, 0, 0.45, 1) infinite;
+}
+@keyframes beam {
+  0% { top: -34px; opacity: 0; }
+  12% { opacity: 1; }
+  78% { opacity: 1; }
+  92%, 100% { top: 100%; opacity: 0; }
+}
+
+/* Printer's registration marks on a plate. */
+.trim { position: relative; }
+.trim::before,
+.trim::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  border-color: var(--brass);
+  opacity: 0.55;
+}
+.trim::before { top: 8px; left: 8px; border-top: 1px solid; border-left: 1px solid; }
+.trim::after { bottom: 8px; right: 8px; border-bottom: 1px solid; border-right: 1px solid; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .foil { color: #8c6b26; -webkit-text-fill-color: #8c6b26; }
+}
+
+/* ---------------------------------------------------------------------------
+   Long-form content (guides, landing pages)
+   --------------------------------------------------------------------------- */
+.prose-mq h2 {
+  font-family: var(--font-display), Didot, Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 400;
+  margin: 2.5rem 0 0.75rem;
+  letter-spacing: -0.015em;
+}
+.prose-mq h3 { font-size: 1.15rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+.prose-mq p { margin: 0 0 1.1rem; line-height: 1.8; color: var(--ink-soft); }
+.prose-mq ul, .prose-mq ol { margin: 0 0 1.1rem 1.25rem; line-height: 1.85; color: var(--ink-soft); }
+.prose-mq ul { list-style: disc; }
+.prose-mq ol { list-style: decimal; }
+.prose-mq li { margin-bottom: 0.35rem; }
+.prose-mq a { color: var(--claret); text-decoration: underline; text-underline-offset: 3px; }
+.prose-mq a:hover { color: var(--ink); }
+.prose-mq strong { font-weight: 600; color: var(--ink); }
+.prose-mq table { width: 100%; border-collapse: collapse; margin: 0 0 1.1rem; }
+.prose-mq th, .prose-mq td { border: 1px solid var(--rule); padding: 0.55rem 0.8rem; text-align: left; }
+.prose-mq th { background: var(--rule-soft); font-size: 0.85rem; }
+
+/* The QR sheet: only the printable card survives. */
 @media print {
   .no-print { display: none !important; }
   .print-only { display: block !important; }
   body { background: #fff; }
 }
 .print-only { display: none; }
-
-.prose-mq h2 { font-size: 1.5rem; font-weight: 700; margin: 2rem 0 .75rem; }
-.prose-mq h3 { font-size: 1.2rem; font-weight: 600; margin: 1.5rem 0 .5rem; }
-.prose-mq p { margin: 0 0 1rem; line-height: 1.75; color: #334155; }
-.prose-mq ul, .prose-mq ol { margin: 0 0 1rem 1.25rem; line-height: 1.8; color: #334155; }
-.prose-mq ul { list-style: disc; }
-.prose-mq ol { list-style: decimal; }
-.prose-mq a { color: var(--brand-dark); text-decoration: underline; text-underline-offset: 3px; }
-.prose-mq table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
-.prose-mq th, .prose-mq td { border: 1px solid var(--line); padding: .5rem .75rem; text-align: left; }

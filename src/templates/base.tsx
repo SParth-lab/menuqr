@@ -25,14 +25,15 @@ export type TemplateOptions = {
   maxWidth?: string;
 };
 
+/* Section headings are small caps in every template; these only vary the weight
+   and tracking. A heading that changes shape per template breaks the card. */
 const HEADING_CLASS: Record<NonNullable<TemplateOptions['headingStyle']>, string> = {
   plain: '',
-  underline: 'inline-block border-b-4 pb-1 border-[var(--mq-primary)]',
-  centered: 'text-center',
-  rule: 'flex items-center gap-3 after:h-px after:flex-1 after:bg-current/20',
-  badge:
-    'inline-block rounded-full px-4 py-1 text-base bg-[var(--mq-primary)] text-white',
-  uppercase: 'uppercase tracking-[0.18em] text-base',
+  underline: 'tracking-[0.22em]',
+  centered: 'tracking-[0.32em]',
+  rule: 'tracking-[0.26em]',
+  badge: 'tracking-[0.2em] font-black',
+  uppercase: 'tracking-[0.34em]',
 };
 
 export function createTemplate(
@@ -52,7 +53,7 @@ export function createTemplate(
   function Component({ restaurant, categories, theme }: MenuRenderProps) {
     return (
       <div
-        className={clsx('mx-auto min-h-screen', maxWidth)}
+        className={clsx('grain mx-auto min-h-screen', maxWidth)}
         style={{ background: 'var(--mq-bg)', color: 'var(--mq-text)', fontFamily: 'var(--mq-font-body)' }}
       >
         {showCover && restaurant.coverUrl ? (

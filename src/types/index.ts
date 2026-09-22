@@ -13,7 +13,11 @@ export type PostType = (typeof POST_TYPES)[number];
 export const POST_STATUSES = ['DRAFT', 'PUBLISHED'] as const;
 export type PostStatus = (typeof POST_STATUSES)[number];
 
-export const FONT_KEYS = ['inter', 'playfair', 'poppins', 'lora', 'oswald', 'dmsans'] as const;
+/* `bodoni` and `archivo` are self-hosted by next/font, so a menu using them makes
+   no font request at all. The rest still come from Google Fonts. */
+export const FONT_KEYS = [
+  'bodoni', 'archivo', 'playfair', 'lora', 'poppins', 'oswald', 'dmsans', 'inter',
+] as const;
 export type FontKey = (typeof FONT_KEYS)[number];
 
 export const RADII = ['none', 'sm', 'md', 'lg', 'full'] as const;

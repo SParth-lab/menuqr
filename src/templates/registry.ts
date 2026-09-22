@@ -15,111 +15,121 @@ export type TemplateEntry = {
  */
 export const templates: Record<string, TemplateEntry> = {
   modern: createTemplate(
-    { key: 'modern', name: 'Modern', category: 'General', description: 'Clean cards, bold price accents, works for almost any venue.' },
+    { key: 'modern', name: 'Modern', category: 'General', description: 'Bone paper, claret rules, dot leaders. The house default.' },
     {
-      primary: '#2563eb', secondary: '#1e40af', background: '#ffffff', surface: '#f8fafc',
-      text: '#0f172a', muted: '#64748b', fontHeading: 'poppins', fontBody: 'inter',
-      radius: 'lg', cardStyle: 'elevated', buttonStyle: 'solid', layout: 'list',
+      primary: '#7e1620', secondary: '#b08a3c', background: '#f7f4ed', surface: '#ffffff',
+      text: '#0b0a09', muted: '#6e675c', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'flat', buttonStyle: 'solid', layout: 'list',
       logoPosition: 'center', showImages: true, showDividers: true,
+
     },
     { headerVariant: 'standard', headingStyle: 'plain', showCover: true }
   ),
 
   minimal: createTemplate(
-    { key: 'minimal', name: 'Minimal', category: 'General', description: 'Type-led, no images, maximum scan speed.' },
+    { key: 'minimal', name: 'Minimal', category: 'General', description: 'Type only, no images, no ornament. Fastest to scan.' },
     {
-      primary: '#111827', secondary: '#374151', background: '#ffffff', surface: '#ffffff',
-      text: '#111827', muted: '#9ca3af', fontHeading: 'inter', fontBody: 'inter',
+      primary: '#0b0a09', secondary: '#6e675c', background: '#ffffff', surface: '#ffffff',
+      text: '#0b0a09', muted: '#8a867e', fontHeading: 'archivo', fontBody: 'archivo',
       radius: 'none', cardStyle: 'flat', buttonStyle: 'outline', layout: 'compact',
       logoPosition: 'left', showImages: false, showDividers: false,
+
     },
     { headerVariant: 'compact', headingStyle: 'uppercase' }
   ),
 
   luxury: createTemplate(
-    { key: 'luxury', name: 'Luxury', category: 'Fine dining', description: 'Gold on charcoal, serif headings, generous spacing.' },
+    { key: 'luxury', name: 'Luxury', category: 'Fine dining', description: 'Brass on near-black, for a dim dining room.' },
     {
-      primary: '#c9a227', secondary: '#8a6d1f', background: '#12100e', surface: '#1b1815',
-      text: '#f5f0e6', muted: '#a89f8c', fontHeading: 'playfair', fontBody: 'lora',
-      radius: 'sm', cardStyle: 'outlined', buttonStyle: 'outline', layout: 'list',
+      primary: '#b08a3c', secondary: '#e8ce8a', background: '#0b0a09', surface: '#141210',
+      text: '#f0ebe2', muted: '#867e70', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'flat', buttonStyle: 'outline', layout: 'list',
       logoPosition: 'center', showImages: true, showDividers: true,
+
     },
     { headerVariant: 'hero', headingStyle: 'centered' }
   ),
 
   cafe: createTemplate(
-    { key: 'cafe', name: 'Cafe', category: 'Cafe', description: 'Warm cream and espresso tones for coffee shops and bakeries.' },
+    { key: 'cafe', name: 'Cafe', category: 'Cafe', description: 'Sepia stock and rust accents, built for daylight.' },
     {
-      primary: '#8b5e34', secondary: '#c08552', background: '#fdf8f3', surface: '#ffffff',
-      text: '#3b2f2a', muted: '#8d7b70', fontHeading: 'lora', fontBody: 'dmsans',
-      radius: 'lg', cardStyle: 'elevated', buttonStyle: 'pill', layout: 'list',
+      primary: '#a4622a', secondary: '#8a7a68', background: '#f4ecdf', surface: '#fbf6ee',
+      text: '#3d3025', muted: '#8a7a68', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'sm', cardStyle: 'flat', buttonStyle: 'pill', layout: 'list',
       logoPosition: 'center', showImages: true, showDividers: true,
+
     },
     { headerVariant: 'standard', headingStyle: 'rule', headerBand: true, showCover: true }
   ),
 
   'street-food': createTemplate(
-    { key: 'street-food', name: 'Street Food', category: 'Casual', description: 'High-contrast and punchy, built for stalls and food trucks.' },
+    { key: 'street-food', name: 'Street Food', category: 'Casual', description: 'High contrast, picture-led grid for stalls and trucks.' },
     {
-      primary: '#ef4444', secondary: '#f59e0b', background: '#fffbeb', surface: '#ffffff',
-      text: '#1c1917', muted: '#78716c', fontHeading: 'oswald', fontBody: 'dmsans',
-      radius: 'md', cardStyle: 'outlined', buttonStyle: 'solid', layout: 'grid',
+      primary: '#c0392f', secondary: '#b08a3c', background: '#fffaf2', surface: '#ffffff',
+      text: '#18110d', muted: '#7a6f63', fontHeading: 'oswald', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'outlined', buttonStyle: 'solid', layout: 'grid',
       logoPosition: 'center', showImages: true, showDividers: false,
+
     },
     { headerVariant: 'standard', headingStyle: 'badge', headerBand: true }
   ),
 
   indian: createTemplate(
-    { key: 'indian', name: 'Indian Restaurant', category: 'Cuisine', description: 'Saffron and deep green, tuned for large veg/non-veg menus.' },
+    { key: 'indian', name: 'Indian Restaurant', category: 'Cuisine', description: 'Terracotta and deep green, tuned for long veg and non-veg lists.' },
     {
-      primary: '#c2410c', secondary: '#15803d', background: '#fffaf5', surface: '#ffffff',
-      text: '#1f2937', muted: '#78716c', fontHeading: 'poppins', fontBody: 'inter',
-      radius: 'md', cardStyle: 'outlined', buttonStyle: 'solid', layout: 'list',
+      primary: '#9c3316', secondary: '#2e6b3a', background: '#fdf7ee', surface: '#ffffff',
+      text: '#1c1713', muted: '#7a6f63', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'flat', buttonStyle: 'solid', layout: 'list',
       logoPosition: 'center', showImages: true, showDividers: true,
+
     },
     { headerVariant: 'standard', headingStyle: 'underline', headerBand: true }
   ),
 
   dark: createTemplate(
-    { key: 'dark', name: 'Dark', category: 'General', description: 'True dark surface — easy on the eyes in dim dining rooms.' },
+    { key: 'dark', name: 'Dark', category: 'General', description: 'Cool near-black with an aged brass accent.' },
     {
-      primary: '#22d3ee', secondary: '#0891b2', background: '#0b0f14', surface: '#151b23',
-      text: '#e6edf3', muted: '#8b98a5', fontHeading: 'inter', fontBody: 'inter',
-      radius: 'lg', cardStyle: 'elevated', buttonStyle: 'ghost', layout: 'list',
+      primary: '#a8894a', secondary: '#6e8f92', background: '#0e1013', surface: '#16191d',
+      text: '#e7e2d8', muted: '#8b8a83', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'flat', buttonStyle: 'ghost', layout: 'list',
       logoPosition: 'left', showImages: true, showDividers: false,
+
     },
     { headerVariant: 'standard', headingStyle: 'plain' }
   ),
 
   elegant: createTemplate(
-    { key: 'elegant', name: 'Elegant', category: 'Fine dining', description: 'Ivory, thin rules, centred serif — quiet and formal.' },
+    { key: 'elegant', name: 'Elegant', category: 'Fine dining', description: 'Ivory, centred, no photographs. Quiet and formal.' },
     {
-      primary: '#1f2937', secondary: '#6b7280', background: '#fcfaf7', surface: '#fcfaf7',
-      text: '#1f2937', muted: '#9ca3af', fontHeading: 'playfair', fontBody: 'lora',
+      primary: '#0b0a09', secondary: '#9a8f7d', background: '#fcfaf5', surface: '#fcfaf5',
+      text: '#1f1c18', muted: '#948c7f', fontHeading: 'bodoni', fontBody: 'archivo',
       radius: 'none', cardStyle: 'flat', buttonStyle: 'outline', layout: 'compact',
       logoPosition: 'center', showImages: false, showDividers: true,
+
     },
     { headerVariant: 'hero', headingStyle: 'centered', showNav: false }
   ),
 
   colorful: createTemplate(
-    { key: 'colorful', name: 'Colorful', category: 'Casual', description: 'Playful violet and lime, image-forward grid.' },
+    { key: 'colorful', name: 'Colorful', category: 'Casual', description: 'Plum and olive, image-forward without the noise.' },
     {
-      primary: '#7c3aed', secondary: '#84cc16', background: '#faf5ff', surface: '#ffffff',
-      text: '#1e1b4b', muted: '#7c7799', fontHeading: 'poppins', fontBody: 'dmsans',
-      radius: 'full', cardStyle: 'elevated', buttonStyle: 'pill', layout: 'grid',
+      primary: '#6b2d5c', secondary: '#8a9a5b', background: '#fdf8f3', surface: '#ffffff',
+      text: '#241c26', muted: '#7d7382', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'md', cardStyle: 'elevated', buttonStyle: 'pill', layout: 'grid',
       logoPosition: 'center', showImages: true, showDividers: false,
+
     },
     { headerVariant: 'standard', headingStyle: 'badge', headerBand: true, showCover: true }
   ),
 
   fastfood: createTemplate(
-    { key: 'fastfood', name: 'Fast Food', category: 'Casual', description: 'Big images, red-yellow energy, two-column grid.' },
+    { key: 'fastfood', name: 'Fast Food', category: 'Casual', description: 'Deep red and amber, condensed display, two-column grid.' },
     {
-      primary: '#dc2626', secondary: '#facc15', background: '#ffffff', surface: '#fff7ed',
-      text: '#18181b', muted: '#71717a', fontHeading: 'oswald', fontBody: 'inter',
-      radius: 'md', cardStyle: 'flat', buttonStyle: 'solid', layout: 'grid',
+      primary: '#b3231f', secondary: '#e0a92b', background: '#ffffff', surface: '#fff8ee',
+      text: '#141110', muted: '#726b63', fontHeading: 'oswald', fontBody: 'archivo',
+      radius: 'none', cardStyle: 'flat', buttonStyle: 'solid', layout: 'grid',
       logoPosition: 'center', showImages: true, showDividers: false,
+
     },
     { headerVariant: 'standard', headingStyle: 'uppercase', headerBand: true }
   ),
