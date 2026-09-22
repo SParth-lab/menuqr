@@ -27,13 +27,20 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!restaurant) redirect('/login');
 
   return (
-    <Shell
+    <>
+      <div className="orbfield" aria-hidden="true">
+        <span className="orb orb-a" />
+        <span className="orb orb-b" />
+        <span className="orb orb-c" />
+      </div>
+      <Shell
       nav={NAV}
       title={restaurant.name}
       subtitle={session.user.email}
       badge={<StatusBadge status={restaurant.status} />}
     >
       {children}
-    </Shell>
+      </Shell>
+    </>
   );
 }

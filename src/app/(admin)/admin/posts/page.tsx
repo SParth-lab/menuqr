@@ -29,7 +29,7 @@ export default async function AdminPosts() {
       ) : (
         <Card className="overflow-x-auto p-0">
           <table className="w-full text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+            <thead className="border-b border-[var(--line)] bg-[var(--ground-2)] text-left text-xs uppercase tracking-wide text-[var(--muted)]">
               <tr>
                 <th className="px-4 py-2.5 font-semibold">Title</th>
                 <th className="px-4 py-2.5 font-semibold">Type</th>
@@ -38,22 +38,22 @@ export default async function AdminPosts() {
                 <th className="px-4 py-2.5 font-semibold">Updated</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[var(--line)]">
               {posts.map((p) => (
                 <tr key={p._id.toString()}>
                   <td className="px-4 py-2.5">
-                    <Link href={`/admin/posts/${p._id}`} className="font-medium text-slate-900 hover:text-orange-700">
+                    <Link href={`/admin/posts/${p._id}`} className="font-medium text-[var(--ink)] hover:text-[var(--brass-lift)]">
                       {p.title}
                     </Link>
                   </td>
-                  <td className="px-4 py-2.5 text-xs text-slate-600">{p.type.toLowerCase()}</td>
+                  <td className="px-4 py-2.5 text-xs text-[var(--ink-soft)]">{p.type.toLowerCase()}</td>
                   <td className="px-4 py-2.5">
-                    <Link href={postPath(p.type, p.slug)} target="_blank" className="font-mono text-xs text-slate-500 hover:text-orange-700">
+                    <Link href={postPath(p.type, p.slug)} target="_blank" className="font-mono text-xs text-[var(--muted)] hover:text-[var(--brass-lift)]">
                       {postPath(p.type, p.slug)}
                     </Link>
                   </td>
                   <td className="px-4 py-2.5"><StatusBadge status={p.status} /></td>
-                  <td className="px-4 py-2.5 text-xs text-slate-500">
+                  <td className="px-4 py-2.5 text-xs text-[var(--muted)]">
                     {new Date(p.updatedAt).toLocaleDateString('en-GB')}
                   </td>
                 </tr>

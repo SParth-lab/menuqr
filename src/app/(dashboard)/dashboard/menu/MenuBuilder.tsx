@@ -164,7 +164,7 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
   return (
     <div className="max-w-3xl space-y-5">
       {error ? (
-        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">{error}</p>
+        <p className="rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-sm text-[#e58a8f]" role="alert">{error}</p>
       ) : null}
 
       <Card>
@@ -206,9 +206,9 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                 </form>
               ) : (
                 <>
-                  <h2 className="flex-1 text-base font-bold text-slate-900">
+                  <h2 className="flex-1 text-base font-bold text-[var(--ink)]">
                     {category.name}
-                    <span className="ml-2 text-xs font-normal text-slate-500">
+                    <span className="ml-2 text-xs font-normal text-[var(--muted)]">
                       {catItems.length} {catItems.length === 1 ? 'item' : 'items'}
                     </span>
                   </h2>
@@ -220,13 +220,13 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                     <Button size="sm" variant="ghost" onClick={() => toggleCategory(category.id, !category.isVisible)}>
                       {category.isVisible ? 'Hide' : 'Show'}
                     </Button>
-                    <Button size="sm" variant="ghost" className="!text-red-600" onClick={() => deleteCategory(category.id)}>Delete</Button>
+                    <Button size="sm" variant="ghost" className="!text-[#e58a8f]" onClick={() => deleteCategory(category.id)}>Delete</Button>
                   </div>
                 </>
               )}
             </div>
 
-            <ul className="mt-3 divide-y divide-slate-100">
+            <ul className="mt-3 divide-y divide-[var(--line)]">
               {catItems.map((item, ii) => (
                 <li key={item.id} className="flex flex-wrap items-center gap-2 py-2.5">
                   <span
@@ -238,15 +238,15 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                   </span>
 
                   <div className="min-w-0 flex-1">
-                    <p className={clsx('truncate text-sm font-medium text-slate-900', !item.isAvailable && 'line-through')}>
+                    <p className={clsx('truncate text-sm font-medium text-[var(--ink)]', !item.isAvailable && 'line-through')}>
                       {item.name} {item.isSpicy ? '🌶️' : null}
                     </p>
                     {item.description ? (
-                      <p className="truncate text-xs text-slate-500">{item.description}</p>
+                      <p className="truncate text-xs text-[var(--muted)]">{item.description}</p>
                     ) : null}
                   </div>
 
-                  <span className="text-sm font-semibold text-slate-900">
+                  <span className="text-sm font-semibold text-[var(--ink)]">
                     {formatPrice(item.price, currency)}
                   </span>
 
@@ -257,7 +257,7 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                       {item.isAvailable ? 'Mark out' : 'Mark in'}
                     </Button>
                     <Button size="sm" variant="ghost" onClick={() => setEditingItem({ ...item })}>Edit</Button>
-                    <Button size="sm" variant="ghost" className="!text-red-600" onClick={() => deleteItem(item.id)}>Delete</Button>
+                    <Button size="sm" variant="ghost" className="!text-[#e58a8f]" onClick={() => deleteItem(item.id)}>Delete</Button>
                   </div>
                 </li>
               ))}

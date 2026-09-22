@@ -54,10 +54,10 @@ export default async function AnalyticsPage() {
       </div>
 
       <Card className="mt-5">
-        <h2 className="text-sm font-bold text-slate-900">Daily traffic</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Daily traffic</h2>
         <div className="mt-4">
           {totals.views === 0 ? (
-            <p className="py-8 text-center text-sm text-slate-500">
+            <p className="py-8 text-center text-sm text-[var(--muted)]">
               No visits recorded yet. Traffic appears here once guests start scanning.
             </p>
           ) : (
@@ -67,7 +67,7 @@ export default async function AnalyticsPage() {
       </Card>
 
       <Card className="mt-5">
-        <h2 className="text-sm font-bold text-slate-900">Most viewed items</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Most viewed items</h2>
         {popularRaw.length === 0 ? (
           <div className="mt-3">
             <EmptyState
@@ -76,14 +76,14 @@ export default async function AnalyticsPage() {
             />
           </div>
         ) : (
-          <ol className="mt-3 divide-y divide-slate-100">
+          <ol className="mt-3 divide-y divide-[var(--line)]">
             {popularRaw.map((p, i) => (
               <li key={p._id.toString()} className="flex items-center justify-between py-2 text-sm">
-                <span className="text-slate-700">
-                  <span className="mr-2 text-xs text-slate-400">{i + 1}</span>
+                <span className="text-[var(--ink-soft)]">
+                  <span className="mr-2 text-xs text-[var(--faint)]">{i + 1}</span>
                   {nameById.get(p._id.toString()) ?? 'Deleted item'}
                 </span>
-                <span className="font-semibold text-slate-900">{p.views}</span>
+                <span className="font-semibold text-[var(--ink)]">{p.views}</span>
               </li>
             ))}
           </ol>

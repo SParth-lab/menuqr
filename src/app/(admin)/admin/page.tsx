@@ -54,10 +54,10 @@ export default async function AdminDashboard() {
       </div>
 
       <Card className="mt-5">
-        <h2 className="text-sm font-bold text-slate-900">Traffic, last 30 days</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Traffic, last 30 days</h2>
         <div className="mt-4">
           {chart.every((d) => d.views === 0) ? (
-            <p className="py-8 text-center text-sm text-slate-500">No traffic recorded yet.</p>
+            <p className="py-8 text-center text-sm text-[var(--muted)]">No traffic recorded yet.</p>
           ) : (
             <BarChart data={chart} />
           )}
@@ -67,19 +67,19 @@ export default async function AdminDashboard() {
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-slate-900">Waiting for approval</h2>
+            <h2 className="text-sm font-bold text-[var(--ink)]">Waiting for approval</h2>
             <LinkButton href="/admin/approvals" variant="outline" size="sm">Review all</LinkButton>
           </div>
           {recentPending.length === 0 ? (
-            <p className="mt-3 text-sm text-slate-500">Nothing pending.</p>
+            <p className="mt-3 text-sm text-[var(--muted)]">Nothing pending.</p>
           ) : (
-            <ul className="mt-3 divide-y divide-slate-100">
+            <ul className="mt-3 divide-y divide-[var(--line)]">
               {recentPending.map((r) => (
                 <li key={r.slug} className="py-2">
-                  <Link href={`/admin/restaurants/${r._id}`} className="text-sm font-medium text-slate-900 hover:text-orange-700">
+                  <Link href={`/admin/restaurants/${r._id}`} className="text-sm font-medium text-[var(--ink)] hover:text-[var(--brass-lift)]">
                     {r.name}
                   </Link>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-[var(--muted)]">
                     {r.city ? `${r.city} · ` : ''}
                     {new Date(r.createdAt).toLocaleDateString('en-GB')}
                   </p>
@@ -90,8 +90,8 @@ export default async function AdminDashboard() {
         </Card>
 
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Content</h2>
-          <p className="mt-2 text-sm text-slate-600">
+          <h2 className="text-sm font-bold text-[var(--ink)]">Content</h2>
+          <p className="mt-2 text-sm text-[var(--ink-soft)]">
             {posts} published {posts === 1 ? 'page' : 'pages'} across the blog and SEO landing routes.
           </p>
           <LinkButton href="/admin/posts" variant="outline" size="sm" className="mt-3">Manage content</LinkButton>

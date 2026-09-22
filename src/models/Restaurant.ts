@@ -27,6 +27,16 @@ export interface IRestaurant {
     whatsapp?: string;
   };
   openingHours?: string;
+  cuisine?: string;
+  cuisineSlug?: string;
+  tags: string[];
+  /* Sample figures in the demo dataset — see scripts/seed.ts. Real deployments
+     take these from a review source, never from us. */
+  rating?: number;
+  reviewCount?: number;
+  priceRange?: 1 | 2 | 3 | 4;
+  isFeatured: boolean;
+  isSampleData: boolean;
   status: RestaurantStatus;
   rejectionReason?: string;
   seoTitle?: string;
@@ -62,6 +72,14 @@ const RestaurantSchema = new Schema<IRestaurant>(
       whatsapp: String,
     },
     openingHours: String,
+    cuisine: { type: String, trim: true },
+    cuisineSlug: { type: String, lowercase: true, trim: true },
+    tags: { type: [String], default: [] },
+    rating: { type: Number, min: 0, max: 5 },
+    reviewCount: { type: Number, min: 0, default: 0 },
+    priceRange: { type: Number, min: 1, max: 4 },
+    isFeatured: { type: Boolean, default: false },
+    isSampleData: { type: Boolean, default: false },
     status: { type: String, enum: RESTAURANT_STATUSES, default: 'PENDING', index: true },
     rejectionReason: String,
     seoTitle: String,
@@ -77,6 +95,9 @@ const RestaurantSchema = new Schema<IRestaurant>(
 
 // Drives /city/[city] listings, which only ever ask for approved restaurants.
 RestaurantSchema.index({ citySlug: 1, status: 1 });
+// Drives /cuisine/[slug] and the discovery filters.
+RestaurantSchema.index({ cuisineSlug: 1, status: 1 });
+RestaurantSchema.index({ status: 1, isFeatured: -1, rating: -1 });
 
 export const Restaurant: Model<IRestaurant> =
   models.Restaurant || model<IRestaurant>('Restaurant', RestaurantSchema);

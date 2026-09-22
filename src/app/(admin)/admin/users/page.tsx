@@ -25,7 +25,7 @@ export default async function AdminUsers() {
       ) : (
         <Card className="overflow-x-auto p-0">
           <table className="w-full text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+            <thead className="border-b border-[var(--line)] bg-[var(--ground-2)] text-left text-xs uppercase tracking-wide text-[var(--muted)]">
               <tr>
                 <th className="px-4 py-2.5 font-semibold">Name</th>
                 <th className="px-4 py-2.5 font-semibold">Email</th>
@@ -34,29 +34,29 @@ export default async function AdminUsers() {
                 <th className="px-4 py-2.5 font-semibold">Joined</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[var(--line)]">
               {users.map((u) => {
                 const r = byOwner.get(u._id.toString());
                 return (
                   <tr key={u._id.toString()}>
-                    <td className="px-4 py-2.5 font-medium text-slate-900">{u.name}</td>
-                    <td className="px-4 py-2.5 text-slate-600">{u.email}</td>
-                    <td className="px-4 py-2.5 text-xs text-slate-600">
+                    <td className="px-4 py-2.5 font-medium text-[var(--ink)]">{u.name}</td>
+                    <td className="px-4 py-2.5 text-[var(--ink-soft)]">{u.email}</td>
+                    <td className="px-4 py-2.5 text-xs text-[var(--ink-soft)]">
                       {u.role === 'SUPER_ADMIN' ? 'Super admin' : 'Owner'}
                     </td>
                     <td className="px-4 py-2.5">
                       {r ? (
                         <span className="flex items-center gap-2">
-                          <Link href={`/admin/restaurants/${r._id}`} className="text-slate-800 hover:text-orange-700">
+                          <Link href={`/admin/restaurants/${r._id}`} className="text-[var(--ink)] hover:text-[var(--brass-lift)]">
                             {r.name}
                           </Link>
                           <StatusBadge status={r.status} />
                         </span>
                       ) : (
-                        <span className="text-xs text-slate-400">—</span>
+                        <span className="text-xs text-[var(--faint)]">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-2.5 text-xs text-slate-500">
+                    <td className="px-4 py-2.5 text-xs text-[var(--muted)]">
                       {new Date(u.createdAt).toLocaleDateString('en-GB')}
                     </td>
                   </tr>

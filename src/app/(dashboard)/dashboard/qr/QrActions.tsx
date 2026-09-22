@@ -39,25 +39,25 @@ export function QrActions({
 
   return (
     <Card>
-      <h2 className="text-sm font-bold text-slate-900">Download</h2>
+      <h2 className="text-sm font-bold text-[var(--ink)]">Download</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         <a
           href={`/api/qr/${slug}?format=png&size=1024&download=1`}
-          className="inline-flex items-center rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-700"
+          className="inline-flex items-center rounded-lg bg-[var(--claret)] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[var(--claret-lift)]"
           download
         >
           PNG (1024px)
         </a>
         <a
           href={`/api/qr/${slug}?format=svg&download=1`}
-          className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center rounded-lg border border-[var(--line-hi)] bg-[var(--pane)] px-4 py-2.5 text-sm font-semibold text-[var(--ink-soft)] hover:bg-[var(--ground-2)]"
           download
         >
           SVG (vector)
         </a>
         <Button variant="outline" onClick={print}>Print table card</Button>
       </div>
-      <p className="mt-2 text-[11px] text-slate-500">
+      <p className="mt-2 text-[11px] text-[var(--muted)]">
         PNG suits stickers and screens. SVG is what a print shop will ask for.
       </p>
     </Card>

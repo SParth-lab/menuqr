@@ -38,7 +38,7 @@ export function LoginForm() {
   return (
     <form onSubmit={onSubmit} className="mt-6 space-y-4">
       {error ? (
-        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+        <p className="rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-sm text-[#e58a8f]" role="alert">
           {error}
         </p>
       ) : null}

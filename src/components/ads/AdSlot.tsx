@@ -21,7 +21,7 @@ export function AdSlot({ slot, format = 'auto', className, label = true }: AdSlo
   return (
     <aside className={clsx('my-8', className)} aria-label="Advertisement">
       {label ? (
-        <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-slate-400">
+        <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-[var(--faint)]">
           Advertisement
         </p>
       ) : null}

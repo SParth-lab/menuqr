@@ -96,7 +96,7 @@ export function PostEditor({ initial }: { initial: PostValues }) {
         </Card>
 
         <Card className="space-y-4">
-          <h2 className="text-sm font-bold text-slate-900">Search appearance</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Search appearance</h2>
           <Field label="Meta title" hint={`${values.metaTitle.length}/70`}>
             <Input value={values.metaTitle} onChange={(e) => set('metaTitle', e.target.value)} maxLength={70} />
           </Field>
@@ -134,17 +134,17 @@ export function PostEditor({ initial }: { initial: PostValues }) {
               {busy ? 'Saving…' : values.id ? 'Save page' : 'Create page'}
             </Button>
             {values.id ? (
-              <Button type="button" variant="ghost" className="w-full !text-red-600" onClick={remove} disabled={busy}>
+              <Button type="button" variant="ghost" className="w-full !text-[#e58a8f]" onClick={remove} disabled={busy}>
                 Delete page
               </Button>
             ) : null}
-            {error ? <p className="text-xs text-red-600">{error}</p> : null}
+            {error ? <p className="text-xs text-[#e58a8f]">{error}</p> : null}
           </div>
         </Card>
 
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Before publishing</h2>
-          <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-600">
+          <h2 className="text-sm font-bold text-[var(--ink)]">Before publishing</h2>
+          <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--ink-soft)]">
             <li>Write for someone running a venue, not for a search engine.</li>
             <li>Link to at least one other page here — internal links are how deep pages get crawled.</li>
             <li>Keep the meta description under 160 characters so it is not truncated.</li>

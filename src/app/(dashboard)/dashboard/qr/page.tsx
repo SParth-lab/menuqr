@@ -21,7 +21,7 @@ export default async function QrPage() {
       />
 
       {restaurant.status !== 'APPROVED' ? (
-        <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="mb-5 rounded-xl border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)] p-4 text-sm text-[var(--brass-lift)]">
           Your menu is not public yet, so this code will not open for guests until your
           restaurant is approved. The code itself will not change.
         </div>
@@ -31,21 +31,21 @@ export default async function QrPage() {
         <Card className="text-center">
           {/* eslint-disable-next-line @next/next/no-img-element -- data URL, no optimisation possible */}
           <img src={dataUrl} alt={`QR code for ${restaurant.name}`} width={220} height={220} className="mx-auto" />
-          <p className="mt-2 text-xs font-semibold text-slate-900">{restaurant.name}</p>
-          <p className="text-[11px] text-slate-500">Scan for menu</p>
+          <p className="mt-2 text-xs font-semibold text-[var(--ink)]">{restaurant.name}</p>
+          <p className="text-[11px] text-[var(--muted)]">Scan for menu</p>
         </Card>
 
         <div className="space-y-4">
           <Card>
-            <h2 className="text-sm font-bold text-slate-900">Menu URL</h2>
-            <p className="mt-2 break-all rounded-lg bg-slate-50 px-3 py-2 font-mono text-xs text-slate-700">{url}</p>
+            <h2 className="text-sm font-bold text-[var(--ink)]">Menu URL</h2>
+            <p className="mt-2 break-all rounded-lg bg-[var(--ground-2)] px-3 py-2 font-mono text-xs text-[var(--ink-soft)]">{url}</p>
           </Card>
 
           <QrActions slug={restaurant.slug} name={restaurant.name} url={url} dataUrl={dataUrl} />
 
           <Card>
-            <h2 className="text-sm font-bold text-slate-900">Printing notes</h2>
-            <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-slate-600">
+            <h2 className="text-sm font-bold text-[var(--ink)]">Printing notes</h2>
+            <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[var(--ink-soft)]">
               <li>Print at 3 cm across or larger so it scans from table distance.</li>
               <li>Keep a white margin around the code and never invert the colours.</li>
               <li>Use the SVG for anything a printer produces — it stays sharp at any size.</li>

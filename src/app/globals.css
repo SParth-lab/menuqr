@@ -1,24 +1,61 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Tokens. The shell is a quiet gallery; the menu artefact inside it is a
-   printed card. Both palettes live here so nothing drifts between them.
+   Liquid glass. Glass only reads as glass when there is colour and motion
+   behind it to refract — hence the orb layer. Over a flat ground it goes grey.
    --------------------------------------------------------------------------- */
 :root {
-  --bone: #f7f4ed;
-  --paper: #ffffff;
-  --ink: #0b0a09;
-  --ink-soft: #3e3a33;
-  --muted: #6e675c;
-  --rule: #e3ded2;
-  --rule-soft: #eae5da;
-  --claret: #7e1620;
-  --claret-lift: #9b2028;
+  /* Ground */
+  --void: #07060a;
+  --ground: #0b0a0e;
+  --ground-2: #121019;
+
+  /* Ink */
+  --ink: #f4f1ea;
+  --ink-soft: #c9c3b8;
+  --muted: #8f8879;
+  --faint: #5d5749;
+
+  /* Brand, carried over from the printed direction */
+  --claret: #9b2028;
+  --claret-lift: #c4434a;
   --brass: #b08a3c;
   --brass-lift: #e8ce8a;
-  --plate: #0b0a09;
-  --plate-soft: #17130e;
+  --plum: #4a2c52;
+  --teal: #1f4d4a;
+
+  /* Glass */
+  --glass-fill: rgba(255, 255, 255, 0.055);
+  --glass-fill-hi: rgba(255, 255, 255, 0.095);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-spec: rgba(255, 255, 255, 0.34);
+  --glass-blur: 24px;
+
+  /* Surfaces inside glass. The shell has one ink colour; the menu artefact
+     keeps its own --mq-* namespace and is unaffected by any of this. */
+  --pane: rgba(255, 255, 255, 0.05);
+  --pane-hi: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.11);
+  --line-hi: rgba(255, 255, 255, 0.2);
+
+  /* Type scale. One ladder, used everywhere. */
+  --t-hero: clamp(2.25rem, 4.6vw, 3.5rem);
+  --t-h1: clamp(1.75rem, 3.2vw, 2.25rem);
+  --t-h2: clamp(1.35rem, 2.4vw, 1.7rem);
+  --t-h3: 1.0625rem;
+  --t-body: 0.875rem;
+  --t-sm: 0.8125rem;
+  --t-xs: 0.75rem;
+  --t-micro: 0.625rem;
 }
+
+.t-hero { font-size: var(--t-hero); line-height: 0.98; }
+.t-h1 { font-size: var(--t-h1); line-height: 1.08; }
+.t-h2 { font-size: var(--t-h2); line-height: 1.18; }
+.t-h3 { font-size: var(--t-h3); line-height: 1.4; }
+.t-body { font-size: var(--t-body); line-height: 1.7; }
+.t-sm { font-size: var(--t-sm); line-height: 1.65; }
+.t-xs { font-size: var(--t-xs); line-height: 1.55; }
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -27,11 +64,16 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
   color: var(--ink);
-  background: var(--bone);
+  background: var(--ground);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--t-body);
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
+
+::selection { background: var(--brass); color: var(--void); }
 
 .display {
   font-family: var(--font-display), Didot, Georgia, serif;
@@ -39,31 +81,221 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* Bodoni hairlines shatter at body sizes, so the display face is never
-   allowed below this. Everything smaller is Archivo. */
-.display-sm {
-  font-family: var(--font-display), Didot, Georgia, serif;
-  font-size: 1.5rem;
-}
-
 .eyebrow {
-  font-size: 10px;
+  font-size: var(--t-micro);
   font-weight: 700;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-/* ---------------------------------------------------------------------------
-   Motion. Everything here runs without input — a menu card should look alive
-   on a still screen. All of it collapses under prefers-reduced-motion.
-   --------------------------------------------------------------------------- */
+/* One button system. Every call-to-action in the shell resolves to one of these
+   three, so colour and size never drift page to page. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.btn-lg { height: 2.875rem; padding: 0 1.75rem; font-size: var(--t-sm); }
+.btn-sm { height: 2.125rem; padding: 0 0.875rem; font-size: var(--t-micro); }
 
-/* A highlight travelling across the letterforms, not a flat gold fill. */
-.foil {
+.btn-primary { background: var(--claret); color: #fdf7f2; }
+.btn-primary:hover { background: var(--claret-lift); }
+
+.btn-secondary {
+  background: var(--pane-hi);
+  border-color: var(--line);
+  color: var(--ink);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.btn-secondary:hover { border-color: var(--line-hi); background: rgba(255, 255, 255, 0.14); }
+
+.btn-ghost { background: transparent; color: var(--ink-soft); }
+.btn-ghost:hover { color: var(--ink); background: var(--pane); }
+
+.btn-danger { background: transparent; border-color: rgba(196, 67, 74, 0.4); color: #e58a8f; }
+.btn-danger:hover { background: rgba(155, 32, 40, 0.25); color: #fff; }
+
+/* Form controls, on glass. */
+.inp {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.625rem 0.75rem;
+  font-size: var(--t-body);
+  font-family: inherit;
+  color: var(--ink);
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+.inp::placeholder { color: var(--faint); }
+.inp:focus {
+  outline: none;
+  border-color: var(--brass);
+  background: rgba(255, 255, 255, 0.07);
+}
+.inp option { background: var(--ground-2); color: var(--ink); }
+
+/* ---------------------------------------------------------------------------
+   The light behind the glass
+   --------------------------------------------------------------------------- */
+.orbfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 60% at 50% -10%, #17131f 0%, transparent 60%),
+    var(--ground);
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.orb-a { width: 46vw; height: 46vw; background: var(--claret); animation: orb-a 26s ease-in-out infinite; }
+.orb-b { width: 38vw; height: 38vw; background: var(--brass); animation: orb-b 32s ease-in-out infinite; opacity: 0.32; }
+.orb-c { width: 42vw; height: 42vw; background: var(--plum); animation: orb-c 38s ease-in-out infinite; }
+.orb-d { width: 30vw; height: 30vw; background: var(--teal); animation: orb-d 30s ease-in-out infinite; opacity: 0.38; }
+
+@keyframes orb-a {
+  0%, 100% { transform: translate(-12vw, -8vh) scale(1); }
+  50% { transform: translate(18vw, 22vh) scale(1.22); }
+}
+@keyframes orb-b {
+  0%, 100% { transform: translate(72vw, 6vh) scale(1.1); }
+  50% { transform: translate(44vw, 40vh) scale(0.86); }
+}
+@keyframes orb-c {
+  0%, 100% { transform: translate(58vw, 62vh) scale(0.94); }
+  50% { transform: translate(8vw, 34vh) scale(1.2); }
+}
+@keyframes orb-d {
+  0%, 100% { transform: translate(22vw, 78vh) scale(1); }
+  50% { transform: translate(66vw, 52vh) scale(1.26); }
+}
+
+/* ---------------------------------------------------------------------------
+   Glass surfaces
+   --------------------------------------------------------------------------- */
+.glass {
+  position: relative;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.085) 0%,
+    rgba(255, 255, 255, 0.035) 42%,
+    rgba(255, 255, 255, 0.055) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+  border: 1px solid var(--glass-edge);
+  box-shadow:
+    inset 0 1px 0 var(--glass-spec),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 24px 60px -32px rgba(0, 0, 0, 0.9);
+}
+
+/* The specular run along the top edge — what separates glass from a grey box. */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.16) 38%,
+    rgba(255, 255, 255, 0.03) 52%,
+    transparent 100%
+  );
+  opacity: 0.7;
+}
+
+.glass-hi {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(255, 255, 255, 0.09) 100%
+  );
+}
+
+.glass-dark {
+  background: linear-gradient(150deg, rgba(10, 8, 14, 0.72), rgba(10, 8, 14, 0.52));
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 24px 60px -34px rgba(0, 0, 0, 0.95);
+}
+
+/* Lift: the pane catches more light as it comes toward you. */
+.glass-lift {
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    background-color 0.4s ease;
+}
+.glass-lift:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 34px 70px -30px rgba(0, 0, 0, 0.95);
+}
+
+/* A highlight that travels across the pane, like light moving over a lens. */
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 45%;
+  height: 200%;
+  pointer-events: none;
   background: linear-gradient(
     100deg,
-    #6e4e19 0%, #a9853a 16%, var(--brass-lift) 28%, #fff6df 36%,
+    transparent,
+    rgba(255, 255, 255, 0.13) 45%,
+    rgba(255, 255, 255, 0.22) 52%,
+    transparent
+  );
+  transform: rotate(16deg);
+  animation: sheen 11s ease-in-out infinite;
+}
+@keyframes sheen {
+  0% { left: -70%; }
+  55% { left: 150%; }
+  100% { left: 150%; }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion, carried over. All of it runs without input.
+   --------------------------------------------------------------------------- */
+.foil {
+  background: linear-gradient(
+    100deg, #6e4e19 0%, #a9853a 16%, var(--brass-lift) 28%, #fff6df 36%,
     var(--brass-lift) 44%, #8c6b26 62%, #6e4e19 100%
   );
   background-size: 320% 100%;
@@ -78,54 +310,16 @@ body {
   to { background-position: -30% 50%; }
 }
 
-/* Paper tooth. Sits over a surface, never under text. */
-.grain { position: relative; }
-.grain::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image:
-    repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 4px);
-}
-
-/* Candlelight crossing a dark plate. */
-.rake { position: relative; overflow: hidden; }
-.rake::before {
-  content: '';
-  position: absolute;
-  top: -40%;
-  left: -60%;
-  width: 46%;
-  height: 180%;
-  pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(
-    100deg, transparent, rgba(232, 206, 138, 0.09) 46%,
-    rgba(255, 246, 223, 0.13) 53%, transparent
-  );
-  transform: rotate(14deg);
-  animation: rake 14s ease-in-out infinite;
-}
-@keyframes rake {
-  0% { left: -60%; }
-  58% { left: 130%; }
-  100% { left: 130%; }
-}
-
-.rise { animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.rise { animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
 @keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: none; }
 }
 
-/* Combination rules: .foil and .rise both set the `animation` shorthand, so an
-   element carrying both needs its own declaration or the later class wins
-   outright and the foil silently stops. */
+/* .foil and .rise both set the `animation` shorthand, so an element carrying
+   both needs its own rule or the later class silently wins. */
 .foil.rise {
-  animation: foil 9s linear infinite, rise 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: foil 9s linear infinite, rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 .drift { animation: drift 12s ease-in-out infinite; }
@@ -141,12 +335,8 @@ body {
 }
 
 .star { animation: star 4.5s ease-in-out infinite; }
-@keyframes star {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
+@keyframes star { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-/* A reader passing over the code. */
 .scanner { position: relative; overflow: hidden; }
 .scanner::after {
   content: '';
@@ -169,20 +359,33 @@ body {
   92%, 100% { top: 100%; opacity: 0; }
 }
 
-/* Printer's registration marks on a plate. */
-.trim { position: relative; }
-.trim::before,
-.trim::after {
+.grain { position: relative; }
+.grain::after {
   content: '';
   position: absolute;
-  width: 13px;
-  height: 13px;
+  inset: 0;
   pointer-events: none;
-  border-color: var(--brass);
-  opacity: 0.55;
+  opacity: 0.045;
+  background-image:
+    repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 4px);
 }
-.trim::before { top: 8px; left: 8px; border-top: 1px solid; border-left: 1px solid; }
-.trim::after { bottom: 8px; right: 8px; border-bottom: 1px solid; border-right: 1px solid; }
+
+/* Skeletons for loading states. */
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.04) 20%,
+    rgba(255, 255, 255, 0.11) 40%,
+    rgba(255, 255, 255, 0.04) 60%
+  );
+  background-size: 260% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -190,36 +393,81 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .foil { color: #8c6b26; -webkit-text-fill-color: #8c6b26; }
+  .foil { color: #d8bc7a; -webkit-text-fill-color: #d8bc7a; }
 }
 
 /* ---------------------------------------------------------------------------
-   Long-form content (guides, landing pages)
+   Long-form reading
    --------------------------------------------------------------------------- */
+.prose-mq { font-size: 15px; }
 .prose-mq h2 {
   font-family: var(--font-display), Didot, Georgia, serif;
-  font-size: 1.85rem;
+  font-size: 1.5rem;
   font-weight: 400;
   margin: 2.5rem 0 0.75rem;
   letter-spacing: -0.015em;
+  color: var(--ink);
 }
-.prose-mq h3 { font-size: 1.15rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
-.prose-mq p { margin: 0 0 1.1rem; line-height: 1.8; color: var(--ink-soft); }
-.prose-mq ul, .prose-mq ol { margin: 0 0 1.1rem 1.25rem; line-height: 1.85; color: var(--ink-soft); }
-.prose-mq ul { list-style: disc; }
+.prose-mq h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.45rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.prose-mq p { margin: 0 0 1.2rem; line-height: 1.85; color: var(--ink-soft); }
+.prose-mq ul, .prose-mq ol { margin: 0 0 1.3rem 1.3rem; line-height: 1.9; color: var(--ink-soft); }
+.prose-mq ul { list-style: none; }
+.prose-mq ul li { position: relative; margin-bottom: 0.5rem; }
+.prose-mq ul li::before {
+  content: '';
+  position: absolute;
+  left: -1.15rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background: var(--brass);
+}
 .prose-mq ol { list-style: decimal; }
-.prose-mq li { margin-bottom: 0.35rem; }
-.prose-mq a { color: var(--claret); text-decoration: underline; text-underline-offset: 3px; }
+.prose-mq ol li { margin-bottom: 0.5rem; padding-left: 0.25rem; }
+.prose-mq ol li::marker { color: var(--brass); font-family: var(--font-display), serif; }
+.prose-mq a { color: var(--brass-lift); text-decoration: underline; text-underline-offset: 4px; }
 .prose-mq a:hover { color: var(--ink); }
 .prose-mq strong { font-weight: 600; color: var(--ink); }
-.prose-mq table { width: 100%; border-collapse: collapse; margin: 0 0 1.1rem; }
-.prose-mq th, .prose-mq td { border: 1px solid var(--rule); padding: 0.55rem 0.8rem; text-align: left; }
-.prose-mq th { background: var(--rule-soft); font-size: 0.85rem; }
+.prose-mq blockquote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--brass);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-display), serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.prose-mq table { width: 100%; border-collapse: collapse; margin: 0 0 1.4rem; font-size: 0.92rem; }
+.prose-mq th, .prose-mq td {
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  color: var(--ink-soft);
+}
+.prose-mq th {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
-/* The QR sheet: only the printable card survives. */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 @media print {
   .no-print { display: none !important; }
   .print-only { display: block !important; }
   body { background: #fff; }
+  .orbfield { display: none; }
 }
 .print-only { display: none; }

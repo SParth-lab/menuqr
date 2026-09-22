@@ -133,6 +133,19 @@ export const templates: Record<string, TemplateEntry> = {
     },
     { headerVariant: 'standard', headingStyle: 'uppercase', headerBand: true }
   ),
+
+  /* Liquid glass, for venues whose dining room is dark enough to carry it. The
+     translucency is applied by the template shell, not by the theme tokens. */
+  glass: createTemplate(
+    { key: 'glass', name: 'Glass', category: 'Modern', description: 'Frosted panes over a lit ground. Best in a dark room.' },
+    {
+      primary: '#e8ce8a', secondary: '#b08a3c', background: '#0b0a0e', surface: 'rgba(255,255,255,0.06)',
+      text: '#f4f1ea', muted: '#8f8879', fontHeading: 'bodoni', fontBody: 'archivo',
+      radius: 'lg', cardStyle: 'glass', buttonStyle: 'ghost', layout: 'list',
+      logoPosition: 'center', showImages: true, showDividers: false,
+    },
+    { headerVariant: 'hero', headingStyle: 'centered', showCover: true }
+  ),
 };
 
 export const DEFAULT_TEMPLATE_KEY = 'modern';

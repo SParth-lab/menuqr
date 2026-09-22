@@ -19,38 +19,38 @@ export default async function AdminSettings() {
 
       <div className="max-w-2xl space-y-5">
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Account</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Account</h2>
           <dl className="mt-3 space-y-2 text-sm">
-            <div className="flex justify-between gap-4"><dt className="text-slate-500">Name</dt><dd className="font-medium text-slate-900">{session?.user.name}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-slate-500">Email</dt><dd className="font-medium text-slate-900">{session?.user.email}</dd></div>
-            <div className="flex justify-between gap-4"><dt className="text-slate-500">Role</dt><dd className="font-medium text-slate-900">Super admin</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Name</dt><dd className="font-medium text-[var(--ink)]">{session?.user.name}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Email</dt><dd className="font-medium text-[var(--ink)]">{session?.user.email}</dd></div>
+            <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Role</dt><dd className="font-medium text-[var(--ink)]">Super admin</dd></div>
           </dl>
         </Card>
 
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Platform configuration</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Platform configuration</h2>
           <dl className="mt-3 space-y-2 text-sm">
             <div className="flex justify-between gap-4">
-              <dt className="text-slate-500">Image storage</dt>
-              <dd className={remoteStorage ? 'font-medium text-emerald-700' : 'font-medium text-amber-700'}>
+              <dt className="text-[var(--muted)]">Image storage</dt>
+              <dd className={remoteStorage ? 'font-medium text-[#7fc383]' : 'font-medium text-[var(--brass-lift)]'}>
                 {remoteStorage ? 'Cloudflare R2' : 'Local disk (dev only)'}
               </dd>
             </div>
             <div className="flex justify-between gap-4">
-              <dt className="text-slate-500">AdSense</dt>
-              <dd className={adsense ? 'font-medium text-emerald-700' : 'font-medium text-slate-500'}>
+              <dt className="text-[var(--muted)]">AdSense</dt>
+              <dd className={adsense ? 'font-medium text-[#7fc383]' : 'font-medium text-[var(--muted)]'}>
                 {adsense ? 'Configured' : 'Not configured'}
               </dd>
             </div>
           </dl>
           {!remoteStorage ? (
-            <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            <p className="mt-3 rounded-lg bg-[rgba(176,138,60,0.13)] px-3 py-2 text-xs text-[var(--brass-lift)]">
               Uploads are written to the local filesystem, which does not survive a serverless
               deploy. Set the R2 variables before going to production.
             </p>
           ) : null}
           {!adsense ? (
-            <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-600">
+            <p className="mt-3 rounded-lg bg-[var(--ground-2)] px-3 py-2 text-xs text-[var(--ink-soft)]">
               Ad slots render nothing until NEXT_PUBLIC_ADSENSE_CLIENT is set. Placements are
               already positioned on the home, blog, landing and city pages, and deliberately
               absent from restaurant menus.
@@ -59,12 +59,12 @@ export default async function AdminSettings() {
         </Card>
 
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Change password</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Change password</h2>
           <PasswordForm />
         </Card>
 
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Session</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Session</h2>
           <div className="mt-3"><SignOutButton /></div>
         </Card>
       </div>

@@ -26,7 +26,7 @@ export default async function EditPostPage({ params }: Props) {
         description={post.status === 'PUBLISHED' ? undefined : 'This page is a draft and is not publicly reachable.'}
         action={
           post.status === 'PUBLISHED' ? (
-            <Link href={postPath(post.type, post.slug)} target="_blank" className="text-sm font-medium text-orange-700 hover:underline">
+            <Link href={postPath(post.type, post.slug)} target="_blank" className="text-sm font-medium text-[var(--brass-lift)] hover:underline">
               View live page
             </Link>
           ) : null

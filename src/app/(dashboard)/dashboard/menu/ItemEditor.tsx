@@ -34,7 +34,7 @@ export function ItemEditor({
         e.preventDefault();
         onSave(values);
       }}
-      className="space-y-3 rounded-lg border border-orange-200 bg-orange-50/50 p-4"
+      className="space-y-3 rounded-lg border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)]/50 p-4"
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="Item name">
@@ -78,30 +78,30 @@ export function ItemEditor({
       </div>
 
       <div className="flex flex-wrap gap-4 pt-1">
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
           <input
             type="checkbox"
             checked={values.isVeg}
             onChange={(e) => set('isVeg', e.target.checked)}
-            className="h-4 w-4 accent-emerald-600"
+            className="h-4 w-4 accent-[#4e9a51]"
           />
           Vegetarian
         </label>
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
           <input
             type="checkbox"
             checked={values.isSpicy}
             onChange={(e) => set('isSpicy', e.target.checked)}
-            className="h-4 w-4 accent-red-600"
+            className="h-4 w-4 accent-[#c4434a]"
           />
           Spicy
         </label>
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
           <input
             type="checkbox"
             checked={values.isAvailable}
             onChange={(e) => set('isAvailable', e.target.checked)}
-            className="h-4 w-4 accent-orange-600"
+            className="h-4 w-4 accent-[#b08a3c]"
           />
           Available today
         </label>

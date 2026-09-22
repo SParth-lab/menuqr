@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { connectDB } from '@/lib/db';
 import { Post } from '@/models';
 import { AdSlot } from '@/components/ads/AdSlot';
-import { readingMinutes } from '@/lib/markdown';
+import { EmptyState } from '@/components/ui';
 
 export const revalidate = 1800;
 
@@ -12,51 +13,169 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 export const metadata: Metadata = {
   title: 'Guides for restaurant and cafe owners',
   description:
-    'Practical guides on digital menus, QR codes, menu design and pricing for restaurants and cafes.',
+    'Practical guides on digital menus, QR codes, menu design, pricing and food photography — written for people who run venues.',
   alternates: { canonical: `${siteUrl}/blog` },
 };
 
-export default async function BlogIndex() {
+type Props = { searchParams: Promise<{ tag?: string }> };
+
+function dateLabel(d?: Date) {
+  return d
+    ? new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '';
+}
+
+export default async function BlogIndex({ searchParams }: Props) {
+  const { tag } = await searchParams;
   await connectDB();
-  const posts = await Post.find({ status: 'PUBLISHED', type: { $in: ['BLOG', 'GUIDE'] } })
+
+  const all = await Post.find({ status: 'PUBLISHED', type: { $in: ['BLOG', 'GUIDE'] } })
     .sort({ publishedAt: -1 })
-    .select('slug title excerpt publishedAt bodyMd type')
+    .select('slug title excerpt publishedAt coverUrl tags author readMinutes type')
     .lean();
 
-  return (
-    <main className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
-        Guides for restaurant and cafe owners
-      </h1>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">
-        Menu structure, pricing, QR codes and design — written for people who run venues, not
-        for search engines.
-      </p>
+  const tagCounts = new Map<string, number>();
+  for (const p of all) for (const t of p.tags ?? []) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
 
-      <AdSlot slot="blog-index-top" />
+  const posts = tag ? all.filter((p) => (p.tags ?? []).includes(tag)) : all;
+  const [lead, ...rest] = posts;
+
+  return (
+    <main className="mx-auto max-w-6xl px-4 pb-10 pt-12">
+      <header className="max-w-3xl">
+        <p className="eyebrow rise text-[var(--brass)]">{all.length} guides</p>
+        <h1 className="display rise mt-4 text-[clamp(1.9rem,3.6vw,2.6rem)] leading-[0.95]">
+          Written for people who <span className="foil">run venues</span>.
+        </h1>
+        <p className="rise mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]" style={{ animationDelay: '0.12s' }}>
+          Menu structure, pricing, photography, QR placement and the Surat food calendar.
+          No listicles, no filler, and nothing written for a search engine to read first.
+        </p>
+      </header>
+
+      {/* Tag filter — plain links, so a filtered view is shareable and crawlable. */}
+      <nav aria-label="Filter by topic" className="no-scrollbar mt-9 flex gap-2 overflow-x-auto pb-1">
+        <Link
+          href="/blog"
+          className={`inline-flex shrink-0 items-center rounded-full border px-4 py-2 text-xs transition-colors ${
+            !tag
+              ? 'border-[var(--brass)] bg-[rgba(176,138,60,0.18)] text-[var(--ink)]'
+              : 'border-[rgba(255,255,255,0.13)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
+          }`}
+        >
+          All
+        </Link>
+        {Array.from(tagCounts.entries())
+          .sort((a, b) => b[1] - a[1])
+          .map(([t, n]) => (
+            <Link
+              key={t}
+              href={`/blog?tag=${encodeURIComponent(t)}`}
+              className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-xs transition-colors ${
+                tag === t
+                  ? 'border-[var(--brass)] bg-[rgba(176,138,60,0.18)] text-[var(--ink)]'
+                  : 'border-[rgba(255,255,255,0.13)] text-[var(--ink-soft)] hover:border-[rgba(255,255,255,0.3)] hover:text-[var(--ink)]'
+              }`}
+            >
+              {t}
+              <span className="text-[10px] text-[var(--faint)]">{n}</span>
+            </Link>
+          ))}
+      </nav>
 
       {posts.length === 0 ? (
-        <p className="mt-10 text-sm text-slate-500">No guides published yet.</p>
-      ) : (
-        <ul className="mt-8 divide-y divide-slate-200">
-          {posts.map((p) => (
-            <li key={p.slug} className="py-5">
-              <Link href={`/blog/${p.slug}`} className="group block">
-                <h2 className="text-lg font-bold text-slate-900 group-hover:text-orange-700">
-                  {p.title}
-                </h2>
-                {p.excerpt ? (
-                  <p className="mt-1 text-sm leading-relaxed text-slate-600">{p.excerpt}</p>
-                ) : null}
-                <p className="mt-2 text-xs text-slate-500">
-                  {p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : null}
-                  {' · '}
-                  {readingMinutes(p.bodyMd)} min read
-                </p>
+        <div className="mt-10">
+          <EmptyState
+            title="No guides under that topic yet"
+            body="Nothing is filed here so far. The full list has everything published to date."
+            action={
+              <Link
+                href="/blog"
+                className="inline-flex h-11 items-center rounded-full bg-[var(--claret)] px-6 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--ink)] hover:bg-[var(--claret-lift)]"
+              >
+                All guides
               </Link>
-            </li>
-          ))}
-        </ul>
+            }
+          />
+        </div>
+      ) : (
+        <>
+          {/* Lead story, given the width it deserves. */}
+          <article className="glass glass-lift group mt-10 overflow-hidden rounded-[24px]">
+            <Link href={`/blog/${lead.slug}`} className="grid gap-0 md:grid-cols-2">
+              <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[320px]">
+                {lead.coverUrl ? (
+                  <Image
+                    src={lead.coverUrl}
+                    alt={lead.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 560px"
+                    priority
+                    className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                  />
+                ) : null}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(7,6,10,0.55)]" />
+              </div>
+
+              <div className="relative z-[2] flex flex-col justify-center p-8 lg:p-10">
+                <p className="eyebrow text-[var(--brass)]">
+                  {lead.type === 'GUIDE' ? 'Guide' : 'Essay'} · Latest
+                </p>
+                <h2 className="display mt-4 text-[clamp(1.35rem,2.4vw,1.75rem)] leading-tight">
+                  {lead.title}
+                </h2>
+                <p className="mt-4 text-[13px] leading-relaxed text-[var(--ink-soft)]">
+                  {lead.excerpt}
+                </p>
+                <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-[var(--faint)]">
+                  {dateLabel(lead.publishedAt)} · {lead.readMinutes ?? 5} min read
+                </p>
+              </div>
+            </Link>
+          </article>
+
+          <AdSlot slot="blog-index-mid" />
+
+          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map((p, i) => (
+              <li key={p.slug} className="rise" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
+                <article className="glass glass-lift group h-full overflow-hidden rounded-[20px]">
+                  <Link href={`/blog/${p.slug}`} className="flex h-full flex-col">
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      {p.coverUrl ? (
+                        <Image
+                          src={p.coverUrl}
+                          alt={p.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 360px"
+                          className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+                        />
+                      ) : null}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(7,6,10,0.75)] to-transparent" />
+                      <span className="glass-dark absolute left-3 top-3 rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em]">
+                        {p.type === 'GUIDE' ? 'Guide' : 'Essay'}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-1 flex-col p-5">
+                      <h2 className="display text-[14px] leading-snug transition-colors group-hover:text-[var(--brass-lift)]">
+                        {p.title}
+                      </h2>
+                      <p className="mt-2.5 line-clamp-3 text-[13px] leading-relaxed text-[var(--muted)]">
+                        {p.excerpt}
+                      </p>
+
+                      <div className="mt-auto flex items-center justify-between gap-3 border-t border-[rgba(255,255,255,0.09)] pt-4 text-[10px] uppercase tracking-[0.14em] text-[var(--faint)]">
+                        <span>{dateLabel(p.publishedAt)}</span>
+                        <span>{p.readMinutes ?? 5} min</span>
+                      </div>
+                    </div>
+                  </Link>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </main>
   );

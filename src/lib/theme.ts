@@ -83,7 +83,7 @@ export function cardClasses(t: ThemeConfig): string {
     case 'outlined':
       return 'bg-[var(--mq-surface)] border border-[color-mix(in_srgb,var(--mq-text)_12%,transparent)]';
     case 'glass':
-      return 'backdrop-blur-md bg-white/10 border border-white/20';
+      return 'backdrop-blur-xl bg-[var(--mq-surface)] border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]';
     default:
       /* The house style: no box at all, just the rule under each line. */
       return 'bg-transparent';

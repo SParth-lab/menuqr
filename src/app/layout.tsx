@@ -20,7 +20,7 @@ const body = Archivo({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'MenuQR';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

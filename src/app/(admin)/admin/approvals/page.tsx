@@ -45,25 +45,25 @@ export default async function ApprovalsPage() {
               <Card key={r._id.toString()}>
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <Link href={`/admin/restaurants/${r._id}`} className="text-base font-bold text-slate-900 hover:text-orange-700">
+                    <Link href={`/admin/restaurants/${r._id}`} className="text-base font-bold text-[var(--ink)] hover:text-[var(--brass-lift)]">
                       {r.name}
                     </Link>
-                    <p className="mt-0.5 text-xs text-slate-500">
+                    <p className="mt-0.5 text-xs text-[var(--muted)]">
                       /menu/{r.slug}
                       {r.city ? ` · ${r.city}` : ''}
                       {` · registered ${new Date(r.createdAt).toLocaleDateString('en-GB')}`}
                     </p>
-                    {owner ? <p className="text-xs text-slate-500">{owner.name} · {owner.email}</p> : null}
-                    <p className="mt-2 text-xs text-slate-600">
+                    {owner ? <p className="text-xs text-[var(--muted)]">{owner.name} · {owner.email}</p> : null}
+                    <p className="mt-2 text-xs text-[var(--ink-soft)]">
                       {cats} {cats === 1 ? 'category' : 'categories'}, {items} {items === 1 ? 'item' : 'items'}
                       {thin ? (
-                        <span className="ml-2 rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-700">
+                        <span className="ml-2 rounded bg-[rgba(176,138,60,0.13)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
                           thin menu
                         </span>
                       ) : null}
                     </p>
                     {thin ? (
-                      <p className="mt-1 text-[11px] text-slate-500">
+                      <p className="mt-1 text-[11px] text-[var(--muted)]">
                         Under 5 items the public page stays noindex even once approved.
                       </p>
                     ) : null}

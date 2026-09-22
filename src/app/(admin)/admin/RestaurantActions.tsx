@@ -93,12 +93,12 @@ export function RestaurantActions({
       ))}
 
       {showDelete ? (
-        <Button size="sm" variant="ghost" className="!text-red-600" disabled={busy} onClick={remove}>
+        <Button size="sm" variant="ghost" className="!text-[#e58a8f]" disabled={busy} onClick={remove}>
           Delete
         </Button>
       ) : null}
 
-      {error ? <span className="text-xs text-red-600">{error}</span> : null}
+      {error ? <span className="text-xs text-[#e58a8f]">{error}</span> : null}
     </div>
   );
 }

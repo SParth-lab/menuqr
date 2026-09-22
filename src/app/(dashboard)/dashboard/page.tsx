@@ -46,13 +46,13 @@ export default async function DashboardHome() {
       />
 
       {restaurant.status !== 'APPROVED' ? (
-        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <p className="text-sm font-semibold text-amber-900">
+        <div className="mb-6 rounded-xl border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)] p-4">
+          <p className="text-sm font-semibold text-[var(--brass-lift)]">
             {restaurant.status === 'PENDING' && 'Your restaurant is awaiting approval'}
             {restaurant.status === 'REJECTED' && 'Your restaurant was not approved'}
             {restaurant.status === 'SUSPENDED' && 'Your restaurant is suspended'}
           </p>
-          <p className="mt-1 text-sm text-amber-800">
+          <p className="mt-1 text-sm text-[var(--brass-lift)]">
             {restaurant.status === 'PENDING' &&
               'You can build the full menu now. The public page and QR code go live as soon as it is approved.'}
             {restaurant.status === 'REJECTED' &&
@@ -72,23 +72,23 @@ export default async function DashboardHome() {
 
       {remaining.length > 0 ? (
         <Card className="mt-6">
-          <h2 className="text-sm font-bold text-slate-900">Finish setting up</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Finish setting up</h2>
           <ul className="mt-3 space-y-2">
             {steps.map((s) => (
               <li key={s.label} className="flex items-center gap-2.5 text-sm">
                 <span
                   className={
                     s.done
-                      ? 'inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[10px] text-white'
-                      : 'inline-block h-4 w-4 rounded-full border border-slate-300'
+                      ? 'inline-flex h-4 w-4 items-center justify-center rounded-full bg-[rgba(78,154,81,0.16)]0 text-[10px] text-white'
+                      : 'inline-block h-4 w-4 rounded-full border border-[var(--line-hi)]'
                   }
                 >
                   {s.done ? '✓' : ''}
                 </span>
                 {s.done ? (
-                  <span className="text-slate-500 line-through">{s.label}</span>
+                  <span className="text-[var(--muted)] line-through">{s.label}</span>
                 ) : (
-                  <Link href={s.href} className="font-medium text-slate-800 hover:text-orange-700">
+                  <Link href={s.href} className="font-medium text-[var(--ink)] hover:text-[var(--brass-lift)]">
                     {s.label}
                   </Link>
                 )}
@@ -99,11 +99,11 @@ export default async function DashboardHome() {
       ) : null}
 
       <Card className="mt-6">
-        <h2 className="text-sm font-bold text-slate-900">Your public menu URL</h2>
-        <p className="mt-2 break-all rounded-lg bg-slate-50 px-3 py-2 font-mono text-xs text-slate-700">
+        <h2 className="text-sm font-bold text-[var(--ink)]">Your public menu URL</h2>
+        <p className="mt-2 break-all rounded-lg bg-[var(--ground-2)] px-3 py-2 font-mono text-xs text-[var(--ink-soft)]">
           {publicMenuUrl(restaurant.slug)}
         </p>
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-xs text-[var(--muted)]">
           This URL is what your QR code points to. It stays the same unless you rename the
           restaurant.
         </p>

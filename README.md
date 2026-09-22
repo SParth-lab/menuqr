@@ -1,4 +1,4 @@
-# MenuQR
+# QR4Menu
 
 Digital menu + QR code product for restaurants and cafes, built so that public menu
 pages are cheap to serve and indexable at scale.
@@ -16,10 +16,17 @@ npm run dev
 
 | Account | Email | Password |
 |---|---|---|
-| Super admin | `admin@menuqr.local` | `Admin@12345` |
+| Super admin | `admin@qr4menu.local` | `Admin@12345` |
 | Demo owner | `owner@demo.local` | `Owner@12345` |
 
-Demo menu: <http://localhost:3000/menu/spice-route-kitchen>
+Demo menus: <http://localhost:3000/city/surat> — 24 Surat venues across 10 cuisines.
+
+**The demo dataset uses real Surat venue names, neighbourhoods and cuisines.**
+Ratings, review counts, opening hours and prices are generated sample figures,
+not sourced from those businesses, and phone numbers are deliberately omitted.
+Every record carries `isSampleData: true`, and the site footer says so.
+
+Owner logins follow `owner+<slug>@qr4menu.demo` / `Owner@12345`.
 
 `npm run db:indexes` syncs indexes deliberately (never on boot — an index build can
 lock a collection). Run it as part of deploys.

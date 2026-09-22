@@ -44,19 +44,19 @@ export default async function AdminRestaurants({ searchParams }: Props) {
             name="q"
             defaultValue={q ?? ''}
             placeholder="Search name, slug or city"
-            className="min-w-48 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500"
+            className="min-w-48 flex-1 rounded-lg border border-[var(--line-hi)] px-3 py-2 text-sm outline-none focus:border-orange-500"
           />
           <select
             name="status"
             defaultValue={status ?? ''}
-            className="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-orange-500"
+            className="rounded-lg border border-[var(--line-hi)] px-3 py-2 text-sm outline-none focus:border-orange-500"
           >
             <option value="">All statuses</option>
             {RESTAURANT_STATUSES.map((s) => (
               <option key={s} value={s}>{s.toLowerCase()}</option>
             ))}
           </select>
-          <button className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Filter</button>
+          <button className="btn btn-primary">Filter</button>
         </form>
       </Card>
 
@@ -70,18 +70,18 @@ export default async function AdminRestaurants({ searchParams }: Props) {
               <Card key={r._id.toString()} className="flex flex-wrap items-center gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <Link href={`/admin/restaurants/${r._id}`} className="text-sm font-bold text-slate-900 hover:text-orange-700">
+                    <Link href={`/admin/restaurants/${r._id}`} className="text-sm font-bold text-[var(--ink)] hover:text-[var(--brass-lift)]">
                       {r.name}
                     </Link>
                     <StatusBadge status={r.status} />
                   </div>
-                  <p className="mt-0.5 text-xs text-slate-500">
+                  <p className="mt-0.5 text-xs text-[var(--muted)]">
                     /menu/{r.slug}
                     {r.city ? ` · ${r.city}` : ''}
                     {` · ${countById.get(r._id.toString()) ?? 0} items`}
                   </p>
                   {owner ? (
-                    <p className="text-xs text-slate-500">{owner.name} · {owner.email}</p>
+                    <p className="text-xs text-[var(--muted)]">{owner.name} · {owner.email}</p>
                   ) : null}
                 </div>
 

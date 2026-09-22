@@ -46,7 +46,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={onSubmit} className="mt-6 space-y-4">
       {error ? (
-        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+        <p className="rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-sm text-[#e58a8f]" role="alert">
           {error}
         </p>
       ) : null}
@@ -76,7 +76,7 @@ export function RegisterForm() {
         {busy ? 'Creating…' : 'Create account'}
       </Button>
 
-      <p className="text-center text-[11px] leading-relaxed text-slate-500">
+      <p className="text-center text-[11px] leading-relaxed text-[var(--muted)]">
         New restaurants are reviewed before their menu goes public. You can build the whole
         menu while that happens.
       </p>

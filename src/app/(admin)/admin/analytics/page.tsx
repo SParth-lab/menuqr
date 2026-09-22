@@ -51,10 +51,10 @@ export default async function AdminAnalytics() {
       </div>
 
       <Card className="mt-5">
-        <h2 className="text-sm font-bold text-slate-900">Daily traffic, last 30 days</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Daily traffic, last 30 days</h2>
         <div className="mt-4">
           {windowTotal === 0 ? (
-            <p className="py-8 text-center text-sm text-slate-500">No traffic recorded yet.</p>
+            <p className="py-8 text-center text-sm text-[var(--muted)]">No traffic recorded yet.</p>
           ) : (
             <BarChart data={chart} />
           )}
@@ -62,27 +62,27 @@ export default async function AdminAnalytics() {
       </Card>
 
       <Card className="mt-5">
-        <h2 className="text-sm font-bold text-slate-900">Busiest menus, last 30 days</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Busiest menus, last 30 days</h2>
         {topRaw.length === 0 ? (
-          <p className="mt-2 text-sm text-slate-500">No data yet.</p>
+          <p className="mt-2 text-sm text-[var(--muted)]">No data yet.</p>
         ) : (
-          <ol className="mt-3 divide-y divide-slate-100">
+          <ol className="mt-3 divide-y divide-[var(--line)]">
             {topRaw.map((t, i) => {
               const r = byId.get(t._id.toString());
               return (
                 <li key={t._id.toString()} className="flex items-center justify-between gap-3 py-2 text-sm">
                   <span className="min-w-0 truncate">
-                    <span className="mr-2 text-xs text-slate-400">{i + 1}</span>
+                    <span className="mr-2 text-xs text-[var(--faint)]">{i + 1}</span>
                     {r ? (
-                      <Link href={`/admin/restaurants/${r._id}`} className="text-slate-800 hover:text-orange-700">
+                      <Link href={`/admin/restaurants/${r._id}`} className="text-[var(--ink)] hover:text-[var(--brass-lift)]">
                         {r.name}
                       </Link>
                     ) : (
-                      <span className="text-slate-400">Deleted restaurant</span>
+                      <span className="text-[var(--faint)]">Deleted restaurant</span>
                     )}
                   </span>
-                  <span className="shrink-0 text-slate-600">
-                    <span className="font-semibold text-slate-900">{t.views}</span> views · {t.qrScans} scans
+                  <span className="shrink-0 text-[var(--ink-soft)]">
+                    <span className="font-semibold text-[var(--ink)]">{t.views}</span> views · {t.qrScans} scans
                   </span>
                 </li>
               );

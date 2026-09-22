@@ -106,7 +106,7 @@ export function DesignStudio({
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
       <div className="space-y-5">
         <Card>
-          <h2 className="text-sm font-bold text-slate-900">Templates</h2>
+          <h2 className="text-sm font-bold text-[var(--ink)]">Templates</h2>
           <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {templates.map((t) => {
               const active = t.key === design.templateKey;
@@ -117,16 +117,16 @@ export function DesignStudio({
                     onClick={() => pickTemplate(t.key)}
                     className={clsx(
                       'w-full overflow-hidden rounded-lg border text-left transition',
-                      active ? 'border-orange-500 ring-2 ring-orange-200' : 'border-slate-200 hover:border-slate-300'
+                      active ? 'border-orange-500 ring-2 ring-orange-200' : 'border-[var(--line)] hover:border-[var(--line-hi)]'
                     )}
                   >
                     <span className="flex h-16 flex-col justify-end p-2" style={{ background: t.defaultConfig.background }}>
                       <span className="block h-1.5 w-8 rounded-full" style={{ background: t.defaultConfig.primary }} />
                       <span className="mt-1 block h-1 w-12 rounded-full" style={{ background: t.defaultConfig.secondary }} />
                     </span>
-                    <span className="block border-t border-slate-200 p-2">
-                      <span className="block text-xs font-semibold text-slate-900">{t.name}</span>
-                      <span className="block text-[10px] text-slate-500">{t.category}</span>
+                    <span className="block border-t border-[var(--line)] p-2">
+                      <span className="block text-xs font-semibold text-[var(--ink)]">{t.name}</span>
+                      <span className="block text-[10px] text-[var(--muted)]">{t.category}</span>
                     </span>
                   </button>
                 </li>
@@ -137,9 +137,9 @@ export function DesignStudio({
 
         <Card className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-slate-900">Customise</h2>
+            <h2 className="text-sm font-bold text-[var(--ink)]">Customise</h2>
             {design.isCustom ? (
-              <span className="rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-orange-700">
+              <span className="rounded-full bg-[rgba(176,138,60,0.13)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
                 Custom
               </span>
             ) : null}
@@ -148,15 +148,15 @@ export function DesignStudio({
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {COLOR_FIELDS.map(([key, label]) => (
               <label key={key} className="block">
-                <span className="mb-1 block text-[11px] font-semibold text-slate-700">{label}</span>
+                <span className="mb-1 block text-[11px] font-semibold text-[var(--ink-soft)]">{label}</span>
                 <span className="flex items-center gap-2">
                   <input
                     type="color"
                     value={theme[key] as string}
                     onChange={(e) => patch(key, e.target.value)}
-                    className="h-8 w-8 cursor-pointer rounded border border-slate-300"
+                    className="h-8 w-8 cursor-pointer rounded border border-[var(--line-hi)]"
                   />
-                  <span className="font-mono text-[10px] uppercase text-slate-500">{theme[key] as string}</span>
+                  <span className="font-mono text-[10px] uppercase text-[var(--muted)]">{theme[key] as string}</span>
                 </span>
               </label>
             ))}
@@ -201,12 +201,12 @@ export function DesignStudio({
           </div>
 
           <div className="flex flex-wrap gap-4 pt-1">
-            <label className="flex items-center gap-2 text-sm text-slate-700">
-              <input type="checkbox" checked={theme.showImages} onChange={(e) => patch('showImages', e.target.checked)} className="h-4 w-4 accent-orange-600" />
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
+              <input type="checkbox" checked={theme.showImages} onChange={(e) => patch('showImages', e.target.checked)} className="h-4 w-4 accent-[#b08a3c]" />
               Show item photos
             </label>
-            <label className="flex items-center gap-2 text-sm text-slate-700">
-              <input type="checkbox" checked={theme.showDividers} onChange={(e) => patch('showDividers', e.target.checked)} className="h-4 w-4 accent-orange-600" />
+            <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
+              <input type="checkbox" checked={theme.showDividers} onChange={(e) => patch('showDividers', e.target.checked)} className="h-4 w-4 accent-[#b08a3c]" />
               Show dividers
             </label>
           </div>
@@ -218,18 +218,18 @@ export function DesignStudio({
             <Button variant="outline" onClick={reset} disabled={busy || !design.isCustom}>
               Reset to template
             </Button>
-            {message ? <span className="text-sm text-slate-600">{message}</span> : null}
+            {message ? <span className="text-sm text-[var(--ink-soft)]">{message}</span> : null}
           </div>
         </Card>
       </div>
 
       <div className="lg:sticky lg:top-6 lg:self-start">
-        <p className="mb-2 text-xs font-semibold text-slate-700">
+        <p className="mb-2 text-xs font-semibold text-[var(--ink-soft)]">
           Live preview
-          {preview.usingSample ? <span className="font-normal text-slate-500"> — sample items</span> : null}
+          {preview.usingSample ? <span className="font-normal text-[var(--muted)]"> — sample items</span> : null}
         </p>
-        <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-[28px] border-[6px] border-slate-900 bg-slate-900 shadow-xl">
-          <div className="max-h-[560px] overflow-y-auto bg-white" style={themeToCssVars(theme)}>
+        <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-[28px] border-[6px] border-[var(--void)] bg-[var(--void)] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)]">
+          <div className="max-h-[560px] overflow-y-auto bg-[var(--pane)]" style={themeToCssVars(theme)}>
             <Preview restaurant={preview.restaurant} categories={preview.categories} theme={theme} />
           </div>
         </div>

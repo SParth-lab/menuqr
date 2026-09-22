@@ -73,7 +73,7 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
   return (
     <form onSubmit={save} className="max-w-3xl space-y-5">
       <Card className="space-y-4">
-        <h2 className="text-sm font-bold text-slate-900">Basics</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Basics</h2>
 
         <Field label="Restaurant name" hint="Renaming changes your public menu URL and QR target.">
           <Input value={values.name} onChange={(e) => set('name', e.target.value)} required minLength={2} />
@@ -94,7 +94,7 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
       </Card>
 
       <Card className="space-y-4">
-        <h2 className="text-sm font-bold text-slate-900">Location and contact</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Location and contact</h2>
 
         <Field label="Address">
           <Input value={values.address} onChange={(e) => set('address', e.target.value)} />
@@ -134,7 +134,7 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
       </Card>
 
       <Card className="space-y-4">
-        <h2 className="text-sm font-bold text-slate-900">Social links</h2>
+        <h2 className="text-sm font-bold text-[var(--ink)]">Social links</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {(['website', 'instagram', 'facebook', 'twitter', 'youtube'] as const).map((k) => (
             <Field key={k} label={k[0].toUpperCase() + k.slice(1)}>
@@ -153,8 +153,8 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
       </Card>
 
       <Card className="space-y-4">
-        <h2 className="text-sm font-bold text-slate-900">Search appearance</h2>
-        <p className="-mt-2 text-xs text-slate-500">
+        <h2 className="text-sm font-bold text-[var(--ink)]">Search appearance</h2>
+        <p className="-mt-2 text-xs text-[var(--muted)]">
           Leave blank and we generate these from your name, city and item count.
         </p>
 
@@ -171,8 +171,8 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
         <Button type="submit" disabled={busy}>
           {busy ? 'Saving…' : 'Save changes'}
         </Button>
-        {status.kind === 'ok' ? <span className="text-sm text-emerald-700">{status.text}</span> : null}
-        {status.kind === 'error' ? <span className="text-sm text-red-700">{status.text}</span> : null}
+        {status.kind === 'ok' ? <span className="text-sm text-[#7fc383]">{status.text}</span> : null}
+        {status.kind === 'error' ? <span className="text-sm text-[#e58a8f]">{status.text}</span> : null}
       </div>
     </form>
   );

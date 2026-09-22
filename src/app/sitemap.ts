@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const [approved, posts] = await Promise.all([
-    Restaurant.find({ status: 'APPROVED' }).select('slug citySlug city updatedAt').lean(),
+    Restaurant.find({ status: 'APPROVED' }).select('slug citySlug cuisineSlug city updatedAt').lean(),
     Post.find({ status: 'PUBLISHED' }).select('slug type updatedAt').lean(),
   ]);
 
@@ -47,6 +47,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!r.citySlug) continue;
     cityCounts.set(r.citySlug, (cityCounts.get(r.citySlug) ?? 0) + 1);
   }
+  /* Cuisine pages follow the same rule as cities: listed only once the page has
+     enough venues to be worth a crawl. */
+  const cuisineCounts = new Map<string, number>();
+  for (const r of indexable) {
+    if (!r.cuisineSlug) continue;
+    cuisineCounts.set(r.cuisineSlug, (cuisineCounts.get(r.cuisineSlug) ?? 0) + 1);
+  }
+  const cuisineEntries: MetadataRoute.Sitemap = Array.from(cuisineCounts.entries())
+    .filter(([, n]) => n >= MIN_VENUES_PER_CITY)
+    .map(([cuisineSlug]) => ({
+      url: `${siteUrl}/cuisine/${cuisineSlug}`,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    }));
+
   const cityEntries: MetadataRoute.Sitemap = Array.from(cityCounts.entries())
     .filter(([, n]) => n >= MIN_VENUES_PER_CITY)
     .map(([citySlug]) => ({
@@ -68,5 +83,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  return [...staticEntries, ...menuEntries, ...cityEntries, ...postEntries];
+  return [...staticEntries, ...menuEntries, ...cityEntries, ...cuisineEntries, ...postEntries];
 }

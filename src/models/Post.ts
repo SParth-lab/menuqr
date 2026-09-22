@@ -12,6 +12,9 @@ export interface IPost {
   metaTitle?: string;
   metaDescription?: string;
   coverUrl?: string;
+  tags: string[];
+  author: string;
+  readMinutes?: number;
   status: PostStatus;
   publishedAt?: Date;
   createdAt: Date;
@@ -29,6 +32,9 @@ const PostSchema = new Schema<IPost>(
     metaTitle: String,
     metaDescription: String,
     coverUrl: String,
+    tags: { type: [String], default: [] },
+    author: { type: String, default: 'QR4Menu Editorial' },
+    readMinutes: Number,
     status: { type: String, enum: POST_STATUSES, default: 'DRAFT' },
     publishedAt: Date,
   },

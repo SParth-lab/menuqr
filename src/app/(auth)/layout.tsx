@@ -1,12 +1,18 @@
 import Link from 'next/link';
+import { Logo } from '@/components/brand/Logo';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'MenuQR';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50">
-      <header className="px-4 py-5">
-        <Link href="/" className="text-base font-extrabold tracking-tight text-slate-900">
+    <div className="relative flex min-h-screen flex-col">
+      <div className="orbfield" aria-hidden="true">
+        <span className="orb orb-a" />
+        <span className="orb orb-c" />
+      </div>
+
+      <header className="px-5 py-6">
+        <Link href="/" className="display text-xl leading-none">
           {siteName}
         </Link>
       </header>

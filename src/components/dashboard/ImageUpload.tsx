@@ -41,7 +41,7 @@ export function ImageUpload({
 
   return (
     <div>
-      <span className="mb-1 block text-xs font-semibold text-slate-700">{label}</span>
+      <span className="mb-1 block text-xs font-semibold text-[var(--ink-soft)]">{label}</span>
 
       <div className="flex items-center gap-3">
         {value ? (
@@ -50,15 +50,15 @@ export function ImageUpload({
             alt=""
             width={56}
             height={56}
-            className="h-14 w-14 rounded-lg border border-slate-200 object-cover"
+            className="h-14 w-14 rounded-lg border border-[var(--line)] object-cover"
           />
         ) : (
-          <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-dashed border-slate-300 text-[10px] text-slate-400">
+          <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-dashed border-[var(--line-hi)] text-[10px] text-[var(--faint)]">
             None
           </div>
         )}
 
-        <label className="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+        <label className="cursor-pointer rounded-lg border border-[var(--line-hi)] bg-[var(--pane)] px-3 py-1.5 text-xs font-semibold text-[var(--ink-soft)] hover:bg-[var(--ground-2)]">
           {busy ? 'Uploading…' : value ? 'Replace' : 'Upload'}
           <input
             type="file"
@@ -80,8 +80,8 @@ export function ImageUpload({
         ) : null}
       </div>
 
-      {hint ? <p className="mt-1 text-[11px] text-slate-500">{hint}</p> : null}
-      {error ? <p className="mt-1 text-[11px] text-red-600">{error}</p> : null}
+      {hint ? <p className="mt-1 text-[11px] text-[var(--muted)]">{hint}</p> : null}
+      {error ? <p className="mt-1 text-[11px] text-[#e58a8f]">{error}</p> : null}
     </div>
   );
 }

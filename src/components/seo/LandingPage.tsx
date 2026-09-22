@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { AdSlot } from '@/components/ads/AdSlot';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'MenuQR';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
 
 export type LandingExample = { name: string; slug: string; city?: string };
 
@@ -40,21 +40,21 @@ export function LandingPage({
         }}
       />
 
-      <nav aria-label="Breadcrumb" className="text-xs text-slate-500">
-        <Link href="/" className="hover:text-orange-700">Home</Link>
+      <nav aria-label="Breadcrumb" className="text-xs text-[var(--muted)]">
+        <Link href="/" className="hover:text-[var(--brass-lift)]">Home</Link>
         <span className="mx-1.5">/</span>
         <span>{crumb}</span>
       </nav>
 
-      <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-slate-900">
+      <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-[var(--ink)]">
         {h1}
       </h1>
-      {excerpt ? <p className="mt-3 text-base leading-relaxed text-slate-600">{excerpt}</p> : null}
+      {excerpt ? <p className="mt-3 text-base leading-relaxed text-[var(--ink-soft)]">{excerpt}</p> : null}
 
       <div className="mt-6">
         <Link
           href="/register"
-          className="inline-block rounded-lg bg-orange-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-700"
+          className="inline-block rounded-lg bg-[var(--claret)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[var(--claret-lift)]"
         >
           Create your menu free
         </Link>
@@ -66,16 +66,16 @@ export function LandingPage({
 
       {examples.length > 0 ? (
         <section className="mt-10">
-          <h2 className="text-lg font-bold text-slate-900">Live menus built here</h2>
+          <h2 className="text-lg font-bold text-[var(--ink)]">Live menus built here</h2>
           <ul className="mt-3 grid gap-2 sm:grid-cols-2">
             {examples.map((e) => (
               <li key={e.slug}>
                 <Link
                   href={`/menu/${e.slug}`}
-                  className="block rounded-lg border border-slate-200 px-3 py-2 text-sm hover:border-orange-300"
+                  className="block rounded-lg border border-[var(--line)] px-3 py-2 text-sm hover:border-orange-300"
                 >
-                  <span className="font-medium text-slate-900">{e.name}</span>
-                  {e.city ? <span className="text-slate-500"> — {e.city}</span> : null}
+                  <span className="font-medium text-[var(--ink)]">{e.name}</span>
+                  {e.city ? <span className="text-[var(--muted)]"> — {e.city}</span> : null}
                 </Link>
               </li>
             ))}
@@ -84,9 +84,9 @@ export function LandingPage({
       ) : null}
 
       {sibling ? (
-        <p className="mt-10 text-sm text-slate-600">
+        <p className="mt-10 text-sm text-[var(--ink-soft)]">
           Also read:{' '}
-          <Link href={sibling.href} className="font-medium text-orange-700 hover:underline">
+          <Link href={sibling.href} className="font-medium text-[var(--brass-lift)] hover:underline">
             {sibling.label}
           </Link>
         </p>
