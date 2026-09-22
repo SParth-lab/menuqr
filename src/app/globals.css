@@ -486,3 +486,9 @@ body {
   .orbfield { display: none; }
 }
 .print-only { display: none; }
+
+/* Mobile menu icon state. Tailwind's peer-checked: only reaches direct
+   siblings, and the icon sits inside one, so the swap is written out here. */
+.nav-open { display: none; }
+#mobile-nav:checked ~ * .nav-closed { display: none; }
+#mobile-nav:checked ~ * .nav-open { display: inline; }

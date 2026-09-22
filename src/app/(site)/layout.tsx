@@ -25,6 +25,11 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       <header className="sticky top-0 z-30 px-3 pt-3 sm:px-4 sm:pt-4">
+        {/* CSS-only toggle. The panel has to live OUTSIDE the bar: the bar sets
+            overflow:hidden for its sheen animation, which clipped the old
+            dropdown so it opened invisibly. */}
+        <input type="checkbox" id="mobile-nav" className="peer sr-only" />
+
         <div className="glass sheen mx-auto max-w-6xl rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3">
           <div className="relative z-[2] flex min-w-0 items-center gap-3 sm:gap-4">
             <Link href="/" aria-label={`${siteName} home`} className="min-w-0 shrink">
@@ -55,40 +60,46 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
                 List venue
               </Link>
 
-              {/* Disclosure rather than a state toggle: it works before hydration
-                  and closes itself on navigation. */}
-              <details className="group relative md:hidden">
-                <summary
-                  className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] [&::-webkit-details-marker]:hidden"
-                  aria-label="Open menu"
-                >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                    <path d="M4 7h16M4 12h16M4 17h16" className="group-open:hidden" />
-                    <path d="M6 6l12 12M18 6L6 18" className="hidden group-open:block" />
-                  </svg>
-                </summary>
-
-                <nav className="glass-dark absolute right-0 top-11 w-56 rounded-2xl p-2">
-                  {NAV.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block rounded-xl px-4 py-3 text-[13px] text-[var(--ink-soft)] transition-colors hover:bg-[var(--pane)] hover:text-[var(--ink)]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                  <Link
-                    href="/login"
-                    className="mt-1 block border-t border-[var(--line)] px-4 py-3 pt-4 text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)]"
-                  >
-                    Sign in
-                  </Link>
-                </nav>
-              </details>
+              <label
+                htmlFor="mobile-nav"
+                role="button"
+                tabIndex={0}
+                aria-controls="mobile-nav-panel"
+                aria-label="Open and close the menu"
+                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition-colors hover:border-[var(--line-hi)] hover:text-[var(--ink)] md:hidden"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                  <path className="nav-closed" d="M4 7h16M4 12h16M4 17h16" />
+                  <path className="nav-open" d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </label>
             </div>
           </div>
         </div>
+
+        <nav
+          id="mobile-nav-panel"
+          aria-label="Menu"
+          className="mx-auto mt-2 hidden max-w-6xl peer-checked:block md:hidden"
+        >
+          <div className="glass-dark rounded-2xl p-2">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="block rounded-xl px-4 py-3.5 text-[13px] font-medium text-[var(--ink-soft)] transition-colors hover:bg-[var(--pane)] hover:text-[var(--ink)]"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              href="/login"
+              className="mt-1 block border-t border-[var(--line)] px-4 py-3.5 pt-4 text-[13px] font-medium text-[var(--ink-soft)] hover:text-[var(--ink)]"
+            >
+              Sign in
+            </Link>
+          </div>
+        </nav>
       </header>
 
       <div className="flex-1">{children}</div>
