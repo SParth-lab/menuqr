@@ -61,13 +61,15 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* `clip`, never `hidden`: hidden turns this into a scroll container and
+     silently disables position:sticky on everything inside it. */
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--ink);
   background: var(--ground);
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
@@ -492,3 +494,11 @@ body {
 .nav-open { display: none; }
 #mobile-nav:checked ~ * .nav-closed { display: none; }
 #mobile-nav:checked ~ * .nav-open { display: inline; }
+
+/* Sticky bars. The offset accounts for the phone's safe area so a bar never
+   sits under the status bar or the home indicator. */
+.stick-top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+}

@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <span className="orb orb-c" />
       </div>
 
-      <header className="px-5 py-6">
+      <header className="stick-top px-5 py-6">
         <Link href="/" className="display text-xl leading-none">
           {siteName}
         </Link>

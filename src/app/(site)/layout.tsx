@@ -24,7 +24,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <span className="orb orb-d" />
       </div>
 
-      <header className="sticky top-0 z-30 px-3 pt-3 sm:px-4 sm:pt-4">
+      <header className="stick-top px-3 pt-3 sm:px-4 sm:pt-4">
         {/* CSS-only toggle. The panel has to live OUTSIDE the bar: the bar sets
             overflow:hidden for its sheen animation, which clipped the old
             dropdown so it opened invisibly. */}

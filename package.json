@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "tsx scripts/seed.ts",
-    "db:indexes": "tsx scripts/sync-indexes.ts"
+    "db:indexes": "tsx scripts/sync-indexes.ts",
+    "migrate:emails": "tsx scripts/migrate-brand-emails.ts"
   },
   "dependencies": {
     "aws4fetch": "^1.0.20",

@@ -25,7 +25,7 @@ export function Shell({
 
   return (
     <div className="relative min-h-screen lg:flex">
-      <aside className="glass-dark rake relative z-[2] text-[var(--muted)] lg:w-60 lg:shrink-0">
+      <aside className="glass-dark rake stick-top relative text-[var(--muted)] lg:sticky lg:top-0 lg:z-[2] lg:h-screen lg:w-60 lg:shrink-0 lg:overflow-y-auto">
         <div className="relative z-[2] flex items-center justify-between gap-3 border-b border-[#1d1a16] px-5 py-5 lg:block">
           <div className="min-w-0">
             <Link href="/" className="display foil block truncate text-xl leading-none">

@@ -28,6 +28,9 @@ Every record carries `isSampleData: true`, and the site footer says so.
 
 Owner logins follow `owner+<slug>@qr4menu.demo` / `Owner@12345`.
 
+If you seeded before the QR4Menu rename, `npm run migrate:emails` moves the
+seeded accounts off the old `@menuqr.*` domain. Real signups are untouched.
+
 `npm run db:indexes` syncs indexes deliberately (never on boot — an index build can
 lock a collection). Run it as part of deploys.
 
