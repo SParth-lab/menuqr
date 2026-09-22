@@ -41,10 +41,10 @@ export default async function BlogIndex({ searchParams }: Props) {
   const [lead, ...rest] = posts;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-10 pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
       <header className="max-w-3xl">
         <p className="eyebrow rise text-[var(--brass)]">{all.length} guides</p>
-        <h1 className="display rise mt-4 text-[clamp(1.9rem,3.6vw,2.6rem)] leading-[0.95]">
+        <h1 className="display rise mt-4 text-[length:var(--t-h1)] leading-[0.95]">
           Written for people who <span className="foil">run venues</span>.
         </h1>
         <p className="rise mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]" style={{ animationDelay: '0.12s' }}>
@@ -54,7 +54,7 @@ export default async function BlogIndex({ searchParams }: Props) {
       </header>
 
       {/* Tag filter — plain links, so a filtered view is shareable and crawlable. */}
-      <nav aria-label="Filter by topic" className="no-scrollbar mt-9 flex gap-2 overflow-x-auto pb-1">
+      <nav aria-label="Filter by topic" className="no-scrollbar mt-6 sm:mt-9 flex gap-2 overflow-x-auto pb-1">
         <Link
           href="/blog"
           className={`inline-flex shrink-0 items-center rounded-full border px-4 py-2 text-xs transition-colors ${
@@ -101,7 +101,7 @@ export default async function BlogIndex({ searchParams }: Props) {
       ) : (
         <>
           {/* Lead story, given the width it deserves. */}
-          <article className="glass glass-lift group mt-10 overflow-hidden rounded-[24px]">
+          <article className="glass glass-lift group mt-6 sm:mt-10 overflow-hidden rounded-[24px]">
             <Link href={`/blog/${lead.slug}`} className="grid gap-0 md:grid-cols-2">
               <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[320px]">
                 {lead.coverUrl ? (
@@ -117,11 +117,11 @@ export default async function BlogIndex({ searchParams }: Props) {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(7,6,10,0.55)]" />
               </div>
 
-              <div className="relative z-[2] flex flex-col justify-center p-8 lg:p-10">
+              <div className="relative z-[2] flex flex-col justify-center p-5 sm:p-8 lg:p-10">
                 <p className="eyebrow text-[var(--brass)]">
                   {lead.type === 'GUIDE' ? 'Guide' : 'Essay'} · Latest
                 </p>
-                <h2 className="display mt-4 text-[clamp(1.35rem,2.4vw,1.75rem)] leading-tight">
+                <h2 className="display mt-4 text-[length:var(--t-h2)] leading-tight">
                   {lead.title}
                 </h2>
                 <p className="mt-4 text-[13px] leading-relaxed text-[var(--ink-soft)]">
@@ -136,7 +136,7 @@ export default async function BlogIndex({ searchParams }: Props) {
 
           <AdSlot slot="blog-index-mid" />
 
-          <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p, i) => (
               <li key={p.slug} className="rise" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
                 <article className="glass glass-lift group h-full overflow-hidden rounded-[20px]">

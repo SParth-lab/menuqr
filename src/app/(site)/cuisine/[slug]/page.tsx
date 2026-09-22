@@ -43,7 +43,7 @@ export default async function CuisinePage({ params }: Props) {
   const siblings = cuisines.filter((c) => c.value !== slug);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-10 pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -69,7 +69,7 @@ export default async function CuisinePage({ params }: Props) {
 
       <header className="mt-5 max-w-3xl">
         <p className="eyebrow rise text-[var(--brass)]">{total} venues in Surat</p>
-        <h1 className="display foil rise mt-4 text-[clamp(1.9rem,3.6vw,2.6rem)] leading-[0.95]">
+        <h1 className="display foil rise mt-4 text-[length:var(--t-h1)] leading-[0.95]">
           {label}
         </h1>
         {blurb ? (
@@ -79,7 +79,7 @@ export default async function CuisinePage({ params }: Props) {
         ) : null}
       </header>
 
-      <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-7 sm:mt-12 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {venues.map((v, i) => (
           <li key={v.slug} className="rise" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
             <VenueCard venue={v} priority={i < 3} />
@@ -90,7 +90,7 @@ export default async function CuisinePage({ params }: Props) {
       <AdSlot slot="cuisine-bottom" />
 
       {siblings.length > 0 ? (
-        <section className="glass mt-14 rounded-[22px] p-8">
+        <section className="glass mt-6 sm:mt-10 rounded sm:mt-14-3xl p-5 sm:p-8">
           <div className="relative z-[2]">
             <h2 className="display text-base">Other cuisines in Surat</h2>
             <ul className="mt-6 flex flex-wrap gap-2.5">

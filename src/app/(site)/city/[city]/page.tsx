@@ -63,7 +63,7 @@ export default async function CityPage({ params, searchParams }: Props) {
   const filtered = Boolean(sp.cuisine || sp.tag || sp.price);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-10 pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -87,7 +87,7 @@ export default async function CityPage({ params, searchParams }: Props) {
 
       <header className="mt-5 max-w-3xl">
         <p className="eyebrow rise text-[var(--brass)]">{total} venues · live menus</p>
-        <h1 className="display rise mt-4 text-[clamp(1.9rem,3.6vw,2.6rem)] leading-[0.95]">
+        <h1 className="display rise mt-4 text-[length:var(--t-h1)] leading-[0.95]">
           Every menu in <span className="foil">{name}</span>, priced.
         </h1>
         <p className="rise mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]" style={{ animationDelay: '0.12s' }}>
@@ -97,7 +97,7 @@ export default async function CityPage({ params, searchParams }: Props) {
         </p>
       </header>
 
-      <section className="glass mt-10 rounded-[22px] p-6" aria-label="Filters">
+      <section className="glass mt-6 sm:mt-10 rounded-3xl p-4 sm:p-6" aria-label="Filters">
         <div className="relative z-[2]">
           <DiscoveryFilters cuisines={cuisines} tags={tags} />
         </div>
@@ -133,7 +133,7 @@ export default async function CityPage({ params, searchParams }: Props) {
           />
         </div>
       ) : (
-        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-6 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {venues.map((v, i) => (
             <li key={v.slug} className="rise" style={{ animationDelay: `${Math.min(i, 8) * 0.05}s` }}>
               <VenueCard venue={v} priority={i < 3} />
@@ -144,7 +144,7 @@ export default async function CityPage({ params, searchParams }: Props) {
 
       <AdSlot slot="city-bottom" />
 
-      <section className="glass mt-14 rounded-[22px] p-8">
+      <section className="glass mt-6 sm:mt-10 rounded sm:mt-14-3xl p-5 sm:p-8">
         <div className="relative z-[2]">
           <h2 className="display text-base">Browse {name} by cuisine</h2>
           <ul className="mt-6 flex flex-wrap gap-2.5">

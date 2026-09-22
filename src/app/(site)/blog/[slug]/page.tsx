@@ -105,7 +105,7 @@ export default async function BlogPost({ params }: Props) {
           </ul>
         ) : null}
 
-        <h1 className="display rise mt-6 text-[clamp(1.75rem,3.4vw,2.4rem)] leading-[1.02]">
+        <h1 className="display rise mt-6 text-[length:var(--t-h1)] leading-[1.02]">
           {post.h1}
         </h1>
 
@@ -123,7 +123,7 @@ export default async function BlogPost({ params }: Props) {
       </div>
 
       {post.coverUrl ? (
-        <figure className="mx-auto mt-10 max-w-5xl px-4">
+        <figure className="mx-auto mt-8 max-w-5xl sm:mt-10 px-4">
           <div className="glass relative aspect-[21/9] overflow-hidden rounded-[24px]">
             <Image
               src={post.coverUrl}
@@ -138,14 +138,14 @@ export default async function BlogPost({ params }: Props) {
       ) : null}
 
       <article
-        className="prose-mq mx-auto mt-12 max-w-2xl px-4"
+        className="prose-mq mx-auto mt-6 sm:mt-9 max-w-2xl px-4"
         dangerouslySetInnerHTML={{ __html: renderMarkdown(post.bodyMd) }}
       />
 
       <div className="mx-auto max-w-2xl px-4">
         <AdSlot slot="blog-post-bottom" />
 
-        <aside className="glass mt-12 rounded-[22px] p-8">
+        <aside className="glass mt-5 sm:mt-7 sm:mt-12 rounded-3xl p-5 sm:p-8">
           <div className="relative z-[2]">
             <h2 className="display text-lg">Put your own menu behind a code</h2>
             <p className="mt-3 text-[14px] leading-relaxed text-[var(--ink-soft)]">
@@ -163,7 +163,7 @@ export default async function BlogPost({ params }: Props) {
       </div>
 
       {related.length > 0 ? (
-        <section className="mx-auto mt-16 max-w-5xl px-4">
+        <section className="mx-auto mt-8 sm:mt-16 max-w-5xl px-4">
           <h2 className="display text-base">Keep reading</h2>
           <ul className="mt-6 grid gap-6 sm:grid-cols-3">
             {related.map((r) => (

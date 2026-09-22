@@ -27,7 +27,7 @@ export default async function QrPage() {
         </div>
       ) : null}
 
-      <div className="grid max-w-3xl gap-5 lg:grid-cols-[260px_minmax(0,1fr)]">
+      <div className="grid max-w-3xl gap-5 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)]">
         <Card className="text-center">
           {/* eslint-disable-next-line @next/next/no-img-element -- data URL, no optimisation possible */}
           <img src={dataUrl} alt={`QR code for ${restaurant.name}`} width={220} height={220} className="mx-auto" />

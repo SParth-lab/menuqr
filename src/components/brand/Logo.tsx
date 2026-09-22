@@ -17,6 +17,8 @@ export type LogoProps = {
 };
 
 export function Logo({ variant = 'full', size = 32, mono, className }: LogoProps) {
+  /* Never hardcode `display` here: a caller passing `hidden` or `sm:hidden`
+     would lose to it on stylesheet order, and both variants would render. */
   const id = mono ? 'brandMono' : 'brandFoil';
 
   const mark = (
@@ -55,7 +57,7 @@ export function Logo({ variant = 'full', size = 32, mono, className }: LogoProps
   if (variant === 'mark') return <span className={className}>{mark}</span>;
 
   return (
-    <span className={clsx('inline-flex items-center gap-2.5', className)}>
+    <span className={clsx('inline-flex items-center gap-2 sm:gap-2.5', className)}>
       {mark}
       <span
         className="display leading-none"

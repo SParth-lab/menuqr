@@ -35,7 +35,15 @@ export function Shell({
               <p className="mt-1.5 truncate text-[11px] text-[#5f584d]">{subtitle}</p>
             ) : null}
           </div>
-          {badge ? <div className="shrink-0 lg:mt-3">{badge}</div> : null}
+          <div className="flex shrink-0 items-center gap-2 lg:mt-3">
+            {badge}
+            <button
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              className="btn btn-ghost btn-sm lg:hidden"
+            >
+              Sign out
+            </button>
+          </div>
         </div>
 
         <nav className="relative z-[2] flex gap-1 overflow-x-auto px-3 py-3 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:py-4">

@@ -66,16 +66,16 @@ export default async function HomePage() {
       />
 
       {/* ---------------------------------------------------------- hero */}
-      <section className="mx-auto max-w-6xl px-4 pb-6 pt-16">
+      <section className="mx-auto max-w-6xl px-4 pb-4 pt-9 sm:pb-6 sm:pt-16">
         <p className="eyebrow rise text-[var(--brass)]">Surat · {total} live menus</p>
 
-        <h1 className="display rise mt-6 max-w-4xl text-[clamp(2.25rem,4.6vw,3.5rem)] leading-[0.92]">
+        <h1 className="display rise mt-6 max-w-4xl text-[length:var(--t-hero)] leading-[0.92]">
           Every menu in the city,
           <span className="foil block italic">priced and current.</span>
         </h1>
 
         <p
-          className="rise mt-7 max-w-xl text-[13.5px] leading-[1.75] text-[var(--ink-soft)]"
+          className="rise mt-5 sm:mt-7 max-w-xl text-[13.5px] leading-[1.75] text-[var(--ink-soft)]"
           style={{ animationDelay: '0.14s' }}
         >
           Browse real menus from {total} restaurants and cafés across Surat, with dish-level
@@ -83,7 +83,7 @@ export default async function HomePage() {
           change it from the pass.
         </p>
 
-        <div className="rise mt-9 flex flex-wrap gap-3" style={{ animationDelay: '0.26s' }}>
+        <div className="rise mt-6 sm:mt-9 flex flex-wrap gap-3" style={{ animationDelay: '0.26s' }}>
           <Link
             href="/city/surat"
             className="inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
@@ -98,7 +98,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <dl className="mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.08)] sm:grid-cols-4">
+        <dl className="mt-6 sm:mt-10 grid sm:mt-16 grid-cols-2 gap-px overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.08)] sm:grid-cols-4">
           {[
             [String(total), 'Venues listed'],
             [dishes.toLocaleString('en-IN'), 'Dishes priced'],
@@ -122,10 +122,10 @@ export default async function HomePage() {
       </section>
 
       {/* ------------------------------------------------------ venues */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="display text-[clamp(1.45rem,2.6vw,1.9rem)] leading-tight">
+            <h2 className="display text-[length:var(--t-h2)] leading-tight">
               Where Surat is eating
             </h2>
             <p className="mt-2 max-w-lg text-[14px] leading-relaxed text-[var(--muted)]">
@@ -140,7 +140,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <ul className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-6 sm:mt-9 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {venues.map((v, i) => (
             <li key={v.slug} className="rise" style={{ animationDelay: `${Math.min(i, 6) * 0.06}s` }}>
               <VenueCard venue={v} priority={i < 3} />
@@ -150,8 +150,8 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------------------------------------------- cuisines */}
-      <section className="mx-auto max-w-6xl px-4 py-10">
-        <h2 className="display text-[clamp(1.45rem,2.6vw,1.9rem)] leading-tight">By cuisine</h2>
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
+        <h2 className="display text-[length:var(--t-h2)] leading-tight">By cuisine</h2>
         <ul className="mt-7 flex flex-wrap gap-3">
           {cuisines.map((c) => (
             <li key={c.value}>
@@ -170,13 +170,13 @@ export default async function HomePage() {
       <AdSlot slot="home-mid" className="mx-auto max-w-6xl px-4" />
 
       {/* ------------------------------------------------------- steps */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="display text-[clamp(1.45rem,2.6vw,1.9rem)] leading-tight">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
+        <h2 className="display text-[length:var(--t-h2)] leading-tight">
           Three steps to a live card.
         </h2>
-        <ol className="mt-9 grid gap-6 sm:grid-cols-3">
+        <ol className="mt-6 sm:mt-9 grid gap-6 sm:grid-cols-3">
           {STEPS.map(([title, body], i) => (
-            <li key={title} className="glass glass-lift rounded-[20px] p-7">
+            <li key={title} className="glass glass-lift rounded-2xl p-5 sm:p-7">
               <span className="display relative z-[2] block text-[32px] leading-none text-[var(--brass)]">
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -190,9 +190,9 @@ export default async function HomePage() {
       </section>
 
       {/* ------------------------------------------------------ guides */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="display text-[clamp(1.45rem,2.6vw,1.9rem)] leading-tight">From the guides</h2>
+          <h2 className="display text-[length:var(--t-h2)] leading-tight">From the guides</h2>
           <Link
             href="/blog"
             className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--brass-lift)] hover:text-[var(--ink)]"
@@ -201,7 +201,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <ul className="mt-9 grid gap-6 sm:grid-cols-3">
+        <ul className="mt-6 sm:mt-9 grid gap-6 sm:grid-cols-3">
           {guides.map((g) => (
             <li key={g.slug}>
               <article className="glass glass-lift group h-full overflow-hidden rounded-[20px]">
@@ -237,10 +237,10 @@ export default async function HomePage() {
       </section>
 
       {/* -------------------------------------------------------- close */}
-      <section className="mx-auto max-w-6xl px-4 pb-4 pt-10">
-        <div className="glass sheen rounded-[28px] px-8 py-20 text-center">
+      <section className="mx-auto max-w-6xl px-4 pb-4 pt-8 sm:pt-10">
+        <div className="glass sheen rounded-[28px] px-5 py-12 sm:px-8 sm:py-20 text-center">
           <div className="relative z-[2]">
-            <h2 className="display foil mx-auto max-w-2xl text-[clamp(1.8rem,3.4vw,2.5rem)] leading-tight">
+            <h2 className="display foil mx-auto max-w-2xl text-[length:var(--t-h1)] leading-tight">
               Print it once. Change it forever.
             </h2>
             <p className="mx-auto mt-5 max-w-md text-[13px] leading-relaxed text-[var(--ink-soft)]">
@@ -249,7 +249,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/register"
-              className="mt-9 inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-9 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
+              className="mt-6 sm:mt-9 inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-9 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
             >
               Get started
             </Link>

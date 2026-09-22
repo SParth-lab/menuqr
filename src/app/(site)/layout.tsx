@@ -24,46 +24,77 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <span className="orb orb-d" />
       </div>
 
-      <header className="sticky top-0 z-30 px-4 pt-4">
-        <div className="glass sheen mx-auto flex max-w-6xl items-center gap-6 rounded-[18px] px-5 py-3">
-          <Link href="/" className="relative z-[2]" aria-label={`${siteName} home`}>
-            <Logo variant="full" size={28} />
-          </Link>
+      <header className="sticky top-0 z-30 px-3 pt-3 sm:px-4 sm:pt-4">
+        <div className="glass sheen mx-auto max-w-6xl rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3">
+          <div className="relative z-[2] flex min-w-0 items-center gap-3 sm:gap-4">
+            <Link href="/" aria-label={`${siteName} home`} className="min-w-0 shrink">
+              <Logo variant="full" size={26} />
+            </Link>
 
-          <nav className="relative z-[2] hidden gap-6 md:flex">
-            {NAV.map((item) => (
+            <nav className="hidden gap-6 md:flex">
+              {NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group relative text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-[var(--brass)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                </Link>
+              ))}
+            </nav>
+
+            <div className="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
               <Link
-                key={item.href}
-                href={item.href}
-                className="group relative text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--muted)] transition-colors hover:text-[var(--ink)]"
+                href="/login"
+                className="hidden text-[13px] font-medium text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)] sm:block"
               >
-                {item.label}
-                <span className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-[var(--brass)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                Sign in
               </Link>
-            ))}
-          </nav>
+              <Link href="/register" className="btn btn-primary btn-sm sm:h-10 sm:px-5">
+                List venue
+              </Link>
 
-          <div className="relative z-[2] ml-auto flex items-center gap-4">
-            <Link
-              href="/login"
-              className="hidden text-sm font-medium text-[var(--ink-soft)] transition-colors hover:text-[var(--ink)] sm:block"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/register"
-              className="inline-flex h-10 items-center rounded-full bg-[var(--claret)] px-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
-            >
-              List your venue
-            </Link>
+              {/* Disclosure rather than a state toggle: it works before hydration
+                  and closes itself on navigation. */}
+              <details className="group relative md:hidden">
+                <summary
+                  className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] [&::-webkit-details-marker]:hidden"
+                  aria-label="Open menu"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                    <path d="M4 7h16M4 12h16M4 17h16" className="group-open:hidden" />
+                    <path d="M6 6l12 12M18 6L6 18" className="hidden group-open:block" />
+                  </svg>
+                </summary>
+
+                <nav className="glass-dark absolute right-0 top-11 w-56 rounded-2xl p-2">
+                  {NAV.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block rounded-xl px-4 py-3 text-[13px] text-[var(--ink-soft)] transition-colors hover:bg-[var(--pane)] hover:text-[var(--ink)]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <Link
+                    href="/login"
+                    className="mt-1 block border-t border-[var(--line)] px-4 py-3 pt-4 text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                  >
+                    Sign in
+                  </Link>
+                </nav>
+              </details>
+            </div>
           </div>
         </div>
       </header>
 
       <div className="flex-1">{children}</div>
 
-      <footer className="mt-20 px-4 pb-6">
-        <div className="glass mx-auto max-w-6xl rounded-[24px] px-8 py-12">
+      <footer className="mt-7 sm:mt-12 px-3 pb-5 sm:mt-20 sm:px-4 sm:pb-6">
+        <div className="glass mx-auto max-w-6xl rounded-3xl px-5 py-8 sm:px-8 sm:py-12">
           <div className="relative z-[2] grid gap-10 sm:grid-cols-3">
             <div>
               <Logo variant="full" size={30} />
@@ -98,7 +129,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
 
-          <div className="relative z-[2] mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(255,255,255,0.09)] pt-6">
+          <div className="relative z-[2] mt-6 sm:mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-[rgba(255,255,255,0.09)] pt-6">
             <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--faint)]">
               © {new Date().getFullYear()} {siteName}
             </p>
