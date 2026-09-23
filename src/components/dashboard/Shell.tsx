@@ -25,14 +25,14 @@ export function Shell({
 
   return (
     <div className="relative min-h-screen lg:flex">
-      <aside className="glass-dark rake stick-top relative text-[var(--muted)] lg:sticky lg:top-0 lg:z-[2] lg:h-screen lg:w-60 lg:shrink-0 lg:overflow-y-auto">
-        <div className="relative z-[2] flex items-center justify-between gap-3 border-b border-[#1d1a16] px-5 py-5 lg:block">
+      <aside className="stick-top relative border-b border-[var(--line)] bg-[var(--navy)] text-[#9fb3d1] lg:border-b-0 lg:border-r lg:sticky lg:top-0 lg:z-[2] lg:h-screen lg:w-60 lg:shrink-0 lg:overflow-y-auto">
+        <div className="relative z-[2] flex items-center justify-between gap-3 border-b border-[rgba(255,255,255,0.1)] px-5 py-5 lg:block">
           <div className="min-w-0">
             <Link href="/" className="display foil block truncate text-xl leading-none">
               {title}
             </Link>
             {subtitle ? (
-              <p className="mt-1.5 truncate text-[11px] text-[#5f584d]">{subtitle}</p>
+              <p className="mt-1.5 truncate text-[11px] text-[#7e93b5]">{subtitle}</p>
             ) : null}
           </div>
           <div className="flex shrink-0 items-center gap-2 lg:mt-3">
@@ -60,8 +60,8 @@ export function Shell({
                 className={clsx(
                   'whitespace-nowrap border-l-2 px-5 py-2.5 text-[13px] font-medium transition-all duration-200',
                   active
-                    ? 'border-[var(--brass)] text-[#f0ebe2]'
-                    : 'border-transparent text-[#867e70] hover:border-[#4a443f] hover:pl-6 hover:text-[#f0ebe2]'
+                    ? 'border-[#5b9bff] bg-[rgba(255,255,255,0.06)] text-white'
+                    : 'border-transparent text-[var(--muted)] hover:border-[#4a443f] hover:pl-6 hover:text-[#f0ebe2]'
                 )}
               >
                 {item.label}
@@ -70,10 +70,10 @@ export function Shell({
           })}
         </nav>
 
-        <div className="relative z-[2] hidden border-t border-[#1d1a16] p-3 lg:block">
+        <div className="relative z-[2] hidden border-t border-[rgba(255,255,255,0.1)] p-3 lg:block">
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="w-full px-2 py-2 text-left text-[11px] font-bold uppercase tracking-[0.16em] text-[#5f584d] transition-colors hover:text-[#f0ebe2]"
+            className="w-full px-2 py-2 text-left text-[11px] font-bold uppercase tracking-[0.16em] text-[#9fb3d1] transition-colors hover:text-white"
           >
             Sign out
           </button>

@@ -57,7 +57,7 @@ export default async function ApprovalsPage() {
                     <p className="mt-2 text-xs text-[var(--ink-soft)]">
                       {cats} {cats === 1 ? 'category' : 'categories'}, {items} {items === 1 ? 'item' : 'items'}
                       {thin ? (
-                        <span className="ml-2 rounded bg-[rgba(176,138,60,0.13)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
+                        <span className="ml-2 rounded bg-[var(--pane-hi)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
                           thin menu
                         </span>
                       ) : null}

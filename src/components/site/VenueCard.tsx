@@ -16,12 +16,26 @@ export type VenueCardData = {
   itemCount?: number;
 };
 
-export function PriceRange({ value, className }: { value?: number; className?: string }) {
+export function PriceRange({
+  value,
+  onImage = false,
+  className,
+}: {
+  value?: number;
+  /** Over a photograph the scale has to be white, not navy. */
+  onImage?: boolean;
+  className?: string;
+}) {
   if (!value) return null;
   return (
-    <span className={clsx('tracking-[0.12em]', className)} aria-label={`Price range ${value} of 4`}>
-      <span className="text-[var(--ink)]">{'₹'.repeat(value)}</span>
-      <span className="text-[var(--faint)]">{'₹'.repeat(4 - value)}</span>
+    <span
+      className={clsx('font-semibold tracking-[0.06em]', className)}
+      aria-label={`Price range ${value} of 4`}
+    >
+      <span className={onImage ? 'text-white' : 'text-[var(--ink)]'}>{'₹'.repeat(value)}</span>
+      <span className={onImage ? 'text-white/40' : 'text-[var(--faint)]'}>
+        {'₹'.repeat(4 - value)}
+      </span>
     </span>
   );
 }
@@ -57,33 +71,35 @@ export function VenueCard({ venue, priority = false }: { venue: VenueCardData; p
           ) : (
             /* A venue that just registered has no cover yet. A monogram plate
                reads as intentional; a grey rectangle reads as broken. */
-            <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(120%_100%_at_50%_0%,var(--ground-2),var(--void))]">
+            <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(140deg,var(--pane)_0%,var(--pane-hi)_100%)]">
               <span className="display foil text-[56px] leading-none">
                 {venue.name.trim().charAt(0).toUpperCase()}
               </span>
             </div>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[rgba(7,6,10,0.92)] via-[rgba(7,6,10,0.25)] to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,31,58,0.94)_0%,rgba(11,31,58,0.78)_22%,rgba(11,31,58,0.28)_50%,transparent_85%)]" />
 
           {venue.cuisine ? (
-            <span className="glass-dark absolute left-3 top-3 rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em] text-[var(--ink)]">
+            <span className="glass-dark absolute left-3 top-3 rounded-full px-3 py-1.5 text-[10px] font-semibold tracking-[0.04em] text-white">
               {venue.cuisine}
             </span>
           ) : null}
 
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
             <div className="min-w-0">
-              <h3 className="display truncate text-[14px] leading-tight text-[var(--ink)]">
+              {/* Over a photograph, not a surface: these stay white regardless
+                  of the palette, with a scrim behind them for contrast. */}
+              <h3 className="display truncate text-[19px] leading-tight text-white">
                 {venue.name}
               </h3>
               {venue.area ? (
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
+                <p className="mt-1 truncate text-[12px] font-medium text-white/75">
                   {venue.area}
                 </p>
               ) : null}
             </div>
-            <PriceRange value={venue.priceRange} className="shrink-0 text-xs" />
+            <PriceRange value={venue.priceRange} onImage className="shrink-0 text-xs" />
           </div>
         </div>
 
@@ -92,7 +108,7 @@ export function VenueCard({ venue, priority = false }: { venue: VenueCardData; p
             {venue.tagline || 'Menu published — tap to see the full card and prices.'}
           </p>
 
-          <div className="mt-3.5 flex items-center justify-between gap-3 border-t border-[rgba(255,255,255,0.09)] pt-3.5">
+          <div className="mt-3.5 flex items-center justify-between gap-3 border-t border-[var(--line)] pt-3.5">
             {venue.rating ? (
               <Rating value={venue.rating} count={venue.reviewCount} />
             ) : (
@@ -112,7 +128,7 @@ export function VenueCard({ venue, priority = false }: { venue: VenueCardData; p
               {venue.tags.slice(0, 3).map((t) => (
                 <li
                   key={t}
-                  className="rounded-full border border-[rgba(255,255,255,0.12)] px-2.5 py-1 text-[10px] text-[var(--muted)]"
+                  className="rounded-full bg-[var(--pane)] px-2.5 py-1 text-[11px] text-[var(--muted)]"
                 >
                   {t}
                 </li>

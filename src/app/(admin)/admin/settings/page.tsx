@@ -32,19 +32,19 @@ export default async function AdminSettings() {
           <dl className="mt-3 space-y-2 text-sm">
             <div className="flex justify-between gap-4">
               <dt className="text-[var(--muted)]">Image storage</dt>
-              <dd className={remoteStorage ? 'font-medium text-[#7fc383]' : 'font-medium text-[var(--brass-lift)]'}>
+              <dd className={remoteStorage ? 'font-medium text-[var(--ok)]' : 'font-medium text-[var(--brass-lift)]'}>
                 {remoteStorage ? 'Cloudflare R2' : 'Local disk (dev only)'}
               </dd>
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-[var(--muted)]">AdSense</dt>
-              <dd className={adsense ? 'font-medium text-[#7fc383]' : 'font-medium text-[var(--muted)]'}>
+              <dd className={adsense ? 'font-medium text-[var(--ok)]' : 'font-medium text-[var(--muted)]'}>
                 {adsense ? 'Configured' : 'Not configured'}
               </dd>
             </div>
           </dl>
           {!remoteStorage ? (
-            <p className="mt-3 rounded-lg bg-[rgba(176,138,60,0.13)] px-3 py-2 text-xs text-[var(--brass-lift)]">
+            <p className="mt-3 rounded-lg bg-[var(--pane-hi)] px-3 py-2 text-xs text-[var(--brass-lift)]">
               Uploads are written to the local filesystem, which does not survive a serverless
               deploy. Set the R2 variables before going to production.
             </p>

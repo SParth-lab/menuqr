@@ -21,7 +21,7 @@ export default async function QrPage() {
       />
 
       {restaurant.status !== 'APPROVED' ? (
-        <div className="mb-5 rounded-xl border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)] p-4 text-sm text-[var(--brass-lift)]">
+        <div className="mb-5 rounded-xl border border-[var(--line-hi)] bg-[var(--pane-hi)] p-4 text-sm text-[var(--brass-lift)]">
           Your menu is not public yet, so this code will not open for guests until your
           restaurant is approved. The code itself will not change.
         </div>

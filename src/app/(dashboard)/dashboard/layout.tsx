@@ -29,9 +29,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <>
       <div className="orbfield" aria-hidden="true">
-        <span className="orb orb-a" />
-        <span className="orb orb-b" />
-        <span className="orb orb-c" />
       </div>
       <Shell
       nav={NAV}

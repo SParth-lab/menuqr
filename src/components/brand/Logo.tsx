@@ -34,9 +34,9 @@ export function Logo({ variant = 'full', size = 32, mono, className }: LogoProps
       {!mono ? (
         <defs>
           <linearGradient id={id} x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#e8ce8a" />
-            <stop offset="0.5" stopColor="#b08a3c" />
-            <stop offset="1" stopColor="#8c6b26" />
+            <stop stopColor="#3b82f6" />
+            <stop offset="0.55" stopColor="#1d4ed8" />
+            <stop offset="1" stopColor="#0b1f3a" />
           </linearGradient>
         </defs>
       ) : null}
@@ -61,9 +61,9 @@ export function Logo({ variant = 'full', size = 32, mono, className }: LogoProps
       {mark}
       <span
         className="display leading-none"
-        style={{ fontSize: size * 0.68, color: mono ?? 'var(--ink)' }}
+        style={{ fontSize: size * 0.66, color: mono ?? 'var(--ink)', fontWeight: 700 }}
       >
-        QR<span style={{ color: mono ?? 'var(--brass)' }}>4</span>Menu
+        QR<span style={{ color: mono ?? 'var(--claret)' }}>4</span>Menu
       </span>
     </span>
   );

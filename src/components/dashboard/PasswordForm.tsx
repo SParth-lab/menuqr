@@ -44,8 +44,8 @@ export function PasswordForm() {
       </Field>
       <div className="flex items-center gap-3">
         <Button type="submit" size="sm" disabled={busy}>{busy ? 'Saving…' : 'Change password'}</Button>
-        {status.kind === 'ok' ? <span className="text-xs text-[#7fc383]">{status.text}</span> : null}
-        {status.kind === 'error' ? <span className="text-xs text-[#e58a8f]">{status.text}</span> : null}
+        {status.kind === 'ok' ? <span className="text-xs text-[var(--ok)]">{status.text}</span> : null}
+        {status.kind === 'error' ? <span className="text-xs text-[var(--bad)]">{status.text}</span> : null}
       </div>
     </form>
   );

@@ -51,7 +51,7 @@ export default async function SettingsPage() {
             </div>
           </dl>
           {restaurant.status === 'REJECTED' && restaurant.rejectionReason ? (
-            <p className="mt-3 rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-xs text-[#e58a8f]">
+            <p className="mt-3 rounded-lg bg-[var(--bad-bg)] px-3 py-2 text-xs text-[var(--bad)]">
               {restaurant.rejectionReason}
             </p>
           ) : null}

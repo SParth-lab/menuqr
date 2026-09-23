@@ -46,7 +46,7 @@ export default async function DashboardHome() {
       />
 
       {restaurant.status !== 'APPROVED' ? (
-        <div className="mb-6 rounded-xl border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)] p-4">
+        <div className="mb-6 rounded-xl border border-[var(--line-hi)] bg-[var(--pane-hi)] p-4">
           <p className="text-sm font-semibold text-[var(--brass-lift)]">
             {restaurant.status === 'PENDING' && 'Your restaurant is awaiting approval'}
             {restaurant.status === 'REJECTED' && 'Your restaurant was not approved'}
@@ -79,7 +79,7 @@ export default async function DashboardHome() {
                 <span
                   className={
                     s.done
-                      ? 'inline-flex h-4 w-4 items-center justify-center rounded-full bg-[rgba(78,154,81,0.16)]0 text-[10px] text-white'
+                      ? 'inline-flex h-4 w-4 items-center justify-center rounded-full bg-[var(--ok-bg)]0 text-[10px] text-white'
                       : 'inline-block h-4 w-4 rounded-full border border-[var(--line-hi)]'
                   }
                 >

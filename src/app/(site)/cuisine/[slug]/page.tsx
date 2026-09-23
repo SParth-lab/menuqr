@@ -43,7 +43,7 @@ export default async function CuisinePage({ params }: Props) {
   const siblings = cuisines.filter((c) => c.value !== slug);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-12">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -59,7 +59,7 @@ export default async function CuisinePage({ params }: Props) {
         }}
       />
 
-      <nav aria-label="Breadcrumb" className="text-[10px] uppercase tracking-[0.2em] text-[var(--faint)]">
+      <nav aria-label="Breadcrumb" className="text-[12px] text-[var(--faint)]">
         <Link href="/" className="hover:text-[var(--brass-lift)]">Home</Link>
         <span className="mx-2">/</span>
         <Link href="/city/surat" className="hover:text-[var(--brass-lift)]">Surat</Link>
@@ -98,7 +98,7 @@ export default async function CuisinePage({ params }: Props) {
                 <li key={c.value}>
                   <Link
                     href={`/cuisine/${c.value}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.13)] px-4 py-2.5 text-[13px] text-[var(--ink-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brass)] hover:text-[var(--ink)]"
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2.5 text-[13px] text-[var(--ink-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brass)] hover:text-[var(--ink)]"
                   >
                     {c.label}
                     <span className="text-[10px] text-[var(--faint)]">{c.count}</span>

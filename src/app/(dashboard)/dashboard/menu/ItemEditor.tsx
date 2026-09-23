@@ -34,7 +34,7 @@ export function ItemEditor({
         e.preventDefault();
         onSave(values);
       }}
-      className="space-y-3 rounded-lg border border-[rgba(176,138,60,0.4)] bg-[rgba(176,138,60,0.13)]/50 p-4"
+      className="space-y-3 rounded-lg border border-[var(--line-hi)] bg-[var(--pane-hi)]/50 p-4"
     >
       <div className="grid gap-3 sm:grid-cols-2">
         <Field label="Item name">
@@ -83,7 +83,7 @@ export function ItemEditor({
             type="checkbox"
             checked={values.isVeg}
             onChange={(e) => set('isVeg', e.target.checked)}
-            className="h-4 w-4 accent-[#4e9a51]"
+            className="h-4 w-4 accent-[#067647]"
           />
           Vegetarian
         </label>
@@ -92,7 +92,7 @@ export function ItemEditor({
             type="checkbox"
             checked={values.isSpicy}
             onChange={(e) => set('isSpicy', e.target.checked)}
-            className="h-4 w-4 accent-[#c4434a]"
+            className="h-4 w-4 accent-[#b42318]"
           />
           Spicy
         </label>
@@ -101,7 +101,7 @@ export function ItemEditor({
             type="checkbox"
             checked={values.isAvailable}
             onChange={(e) => set('isAvailable', e.target.checked)}
-            className="h-4 w-4 accent-[#b08a3c]"
+            className="h-4 w-4 accent-[#1d4ed8]"
           />
           Available today
         </label>

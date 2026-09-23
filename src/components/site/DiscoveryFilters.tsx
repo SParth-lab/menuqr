@@ -134,8 +134,8 @@ function Chip({
       className={clsx(
         'inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3.5 py-2 text-xs font-medium transition-all duration-200',
         on
-          ? 'border-[var(--brass)] bg-[rgba(176,138,60,0.18)] text-[var(--ink)]'
-          : 'border-[rgba(255,255,255,0.13)] text-[var(--ink-soft)] hover:border-[rgba(255,255,255,0.3)] hover:text-[var(--ink)]'
+          ? 'border-[var(--brass)] bg-[var(--pane-hi)] text-[var(--ink)]'
+          : 'border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--line-hi)] hover:text-[var(--ink)]'
       )}
     >
       {children}

@@ -59,7 +59,7 @@ export default async function AdminRestaurantDetail({ params }: Props) {
               <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Registered</dt><dd className="text-[var(--ink-soft)]">{new Date(owner.createdAt).toLocaleDateString('en-GB')}</dd></div>
             </dl>
           ) : (
-            <p className="mt-2 text-sm text-[#e58a8f]">Owner account is missing.</p>
+            <p className="mt-2 text-sm text-[var(--bad)]">Owner account is missing.</p>
           )}
         </Card>
 
@@ -83,7 +83,7 @@ export default async function AdminRestaurantDetail({ params }: Props) {
             </div>
           </dl>
           {restaurant.rejectionReason ? (
-            <p className="mt-3 rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-xs text-[#e58a8f]">
+            <p className="mt-3 rounded-lg bg-[var(--bad-bg)] px-3 py-2 text-xs text-[var(--bad)]">
               Rejection reason: {restaurant.rejectionReason}
             </p>
           ) : null}

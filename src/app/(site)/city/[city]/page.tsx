@@ -63,7 +63,7 @@ export default async function CityPage({ params, searchParams }: Props) {
   const filtered = Boolean(sp.cuisine || sp.tag || sp.price);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-12">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -79,7 +79,7 @@ export default async function CityPage({ params, searchParams }: Props) {
         }}
       />
 
-      <nav aria-label="Breadcrumb" className="text-[10px] uppercase tracking-[0.2em] text-[var(--faint)]">
+      <nav aria-label="Breadcrumb" className="text-[12px] text-[var(--faint)]">
         <Link href="/" className="hover:text-[var(--brass-lift)]">Home</Link>
         <span className="mx-2">/</span>
         <span className="text-[var(--muted)]">{name}</span>
@@ -110,7 +110,7 @@ export default async function CityPage({ params, searchParams }: Props) {
         {filtered ? (
           <Link
             href={`/city/${city}`}
-            className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--brass-lift)] hover:text-[var(--ink)]"
+            className="text-[13px] font-semibold text-[var(--claret)] hover:text-[var(--ink)]"
           >
             Show all {total}
           </Link>
@@ -125,7 +125,7 @@ export default async function CityPage({ params, searchParams }: Props) {
             action={
               <Link
                 href={`/city/${city}`}
-                className="inline-flex h-11 items-center rounded-full bg-[var(--claret)] px-6 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--ink)] hover:bg-[var(--claret-lift)]"
+                className="inline-flex h-11 items-center rounded-full bg-[var(--claret)] px-6 text-[13px] font-semibold text-[var(--ink)] hover:bg-[var(--claret-lift)]"
               >
                 Clear filters
               </Link>
@@ -152,7 +152,7 @@ export default async function CityPage({ params, searchParams }: Props) {
               <li key={c.value}>
                 <Link
                   href={`/cuisine/${c.value}`}
-                  className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.13)] px-4 py-2.5 text-[13px] text-[var(--ink-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brass)] hover:text-[var(--ink)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2.5 text-[13px] text-[var(--ink-soft)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--brass)] hover:text-[var(--ink)]"
                 >
                   {c.label}
                   <span className="text-[10px] text-[var(--faint)]">{c.count}</span>

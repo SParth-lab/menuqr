@@ -21,9 +21,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <>
       <div className="orbfield" aria-hidden="true">
-        <span className="orb orb-a" />
-        <span className="orb orb-b" />
-        <span className="orb orb-c" />
       </div>
       <Shell nav={NAV} title="Admin console" subtitle={session.user.email}>
       {children}

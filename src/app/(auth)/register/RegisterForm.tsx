@@ -46,7 +46,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={onSubmit} className="mt-6 space-y-4">
       {error ? (
-        <p className="rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-sm text-[#e58a8f]" role="alert">
+        <p className="rounded-lg bg-[var(--bad-bg)] px-3 py-2 text-sm text-[var(--bad)]" role="alert">
           {error}
         </p>
       ) : null}

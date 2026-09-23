@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
-import { Bodoni_Moda, Archivo } from 'next/font/google';
+import { Plus_Jakarta_Sans, Archivo } from 'next/font/google';
 import './globals.css';
 
 /* Self-hosted at build time: no render-blocking request to a font CDN, which is
    the single biggest LCP lever on the public menu pages. */
-const display = Bodoni_Moda({
+const display = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  style: ['normal', 'italic'],
+  weight: ['500', '600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 });

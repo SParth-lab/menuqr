@@ -6,6 +6,8 @@ import { Post, Restaurant } from '@/models';
 import { findVenues } from '@/lib/discovery';
 import { listTemplates } from '@/templates/registry';
 import { VenueCard } from '@/components/site/VenueCard';
+import { LinkButton } from '@/components/ui';
+import { Logo } from '@/components/brand/Logo';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { AdSlot } from '@/components/ads/AdSlot';
 
@@ -66,63 +68,113 @@ export default async function HomePage() {
       />
 
       {/* ---------------------------------------------------------- hero */}
-      <section className="mx-auto max-w-6xl px-4 pb-4 pt-9 sm:pb-6 sm:pt-16">
-        <p className="eyebrow rise text-[var(--brass)]">Surat · {total} live menus</p>
+      <section className="relative">
+        <div className="orbfield" aria-hidden="true" />
 
-        <h1 className="display rise mt-6 max-w-4xl text-[length:var(--t-hero)] leading-[0.92]">
-          Every menu in the city,
-          <span className="foil block italic">priced and current.</span>
-        </h1>
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 pb-10 pt-12 sm:px-6 sm:pb-16 sm:pt-20 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:gap-16">
+          <div>
+            <p className="eyebrow rise">Surat · {total} live menus</p>
 
-        <p
-          className="rise mt-5 sm:mt-7 max-w-xl text-[13.5px] leading-[1.75] text-[var(--ink-soft)]"
-          style={{ animationDelay: '0.14s' }}
-        >
-          Browse real menus from {total} restaurants and cafés across Surat, with dish-level
-          prices and what is off tonight. Or put your own menu behind a printed code and
-          change it from the pass.
-        </p>
+            <h1 className="display rise t-hero mt-5 max-w-2xl">
+              Every menu in the city,{' '}
+              <span className="foil">priced and current.</span>
+            </h1>
 
-        <div className="rise mt-6 sm:mt-9 flex flex-wrap gap-3" style={{ animationDelay: '0.26s' }}>
-          <Link
-            href="/city/surat"
-            className="inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
-          >
-            Browse Surat
-          </Link>
-          <Link
-            href="/register"
-            className="glass glass-lift inline-flex items-center rounded-full px-8 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)]"
-          >
-            <span className="relative z-[2]">List your venue</span>
-          </Link>
-        </div>
-
-        <dl className="mt-6 sm:mt-10 grid sm:mt-16 grid-cols-2 gap-px overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.08)] sm:grid-cols-4">
-          {[
-            [String(total), 'Venues listed'],
-            [dishes.toLocaleString('en-IN'), 'Dishes priced'],
-            [String(cuisines.length), 'Cuisines'],
-            [String(templateCount), 'Menu designs'],
-          ].map(([value, label], i) => (
-            <div
-              key={label}
-              className="glass rise rounded-none p-6"
-              style={{ animationDelay: `${0.36 + i * 0.08}s` }}
+            <p
+              className="rise mt-6 max-w-xl text-[16px] leading-[1.75] text-[var(--ink-soft)]"
+              style={{ animationDelay: '0.08s' }}
             >
-              <dt className="display foil relative z-[2] text-[28px] leading-none tabular-nums">
-                {value}
-              </dt>
-              <dd className="relative z-[2] mt-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--muted)]">
-                {label}
-              </dd>
+              Browse real menus from {total} restaurants and cafés across Surat, with
+              dish-level prices and what is off tonight. Or put your own menu behind a
+              printed code and change it from the pass.
+            </p>
+
+            <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: '0.16s' }}>
+              <LinkButton href="/city/surat" size="lg">
+                Browse Surat
+              </LinkButton>
+              <LinkButton href="/register" variant="secondary" size="lg">
+                List your venue
+              </LinkButton>
             </div>
-          ))}
-        </dl>
+
+            <dl className="rise mt-12 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4" style={{ animationDelay: '0.24s' }}>
+              {[
+                [String(total), 'Venues listed'],
+                [dishes.toLocaleString('en-IN'), 'Dishes priced'],
+                [String(cuisines.length), 'Cuisines'],
+                [String(templateCount), 'Menu designs'],
+              ].map(([value, label]) => (
+                <div key={label}>
+                  <dt className="display text-[26px] leading-none tabular-nums text-[var(--claret)]">
+                    {value}
+                  </dt>
+                  <dd className="mt-2 text-[12px] font-medium text-[var(--muted)]">{label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          {/* The product, shown rather than described. */}
+          <div className="rise relative hidden lg:block" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute -inset-6 rounded-[28px] bg-[linear-gradient(150deg,var(--pane-hi),transparent_60%)]" />
+
+            <div className="glass relative mx-auto w-[300px] rounded-[26px] p-5 shadow-[var(--shadow-lg)]">
+              <div className="border-b border-[var(--line)] pb-4 text-center">
+                <p className="display text-[19px] text-[var(--ink)]">Tamarind &amp; Rye</p>
+                <p className="mt-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">
+                  Modern Indian Bakery
+                </p>
+              </div>
+
+              <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--claret)]">
+                Small Plates
+              </p>
+
+              <ul className="mt-3 space-y-3.5">
+                {[
+                  ['Kejriwal Toast', '280', true],
+                  ['Lamb Kheema Pav', '460', false],
+                  ['Rose Cardamom Latte', '180', true],
+                ].map(([name, price, veg]) => (
+                  <li key={name as string} className="flex items-baseline gap-2">
+                    <span
+                      className="inline-flex h-2.5 w-2.5 shrink-0 items-center justify-center self-center rounded-[2px] border"
+                      style={{ borderColor: veg ? '#067647' : '#b42318' }}
+                      aria-label={veg ? 'Vegetarian' : 'Non-vegetarian'}
+                    >
+                      <span
+                        className="h-1 w-1 rounded-full"
+                        style={{ background: veg ? '#067647' : '#b42318' }}
+                      />
+                    </span>
+                    <span className="text-[13px] font-medium text-[var(--ink)]">{name}</span>
+                    <span aria-hidden="true" className="-translate-y-1 flex-1 border-b border-dotted border-[var(--line-hi)]" />
+                    <span className="text-[13px] font-semibold tabular-nums text-[var(--ink)]">
+                      ₹{price}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex items-center gap-3 rounded-xl bg-[var(--pane)] p-3">
+                <span className="scanner flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--ground)] ring-1 ring-[var(--line)]">
+                  <Logo variant="mark" size={22} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold text-[var(--ink)]">One printed code</p>
+                  <p className="truncate text-[11px] text-[var(--muted)]">
+                    qr4menu.app/menu/tamarind-and-rye
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ------------------------------------------------------ venues */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="display text-[length:var(--t-h2)] leading-tight">
@@ -134,7 +186,7 @@ export default async function HomePage() {
           </div>
           <Link
             href="/city/surat"
-            className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--brass-lift)] transition-colors hover:text-[var(--ink)]"
+            className="text-[13px] font-semibold text-[var(--claret)] transition-colors hover:text-[var(--ink)]"
           >
             All {total} venues →
           </Link>
@@ -150,7 +202,7 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------------------------------------------- cuisines */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         <h2 className="display text-[length:var(--t-h2)] leading-tight">By cuisine</h2>
         <ul className="mt-7 flex flex-wrap gap-3">
           {cuisines.map((c) => (
@@ -170,7 +222,7 @@ export default async function HomePage() {
       <AdSlot slot="home-mid" className="mx-auto max-w-6xl px-4" />
 
       {/* ------------------------------------------------------- steps */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <h2 className="display text-[length:var(--t-h2)] leading-tight">
           Three steps to a live card.
         </h2>
@@ -190,12 +242,12 @@ export default async function HomePage() {
       </section>
 
       {/* ------------------------------------------------------ guides */}
-      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-10 sm:py-16">
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="display text-[length:var(--t-h2)] leading-tight">From the guides</h2>
           <Link
             href="/blog"
-            className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--brass-lift)] hover:text-[var(--ink)]"
+            className="text-[13px] font-semibold text-[var(--claret)] hover:text-[var(--ink)]"
           >
             All guides →
           </Link>
@@ -215,7 +267,7 @@ export default async function HomePage() {
                         sizes="360px"
                         className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(7,6,10,0.7)] to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(11,31,58,0.68)] to-transparent" />
                     </div>
                   ) : null}
                   <div className="flex flex-1 flex-col p-5">
@@ -225,7 +277,7 @@ export default async function HomePage() {
                     <p className="mt-2.5 line-clamp-2 text-[13px] leading-relaxed text-[var(--muted)]">
                       {g.excerpt}
                     </p>
-                    <p className="mt-auto pt-4 text-[10px] uppercase tracking-[0.14em] text-[var(--faint)]">
+                    <p className="mt-auto pt-4 text-[12px] text-[var(--faint)]">
                       {g.readMinutes ?? 5} min read
                     </p>
                   </div>
@@ -237,7 +289,7 @@ export default async function HomePage() {
       </section>
 
       {/* -------------------------------------------------------- close */}
-      <section className="mx-auto max-w-6xl px-4 pb-4 pt-8 sm:pt-10">
+      <section className="mx-auto max-w-6xl px-4 pb-4 pt-10 sm:px-6">
         <div className="glass sheen rounded-[28px] px-5 py-12 sm:px-8 sm:py-20 text-center">
           <div className="relative z-[2]">
             <h2 className="display foil mx-auto max-w-2xl text-[length:var(--t-h1)] leading-tight">
@@ -249,7 +301,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/register"
-              className="mt-6 sm:mt-9 inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-9 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
+              className="mt-6 sm:mt-9 inline-flex h-13 items-center rounded-full bg-[var(--claret)] px-9 py-4 text-[13px] font-semibold text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
             >
               Get started
             </Link>

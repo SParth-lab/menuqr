@@ -121,10 +121,10 @@ export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  APPROVED: 'border-[rgba(78,154,81,0.45)] text-[#7fc383]',
-  PUBLISHED: 'border-[rgba(78,154,81,0.45)] text-[#7fc383]',
-  PENDING: 'border-[rgba(176,138,60,0.5)] text-[var(--brass-lift)]',
-  REJECTED: 'border-[rgba(196,67,74,0.45)] text-[#e58a8f]',
+  APPROVED: 'border-[rgba(6,118,71,0.4)] text-[var(--ok)]',
+  PUBLISHED: 'border-[rgba(6,118,71,0.4)] text-[var(--ok)]',
+  PENDING: 'border-[rgba(37,99,235,0.45)] text-[var(--brass-lift)]',
+  REJECTED: 'border-[rgba(180,35,24,0.4)] text-[var(--bad)]',
   SUSPENDED: 'border-[var(--line)] text-[var(--muted)]',
   DRAFT: 'border-[var(--line)] text-[var(--muted)]',
 };
@@ -138,7 +138,7 @@ export function StatusBadge({ status }: { status: string }) {
         STATUS_STYLES[status] ?? 'border-[var(--line)] text-[var(--muted)]'
       )}
     >
-      {live ? <span className="star h-1 w-1 rounded-full bg-[#4e9a51]" /> : null}
+      {live ? <span className="star h-1 w-1 rounded-full bg-[var(--ok)]" /> : null}
       {status.toLowerCase()}
     </span>
   );

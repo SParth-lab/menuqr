@@ -139,7 +139,7 @@ export function DesignStudio({
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold text-[var(--ink)]">Customise</h2>
             {design.isCustom ? (
-              <span className="rounded-full bg-[rgba(176,138,60,0.13)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
+              <span className="rounded-full bg-[var(--pane-hi)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--brass-lift)]">
                 Custom
               </span>
             ) : null}
@@ -202,11 +202,11 @@ export function DesignStudio({
 
           <div className="flex flex-wrap gap-4 pt-1">
             <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
-              <input type="checkbox" checked={theme.showImages} onChange={(e) => patch('showImages', e.target.checked)} className="h-4 w-4 accent-[#b08a3c]" />
+              <input type="checkbox" checked={theme.showImages} onChange={(e) => patch('showImages', e.target.checked)} className="h-4 w-4 accent-[#1d4ed8]" />
               Show item photos
             </label>
             <label className="flex items-center gap-2 text-sm text-[var(--ink-soft)]">
-              <input type="checkbox" checked={theme.showDividers} onChange={(e) => patch('showDividers', e.target.checked)} className="h-4 w-4 accent-[#b08a3c]" />
+              <input type="checkbox" checked={theme.showDividers} onChange={(e) => patch('showDividers', e.target.checked)} className="h-4 w-4 accent-[#1d4ed8]" />
               Show dividers
             </label>
           </div>

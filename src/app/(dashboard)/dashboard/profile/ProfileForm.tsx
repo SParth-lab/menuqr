@@ -171,8 +171,8 @@ export function ProfileForm({ initial, slug }: { initial: ProfileValues; slug: s
         <Button type="submit" disabled={busy}>
           {busy ? 'Saving…' : 'Save changes'}
         </Button>
-        {status.kind === 'ok' ? <span className="text-sm text-[#7fc383]">{status.text}</span> : null}
-        {status.kind === 'error' ? <span className="text-sm text-[#e58a8f]">{status.text}</span> : null}
+        {status.kind === 'ok' ? <span className="text-sm text-[var(--ok)]">{status.text}</span> : null}
+        {status.kind === 'error' ? <span className="text-sm text-[var(--bad)]">{status.text}</span> : null}
       </div>
     </form>
   );

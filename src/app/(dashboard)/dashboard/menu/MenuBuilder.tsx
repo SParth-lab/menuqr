@@ -164,7 +164,7 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
   return (
     <div className="max-w-3xl space-y-5">
       {error ? (
-        <p className="rounded-lg bg-[rgba(155,32,40,0.2)] px-3 py-2 text-sm text-[#e58a8f]" role="alert">{error}</p>
+        <p className="rounded-lg bg-[var(--bad-bg)] px-3 py-2 text-sm text-[var(--bad)]" role="alert">{error}</p>
       ) : null}
 
       <Card>
@@ -220,7 +220,7 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                     <Button size="sm" variant="ghost" onClick={() => toggleCategory(category.id, !category.isVisible)}>
                       {category.isVisible ? 'Hide' : 'Show'}
                     </Button>
-                    <Button size="sm" variant="ghost" className="!text-[#e58a8f]" onClick={() => deleteCategory(category.id)}>Delete</Button>
+                    <Button size="sm" variant="ghost" className="!text-[var(--bad)]" onClick={() => deleteCategory(category.id)}>Delete</Button>
                   </div>
                 </>
               )}
@@ -257,7 +257,7 @@ export function MenuBuilder({ currency, initialCategories, initialItems }: Props
                       {item.isAvailable ? 'Mark out' : 'Mark in'}
                     </Button>
                     <Button size="sm" variant="ghost" onClick={() => setEditingItem({ ...item })}>Edit</Button>
-                    <Button size="sm" variant="ghost" className="!text-[#e58a8f]" onClick={() => deleteItem(item.id)}>Delete</Button>
+                    <Button size="sm" variant="ghost" className="!text-[var(--bad)]" onClick={() => deleteItem(item.id)}>Delete</Button>
                   </div>
                 </li>
               ))}

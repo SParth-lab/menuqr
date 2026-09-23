@@ -41,7 +41,7 @@ export default async function BlogIndex({ searchParams }: Props) {
   const [lead, ...rest] = posts;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-8 pt-8 sm:pb-10 sm:pt-12">
+    <main className="mx-auto max-w-6xl px-4 pb-10 pt-8 sm:px-6 sm:pb-14 sm:pt-12">
       <header className="max-w-3xl">
         <p className="eyebrow rise text-[var(--brass)]">{all.length} guides</p>
         <h1 className="display rise mt-4 text-[length:var(--t-h1)] leading-[0.95]">
@@ -59,8 +59,8 @@ export default async function BlogIndex({ searchParams }: Props) {
           href="/blog"
           className={`inline-flex shrink-0 items-center rounded-full border px-4 py-2 text-xs transition-colors ${
             !tag
-              ? 'border-[var(--brass)] bg-[rgba(176,138,60,0.18)] text-[var(--ink)]'
-              : 'border-[rgba(255,255,255,0.13)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
+              ? 'border-[var(--brass)] bg-[var(--pane-hi)] text-[var(--ink)]'
+              : 'border-[var(--line)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
           }`}
         >
           All
@@ -73,8 +73,8 @@ export default async function BlogIndex({ searchParams }: Props) {
               href={`/blog?tag=${encodeURIComponent(t)}`}
               className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-xs transition-colors ${
                 tag === t
-                  ? 'border-[var(--brass)] bg-[rgba(176,138,60,0.18)] text-[var(--ink)]'
-                  : 'border-[rgba(255,255,255,0.13)] text-[var(--ink-soft)] hover:border-[rgba(255,255,255,0.3)] hover:text-[var(--ink)]'
+                  ? 'border-[var(--brass)] bg-[var(--pane-hi)] text-[var(--ink)]'
+                  : 'border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--line-hi)] hover:text-[var(--ink)]'
               }`}
             >
               {t}
@@ -91,7 +91,7 @@ export default async function BlogIndex({ searchParams }: Props) {
             action={
               <Link
                 href="/blog"
-                className="inline-flex h-11 items-center rounded-full bg-[var(--claret)] px-6 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--ink)] hover:bg-[var(--claret-lift)]"
+                className="inline-flex h-11 items-center rounded-full bg-[var(--claret)] px-6 text-[13px] font-semibold text-[var(--ink)] hover:bg-[var(--claret-lift)]"
               >
                 All guides
               </Link>
@@ -114,7 +114,7 @@ export default async function BlogIndex({ searchParams }: Props) {
                     className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
                   />
                 ) : null}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(7,6,10,0.55)]" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(11,31,58,0.5)]" />
               </div>
 
               <div className="relative z-[2] flex flex-col justify-center p-5 sm:p-8 lg:p-10">
@@ -127,7 +127,7 @@ export default async function BlogIndex({ searchParams }: Props) {
                 <p className="mt-4 text-[13px] leading-relaxed text-[var(--ink-soft)]">
                   {lead.excerpt}
                 </p>
-                <p className="mt-6 text-[11px] uppercase tracking-[0.16em] text-[var(--faint)]">
+                <p className="mt-6 text-[12px] text-[var(--faint)]">
                   {dateLabel(lead.publishedAt)} · {lead.readMinutes ?? 5} min read
                 </p>
               </div>
@@ -151,7 +151,7 @@ export default async function BlogIndex({ searchParams }: Props) {
                           className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
                         />
                       ) : null}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(7,6,10,0.75)] to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(11,31,58,0.72)] to-transparent" />
                       <span className="glass-dark absolute left-3 top-3 rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.16em]">
                         {p.type === 'GUIDE' ? 'Guide' : 'Essay'}
                       </span>
@@ -165,7 +165,7 @@ export default async function BlogIndex({ searchParams }: Props) {
                         {p.excerpt}
                       </p>
 
-                      <div className="mt-auto flex items-center justify-between gap-3 border-t border-[rgba(255,255,255,0.09)] pt-4 text-[10px] uppercase tracking-[0.14em] text-[var(--faint)]">
+                      <div className="mt-auto flex items-center justify-between gap-3 border-t border-[var(--line)] pt-4 text-[12px] text-[var(--faint)]">
                         <span>{dateLabel(p.publishedAt)}</span>
                         <span>{p.readMinutes ?? 5} min</span>
                       </div>

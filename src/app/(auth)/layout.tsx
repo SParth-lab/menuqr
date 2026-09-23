@@ -7,8 +7,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="relative flex min-h-screen flex-col">
       <div className="orbfield" aria-hidden="true">
-        <span className="orb orb-a" />
-        <span className="orb orb-c" />
       </div>
 
       <header className="stick-top px-5 py-6">

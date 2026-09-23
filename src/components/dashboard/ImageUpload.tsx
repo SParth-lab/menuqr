@@ -81,7 +81,7 @@ export function ImageUpload({
       </div>
 
       {hint ? <p className="mt-1 text-[11px] text-[var(--muted)]">{hint}</p> : null}
-      {error ? <p className="mt-1 text-[11px] text-[#e58a8f]">{error}</p> : null}
+      {error ? <p className="mt-1 text-[11px] text-[var(--bad)]">{error}</p> : null}
     </div>
   );
 }

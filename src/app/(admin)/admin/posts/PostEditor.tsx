@@ -134,11 +134,11 @@ export function PostEditor({ initial }: { initial: PostValues }) {
               {busy ? 'Saving…' : values.id ? 'Save page' : 'Create page'}
             </Button>
             {values.id ? (
-              <Button type="button" variant="ghost" className="w-full !text-[#e58a8f]" onClick={remove} disabled={busy}>
+              <Button type="button" variant="ghost" className="w-full !text-[var(--bad)]" onClick={remove} disabled={busy}>
                 Delete page
               </Button>
             ) : null}
-            {error ? <p className="text-xs text-[#e58a8f]">{error}</p> : null}
+            {error ? <p className="text-xs text-[var(--bad)]">{error}</p> : null}
           </div>
         </Card>
 

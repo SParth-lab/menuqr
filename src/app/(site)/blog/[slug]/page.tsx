@@ -84,7 +84,7 @@ export default async function BlogPost({ params }: Props) {
       />
 
       <div className="mx-auto max-w-3xl px-4 pt-12">
-        <nav aria-label="Breadcrumb" className="text-[10px] uppercase tracking-[0.2em] text-[var(--faint)]">
+        <nav aria-label="Breadcrumb" className="text-[12px] text-[var(--faint)]">
           <Link href="/" className="hover:text-[var(--brass-lift)]">Home</Link>
           <span className="mx-2">/</span>
           <Link href="/blog" className="hover:text-[var(--brass-lift)]">Guides</Link>
@@ -96,7 +96,7 @@ export default async function BlogPost({ params }: Props) {
               <li key={t}>
                 <Link
                   href={`/blog?tag=${encodeURIComponent(t)}`}
-                  className="inline-flex rounded-full border border-[rgba(255,255,255,0.13)] px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] transition-colors hover:border-[var(--brass)] hover:text-[var(--ink)]"
+                  className="inline-flex rounded-full border border-[var(--line)] px-3 py-1.5 text-[12px] text-[var(--muted)] transition-colors hover:border-[var(--brass)] hover:text-[var(--ink)]"
                 >
                   {t}
                 </Link>
@@ -115,7 +115,7 @@ export default async function BlogPost({ params }: Props) {
           </p>
         ) : null}
 
-        <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-[rgba(255,255,255,0.09)] py-4 text-[11px] uppercase tracking-[0.16em] text-[var(--faint)]">
+        <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-[var(--line)] py-4 text-[12px] text-[var(--faint)]">
           <span className="text-[var(--muted)]">{post.author}</span>
           {published ? <span>{published}</span> : null}
           <span>{post.readMinutes ?? 5} min read</span>
@@ -145,7 +145,7 @@ export default async function BlogPost({ params }: Props) {
       <div className="mx-auto max-w-2xl px-4">
         <AdSlot slot="blog-post-bottom" />
 
-        <aside className="glass mt-5 sm:mt-7 sm:mt-12 rounded-3xl p-5 sm:p-8">
+        <aside className="glass mt-5 sm:mt-12 rounded-3xl p-5 sm:p-8">
           <div className="relative z-[2]">
             <h2 className="display text-lg">Put your own menu behind a code</h2>
             <p className="mt-3 text-[14px] leading-relaxed text-[var(--ink-soft)]">
@@ -154,7 +154,7 @@ export default async function BlogPost({ params }: Props) {
             </p>
             <Link
               href="/register"
-              className="mt-6 inline-flex h-12 items-center rounded-full bg-[var(--claret)] px-7 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
+              className="mt-6 inline-flex h-12 items-center rounded-full bg-[var(--claret)] px-7 text-[13px] font-semibold text-[var(--ink)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--claret-lift)]"
             >
               Get started free
             </Link>
@@ -185,7 +185,7 @@ export default async function BlogPost({ params }: Props) {
                       <h3 className="display text-[13.5px] leading-snug transition-colors group-hover:text-[var(--brass-lift)]">
                         {r.title}
                       </h3>
-                      <p className="mt-auto pt-3 text-[10px] uppercase tracking-[0.14em] text-[var(--faint)]">
+                      <p className="mt-auto pt-3 text-[12px] text-[var(--faint)]">
                         {r.readMinutes ?? 5} min read
                       </p>
                     </div>
