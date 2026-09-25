@@ -1,51 +1,62 @@
-import clsx from 'clsx';
+'use client';
 
-const CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+import { useEffect, useRef } from 'react';
+import clsx from 'clsx';
+import { ADSENSE_CLIENT, adsEnabled, slotId, type Placement } from '@/lib/ads';
+
+declare global {
+  interface Window {
+    adsbygoogle?: unknown[];
+  }
+}
 
 export type AdSlotProps = {
-  slot?: string;
+  slot?: Placement;
   format?: 'auto' | 'fluid' | 'rectangle';
   className?: string;
   label?: boolean;
 };
 
 /**
- * AdSense seam. Renders nothing until NEXT_PUBLIC_ADSENSE_CLIENT is set, so the
- * layout can be positioned now and monetised after approval without touching pages.
+ * Renders nothing unless both the publisher id and a real numeric unit id are
+ * configured, so an unconfigured placement leaves no empty box on the page.
  *
- * Deliberately never used on /menu/[slug] — a diner's menu stays ad-free.
+ * Deliberately never used on /menu/[slug]: a diner reading a menu at the table
+ * is not the audience, and AdSense discourages ads on that kind of utility page.
  */
 export function AdSlot({ slot, format = 'auto', className, label = true }: AdSlotProps) {
-  if (!CLIENT || !slot) return null;
+  const pushed = useRef(false);
+  const id = slot ? slotId(slot) : undefined;
+  const show = adsEnabled && Boolean(id);
+
+  useEffect(() => {
+    if (!show || pushed.current) return;
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      // React 18 mounts effects twice in dev; a second push logs an AdSense error.
+      pushed.current = true;
+    } catch {
+      /* Blocked by an extension, or the script has not landed. Nothing to do. */
+    }
+  }, [show]);
+
+  if (!show) return null;
 
   return (
-    <aside className={clsx('my-8', className)} aria-label="Advertisement">
+    <aside className={clsx('my-10', className)} aria-label="Advertisement">
       {label ? (
-        <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-[var(--faint)]">
+        <p className="mb-2 text-center text-[10px] uppercase tracking-[0.14em] text-[var(--faint)]">
           Advertisement
         </p>
       ) : null}
       <ins
-        className="adsbygoogle block"
+        className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client={CLIENT}
-        data-ad-slot={slot}
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={id}
         data-ad-format={format}
         data-full-width-responsive="true"
       />
-      <script dangerouslySetInnerHTML={{ __html: '(adsbygoogle = window.adsbygoogle || []).push({});' }} />
     </aside>
-  );
-}
-
-/** Loaded once in the content-site layout, never in the menu layout. */
-export function AdSenseScript() {
-  if (!CLIENT) return null;
-  return (
-    <script
-      async
-      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CLIENT}`}
-      crossOrigin="anonymous"
-    />
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans, Archivo } from 'next/font/google';
+import { ADSENSE_CLIENT, adsEnabled } from '@/lib/ads';
 import './globals.css';
 
 /* Self-hosted at build time: no render-blocking request to a font CDN, which is
@@ -37,7 +38,25 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+
+        {/* One AdSense tag for the whole app, in the root layout so it is present
+            on every page — Google has to find it site-wide to verify the site.
+            A plain <script async> rather than next/script: React 19 hoists it into
+            <head>, which is where Google documents it, and it appears literally in
+            the server-rendered HTML instead of being injected by a loader. It runs
+            once per document load, and client-side navigation does not unmount the
+            root layout, so it is never loaded twice. Ad *units* are still kept off
+            /menu/[slug]; see AdSlot. */}
+        {adsEnabled ? (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        ) : null}
+      </body>
     </html>
   );
 }

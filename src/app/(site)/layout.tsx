@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { AdSenseScript } from '@/components/ads/AdSlot';
 import { Suspense } from 'react';
 import { Logo } from '@/components/brand/Logo';
 import { NavProgress } from '@/components/site/NavProgress';
@@ -16,7 +15,6 @@ const NAV = [
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <AdSenseScript />
       {/* useSearchParams needs a boundary, or the whole route opts out of
           static rendering. */}
       <Suspense fallback={null}>
