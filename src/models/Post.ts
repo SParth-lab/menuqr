@@ -33,7 +33,7 @@ const PostSchema = new Schema<IPost>(
     metaDescription: String,
     coverUrl: String,
     tags: { type: [String], default: [] },
-    author: { type: String, default: 'QR4Menu Editorial' },
+    author: { type: String, default: 'QR4Blueprint Editorial' },
     readMinutes: Number,
     status: { type: String, enum: POST_STATUSES, default: 'DRAFT' },
     publishedAt: Date,

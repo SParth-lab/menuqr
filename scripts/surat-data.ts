@@ -1,5 +1,5 @@
 /**
- * Demonstration dataset for QR4Menu.
+ * Demonstration dataset for QR4Blueprint.
  *
  * Venue names, neighbourhoods and cuisines are real Surat establishments, used
  * illustratively so the product demos against recognisable content instead of
@@ -663,7 +663,7 @@ export const SEED_POSTS: SeedPost[] = [
       'Step-by-step guide to building a digital restaurant menu: category structure, descriptions, pricing, photography and QR placement.',
     tags: ['Getting started', 'Menu design', 'QR codes'],
     cover: IMG('photo-1495474472287-4d71bcdd2085'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `A digital menu is your menu on a web page, opened by scanning a code at the table. It costs nothing to reprint and it can be corrected between two orders.
 
 ## Start with the category structure
@@ -722,7 +722,7 @@ Test the scan yourself, at the table, in your dining room's actual lighting, bef
       'The practical case for QR menus: instant price changes, no reprinting cost, out-of-stock control, and menu analytics.',
     tags: ['Operations', 'QR codes', 'Costs'],
     cover: IMG('photo-1517686469429-8bdb88b9f907'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Most restaurants first adopted QR menus for hygiene reasons. Most kept them for reasons that have nothing to do with hygiene.
 
 ## Price changes stop being an event
@@ -761,7 +761,7 @@ Keep a few printed copies. Make sure the page loads in under two seconds on mobi
       'A guide to eating in Surat by neighbourhood and season: Surti street food, Gujarati thali, winter undhiyu and ponk, and the ghari tradition.',
     tags: ['Surat', 'City guide', 'Surti food', 'Seasonal'],
     cover: IMG('photo-1596797038530-2c107229654b'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Surat has a reputation for eating well that it did not manufacture. The city runs on farsan counters that open at six, a thali trade that assumes you did not eat breakfast, and a winter menu that briefly makes every other city look under-supplied.
 
 ## Locho is the local argument
@@ -818,7 +818,7 @@ A thali at lunch, locho in the late afternoon, and ghari to take away. That is t
       'How to present prices on a restaurant menu: placement, typography, currency symbols, decimals and price anchoring, with practical examples.',
     tags: ['Menu design', 'Pricing', 'Typography'],
     cover: IMG('photo-1521017432531-fbd92d768814'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Pricing is a design decision before it is a commercial one. The same number reads differently depending on where it sits and what it is set in.
 
 ## Drop the trailing zeros
@@ -864,7 +864,7 @@ The whole argument for a digital menu is that the first principle stops being ex
       'Practical food photography for restaurant menus using a phone: light, angle, which dishes to shoot, and how many photographs a menu should carry.',
     tags: ['Photography', 'Menu design', 'Getting started'],
     cover: IMG('photo-1495195134817-aeb325a55b65'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `You do not need a photographer for a digital menu. You need one window, one morning, and the discipline to shoot fewer dishes than you think.
 
 ## Shoot fewer dishes
@@ -911,7 +911,7 @@ A menu is opened on mobile data, often on a weak signal, by someone who is hungr
       'How the green dot and brown triangle marks work on Indian food menus, what FSSAI requires, and how to apply them on a digital menu.',
     tags: ['India', 'Compliance', 'Menu design'],
     cover: IMG('photo-1516684732162-798a0062be99'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `The green dot in a green square and the brown mark in a brown square are among the most-read pieces of design in India. On a menu they are not decoration and not optional.
 
 ## What the marks mean
@@ -950,7 +950,7 @@ The two-mark system does not cover Jain preparations, veganism or allergens, and
       'How large to print a restaurant QR code, where to place it, which file format to send the printer, and the mistakes that stop codes scanning.',
     tags: ['QR codes', 'Printing', 'Getting started'],
     cover: IMG('photo-1541167760496-1628856ab772'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `A QR code that does not scan on the first try costs more than a printed menu, because the diner now has to ask for one.
 
 ## Size
@@ -995,7 +995,7 @@ Scan it yourself, at the table, in your dining room's actual lighting, on one iP
       'How to run a seasonal restaurant menu — winter specials, limited runs and sold-out items — without reprinting, using a digital menu.',
     tags: ['Seasonal', 'Operations', 'Surti food'],
     cover: IMG('photo-1601050690597-df0568f70950'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `In Gujarat the winter menu is not a marketing exercise. Undhiyu, ponk and ubadiyu are available when the produce is available and not one week longer, and every kitchen in the state reorganises around that for about eight weeks.
 
 ## The printed-menu problem
@@ -1038,7 +1038,7 @@ That only works if you actually remove it. The kitchens that keep undhiyu on the
       'Create a digital restaurant menu with categories, photographs, prices and dietary marks. Get a unique QR code. Guests need no app and no account.',
     tags: ['Restaurants', 'Getting started'],
     cover: IMG('photo-1517248135467-4c7edcad34c4'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `A restaurant menu does more work than a café menu. It carries more items, more categories and more dietary information, and it is read by a table of people passing one phone around.
 
 ## What a restaurant menu needs
@@ -1068,7 +1068,7 @@ Nothing, and that is the whole argument. A price correction, a dish taken off, a
       'Create a cafe menu online with a QR code. Coffee, bakery and dessert categories with photographs and prices, on a mobile-first page.',
     tags: ['Cafes', 'Getting started'],
     cover: IMG('photo-1559339352-11d035aa65de'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Café menus are shorter than restaurant menus and read far more often per seat. Somebody ordering a flat white does not want to scroll past a starters section.
 
 ## What works for a café
@@ -1098,7 +1098,7 @@ Cafés have two scan points and they need different treatment. A counter code is
       'Create a QR code menu for your restaurant. Download as PNG or SVG and print for tables. Guests scan and see your live menu, no app required.',
     tags: ['QR codes', 'Restaurants'],
     cover: IMG('photo-1541167760496-1628856ab772'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Your QR code points at one address: your menu page. Change the menu and the code keeps working, because the code never changes — only the page behind it does.
 
 ## Where to put the code
@@ -1131,7 +1131,7 @@ PNG suits stickers and digital use. SVG is a vector, so use it whenever a printe
       'Generate a QR code menu for your cafe or coffee shop. Print for counters and tables. Update drinks and prices at any time.',
     tags: ['QR codes', 'Cafes'],
     cover: IMG('photo-1445116572660-236099ec97a0'),
-    author: 'QR4Menu Editorial',
+    author: 'QR4Blueprint Editorial',
     bodyMd: `Cafés have two scan points, and they need different things.
 
 ## At the counter

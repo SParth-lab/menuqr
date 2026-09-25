@@ -13,11 +13,11 @@ import { AdSlot } from '@/components/ads/AdSlot';
 
 export const revalidate = 1800;
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 export const metadata: Metadata = {
-  /* absolute: the root layout's `%s | QR4Menu` template would otherwise stamp
+  /* absolute: the root layout's `%s | QR4Blueprint` template would otherwise stamp
      the brand on a title that already carries it. */
   title: { absolute: `${siteName} — Digital QR Menus for Restaurants & Cafes` },
   description:
@@ -164,7 +164,7 @@ export default async function HomePage() {
                 <div className="min-w-0">
                   <p className="text-[11px] font-semibold text-[var(--ink)]">One printed code</p>
                   <p className="truncate text-[11px] text-[var(--muted)]">
-                    qr4menu.app/menu/tamarind-and-rye
+                    qr4blueprint.app/menu/tamarind-and-rye
                   </p>
                 </div>
               </div>

@@ -379,7 +379,7 @@ export function MenuFooter({ restaurant }: { restaurant: PublicRestaurant }) {
       <p className="mt-7 text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--mq-muted)' }}>
         Menu by{' '}
         <Link href="/" className="underline underline-offset-4">
-          {process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu'}
+          {process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint'}
         </Link>
       </p>
     </footer>

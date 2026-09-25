@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { AdSlot } from '@/components/ads/AdSlot';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 
 export type LandingExample = { name: string; slug: string; city?: string };
 

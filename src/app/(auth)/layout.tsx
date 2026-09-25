@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/brand/Logo';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (

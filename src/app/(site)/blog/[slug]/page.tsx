@@ -11,7 +11,7 @@ import { AdSlot } from '@/components/ads/AdSlot';
 export const revalidate = 1800;
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 
 type Props = { params: Promise<{ slug: string }> };
 

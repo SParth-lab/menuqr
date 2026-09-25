@@ -1,4 +1,4 @@
-# QR4Menu
+# QR4Blueprint
 
 Digital menu + QR code product for restaurants and cafes, built so that public menu
 pages are cheap to serve and indexable at scale.
@@ -16,7 +16,7 @@ npm run dev
 
 | Account | Email | Password |
 |---|---|---|
-| Super admin | `admin@qr4menu.local` | `Admin@12345` |
+| Super admin | `admin@qr4blueprint.local` | `Admin@12345` |
 | Demo owner | `owner@demo.local` | `Owner@12345` |
 
 Demo menus: <http://localhost:3000/city/surat> — 24 Surat venues across 10 cuisines.
@@ -26,9 +26,9 @@ Ratings, review counts, opening hours and prices are generated sample figures,
 not sourced from those businesses, and phone numbers are deliberately omitted.
 Every record carries `isSampleData: true`, and the site footer says so.
 
-Owner logins follow `owner+<slug>@qr4menu.demo` / `Owner@12345`.
+Owner logins follow `owner+<slug>@qr4blueprint.demo` / `Owner@12345`.
 
-If you seeded before the QR4Menu rename, `npm run migrate:emails` moves the
+If you seeded before the QR4Blueprint rename, `npm run migrate:emails` moves the
 seeded accounts off the old `@menuqr.*` domain. Real signups are untouched.
 
 `npm run db:indexes` syncs indexes deliberately (never on boot — an index build can

@@ -51,7 +51,7 @@ async function seedTemplates() {
 }
 
 async function seedAdmin() {
-  const email = (process.env.SEED_ADMIN_EMAIL || 'admin@qr4menu.local').toLowerCase();
+  const email = (process.env.SEED_ADMIN_EMAIL || 'admin@qr4blueprint.local').toLowerCase();
   const password = process.env.SEED_ADMIN_PASSWORD || 'Admin@12345';
 
   if (await User.findOne({ email }).select('_id').lean()) {
@@ -83,7 +83,7 @@ function seeded(slug: string) {
 async function seedVenue(venue: SeedVenue, index: number) {
   if (await Restaurant.findOne({ slug: venue.slug }).select('_id').lean()) return false;
 
-  const email = `owner+${venue.slug}@qr4menu.demo`;
+  const email = `owner+${venue.slug}@qr4blueprint.demo`;
   const owner =
     (await User.findOne({ email })) ??
     (await User.create({

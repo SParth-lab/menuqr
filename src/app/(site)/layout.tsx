@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import { Logo } from '@/components/brand/Logo';
 import { NavProgress } from '@/components/site/NavProgress';
 
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Menu';
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 
 const NAV = [
   { href: '/city/surat', label: 'Discover' },

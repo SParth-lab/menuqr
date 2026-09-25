@@ -1,4 +1,4 @@
-# QR4Menu — Architecture
+# QR4Blueprint — Architecture
 
 Digital menu + QR + SEO/AdSense product. Optimised for: organic traffic, page speed, low ops cost.
 
