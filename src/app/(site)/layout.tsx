@@ -9,8 +9,8 @@ const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'QR4Blueprint';
 const NAV = [
   { href: '/city/surat', label: 'Discover' },
   { href: '/cuisine/surti-street-food', label: 'Cuisines' },
+  { href: '/how-it-works', label: 'How it works' },
   { href: '/blog', label: 'Guides' },
-  { href: '/digital-menu/restaurant', label: 'For venues' },
 ];
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -131,6 +131,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
                 For venues
               </p>
               <ul className="mt-4 space-y-2.5 text-[14px] text-[var(--muted)]">
+                <li><Link href="/how-it-works" className="transition-colors hover:text-[var(--claret)]">How it works</Link></li>
+                <li><Link href="/about" className="transition-colors hover:text-[var(--claret)]">Our story</Link></li>
                 <li><Link href="/digital-menu/restaurant" className="transition-colors hover:text-[var(--claret)]">Digital menu for restaurants</Link></li>
                 <li><Link href="/digital-menu/cafe" className="transition-colors hover:text-[var(--claret)]">Digital menu for cafés</Link></li>
                 <li><Link href="/qr-menu/restaurant" className="transition-colors hover:text-[var(--claret)]">QR menu generator</Link></li>

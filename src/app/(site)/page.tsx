@@ -221,18 +221,61 @@ export default async function HomePage() {
 
       <AdSlot slot="home-mid" className="mx-auto max-w-6xl px-4" />
 
+      {/* ------------------------------------------------- what changes */}
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <div className="max-w-2xl">
+          <p className="eyebrow">For owners</p>
+          <h2 className="display t-h1 mt-4">
+            What actually changes when the menu stops being paper
+          </h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-[var(--ink-soft)]">
+            Not the hygiene argument. These are the reasons venues keep a digital menu long
+            after the reason they adopted one stopped applying.
+          </p>
+        </div>
+
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            ['A price change stops being an event',
+             'No waiting until enough changes pile up to justify a reprint. Type the number and the till and the menu agree again.'],
+            ['Out of stock is handled at the source',
+             'Mark the fish off at seven and every table sees it. Servers stop apologising for the same dish forty times a night.'],
+            ['Seasonal sections can actually be seasonal',
+             'Add the winter list in November, hide it in February. A printed menu forces you to leave it up all year and disappoint people for ten months.'],
+            ['Reprinting cost goes to zero',
+             'For a fifty-seat room reprinting quarterly, laminated menus are a real annual line. The code on the table never needs reissuing.'],
+            ['You find out what gets read',
+             'A printed menu tells you nothing about what people looked at. This one tells you which categories get opened and how many guests arrived by scanning.'],
+            ['Your menu becomes findable',
+             'Each page carries its own title, description and Restaurant structured data, so people searching for your food can land on the actual dishes and prices.'],
+          ].map(([title, body]) => (
+            <li key={title} className="glass glass-lift rounded-2xl p-6">
+              <h3 className="display text-[16px]">{title}</h3>
+              <p className="mt-2.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">{body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       {/* ------------------------------------------------------- steps */}
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-        <h2 className="display text-[length:var(--t-h2)] leading-tight">
-          Three steps to a live card.
-        </h2>
-        <ol className="mt-6 sm:mt-9 grid gap-6 sm:grid-cols-3">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="display t-h1">Three steps to a live card.</h2>
+          <Link
+            href="/how-it-works"
+            className="text-[13px] font-semibold text-[var(--claret)] transition-colors hover:text-[var(--ink)]"
+          >
+            Full walkthrough →
+          </Link>
+        </div>
+
+        <ol className="mt-9 grid gap-5 sm:grid-cols-3">
           {STEPS.map(([title, body], i) => (
             <li key={title} className="glass glass-lift rounded-2xl p-5 sm:p-7">
-              <span className="display relative z-[2] block text-[32px] leading-none text-[var(--brass)]">
+              <span className="display relative z-[2] block text-[32px] leading-none text-[var(--claret)]">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <h3 className="relative z-[2] mt-6 text-[14px] font-semibold">{title}</h3>
+              <h3 className="relative z-[2] mt-5 text-[16px] font-semibold">{title}</h3>
               <p className="relative z-[2] mt-2.5 text-[13.5px] leading-relaxed text-[var(--muted)]">
                 {body}
               </p>
