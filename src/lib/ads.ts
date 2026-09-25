@@ -8,7 +8,12 @@
  *
  * To light one up, create the unit in AdSense and set the matching env var.
  */
-export const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? '';
+/* Trimmed, and stripped of wrapping quotes: pasting `"ca-pub-…"` into a hosting
+   dashboard is common, and the quotes would otherwise silently disable ads with
+   no error anywhere. */
+export const ADSENSE_CLIENT = (process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? '')
+  .trim()
+  .replace(/^['"]|['"]$/g, '');
 
 export type Placement =
   | 'home-mid'
@@ -28,9 +33,9 @@ const SLOTS: Record<Placement, string | undefined> = {
 };
 
 export function slotId(placement: Placement): string | undefined {
-  const id = SLOTS[placement];
+  const id = (SLOTS[placement] ?? '').trim().replace(/^['"]|['"]$/g, '');
   // Guard against a placement name being pasted in where a unit id belongs.
-  return id && /^\d{6,}$/.test(id) ? id : undefined;
+  return /^\d{6,}$/.test(id) ? id : undefined;
 }
 
 export const adsEnabled = ADSENSE_CLIENT.startsWith('ca-pub-');
